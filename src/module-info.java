@@ -6,4 +6,5 @@
  *
  */
 module Arquivo {
+	requires java.sql;
 }
