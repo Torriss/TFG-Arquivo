@@ -16,8 +16,8 @@ public abstract class Conexion<T> {
 	protected static Connection c = null;
 	static String usuario ="root";
 	static String password = "";
-	private static String _bd="modelado_salacine";
-	static String url = "jdbc:mysql://localhost/"+_bd;
+	private static String _bd = "arquivo";
+	static String url = "jdbc:mysql://localhost/" + _bd;
 	protected HashMap<consult, String> structConsult;
 	
 	public Conexion() {
