@@ -2,27 +2,23 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+//import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 public abstract class Conexion<T> {
 	
-	public enum consult { Insert, Update, CreateTable }
+	//public enum consult { Insert, Update, CreateTable }
 	
 	protected static Connection c = null;
 	static String usuario ="root";
 	static String password = "";
 	private static String _bd = "arquivo";
 	static String url = "jdbc:mysql://localhost/" + _bd;
-	protected HashMap<consult, String> structConsult;
-	
-	public Conexion() {
-		this.initStructure();
-	}
+	//protected HashMap<consult, String> structConsult;
 	
 	public static void initConnection() throws ClassNotFoundException, SQLException {
 		try {
@@ -73,7 +69,22 @@ public abstract class Conexion<T> {
 		return r > 0;
 	}
 	
-	public T readByParam(String paramName, String value) {
+	public ResultSet executeSelect(String query) {
+		ResultSet rs = null; 
+		try {
+			this.checkConnection();
+			Statement statement =  c.createStatement();
+			rs = statement.executeQuery(query); 
+			
+		}
+		catch (SQLException e) {
+			System.out.println("No se ha podido ejecutar al query: '" + query + "'");
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	/*public T readByParam(String paramName, String value) {
 		T result = null;
 
 		Statement statement;
@@ -195,17 +206,17 @@ public abstract class Conexion<T> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
-	public abstract String getTableName();
+	//public abstract String getTableName();
 	
-	public abstract T convToTransfer(ResultSet r);
+	//public abstract T convToTransfer(ResultSet r);
 
-	public abstract void setId(T t, long l);
+	//public abstract void setId(T t, long l);
 
-	public abstract long getId(T t);
+	//public abstract long getId(T t);
 
-	protected abstract void initStructure();
+	//protected abstract void initStructure();
 
-	protected abstract String[] extractDatos(T t);
+	//protected abstract String[] extractDatos(T t);
 }
