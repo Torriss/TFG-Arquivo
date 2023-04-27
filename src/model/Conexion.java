@@ -9,22 +9,22 @@ import java.sql.Statement;
 //import java.util.HashMap;
 //import java.util.Map;
 
-public abstract class Conexion<T> {
+public class Conexion {
 	
 	//public enum consult { Insert, Update, CreateTable }
 	
-	protected static Connection c = null;
-	static String usuario ="root";
-	static String password = "";
+	protected static Connection instance = null;
+	private static String usuario ="root";
+	private static String password = "";
 	private static String _bd = "arquivo";
-	static String url = "jdbc:mysql://localhost/" + _bd;
+	private static String url = "jdbc:mysql://localhost/" + _bd;
 	//protected HashMap<consult, String> structConsult;
 	
-	public static void initConnection() throws ClassNotFoundException, SQLException {
+	private static void initConnection() throws ClassNotFoundException, SQLException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			c = (Connection)DriverManager.getConnection(url, usuario, password);
-			if (c!= null) {
+			instance = (Connection)DriverManager.getConnection(url, usuario, password);
+			if (instance != null) {
 				System.out.println("Conexion correcta!");
 			}
 			
@@ -36,16 +36,48 @@ public abstract class Conexion<T> {
 	}
 	
 	public static void closeConnection() throws SQLException {
-		if (c != null || c.isClosed()){
+		if (instance != null || instance.isClosed()){
 			System.out.println("Conexion CERRADA!");
-			c.close();
+			instance.close();
 			
 		}
 	}
 	
-	private void checkConnection() {
+	public static boolean execute(String query) {
+		int r = 0;
 		try {
-			if (c == null || c.isClosed()) {
+			if (instance == null || instance.isClosed()) initConnection();
+			Statement statement = instance.createStatement();
+			r = statement.executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println("No se ha podido ejecutar la query: '" + query + "'");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return r > 0;
+	}
+	
+	public static ResultSet executeSelect(String query) {
+		ResultSet rs = null;
+		try {
+			if (instance == null || instance.isClosed()) initConnection();
+			Statement statement =  instance.createStatement();
+			rs = statement.executeQuery(query); 
+		} catch (SQLException e) {
+			System.out.println("No se ha podido ejecutar al query: '" + query + "'");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	//esta la hice yo, posiblemente para nada
+	/*public static Connection getConexion() {
+		try {
+			if (instance == null || instance.isClosed()) {
 				initConnection();
 			}
 		} catch (ClassNotFoundException e) {
@@ -53,36 +85,20 @@ public abstract class Conexion<T> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+		return instance;
+	}*/
 	
-	public boolean execute(String query) {
-		int r = 0;
+	/*private void checkConnection() {
 		try {
-			this.checkConnection();
-			Statement statement = c.createStatement();
-			r = statement.executeUpdate(query);
+			if (instance == null || instance.isClosed()) {
+				initConnection();
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
-			System.out.println("No se ha podido ejecutar la query: '" + query + "'");
 			e.printStackTrace();
 		}
-
-		return r > 0;
-	}
-	
-	public ResultSet executeSelect(String query) {
-		ResultSet rs = null; 
-		try {
-			this.checkConnection();
-			Statement statement =  c.createStatement();
-			rs = statement.executeQuery(query); 
-			
-		}
-		catch (SQLException e) {
-			System.out.println("No se ha podido ejecutar al query: '" + query + "'");
-			e.printStackTrace();
-		}
-		return rs;
-	}
+	}*/
 	
 	/*public T readByParam(String paramName, String value) {
 		T result = null;

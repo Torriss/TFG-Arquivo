@@ -1,25 +1,27 @@
 package model;
 
 public class Usuario {
-	private int idUsuario;
 	private String nombre;
+	private String password;
 	private String rol;
-	
-	public Usuario(int idUsuario, String nombre, String rol) {
-		this.idUsuario = idUsuario;
+
+	public Usuario(String nombre, String password, String rol) {
 		this.nombre = nombre;
+		this.password = password;
 		this.rol = rol;
 	}
 	
-	public boolean altaUsuario() {
+	public static boolean altaUsuario(Usuario user) {
+		String query = "INSERT INTO usuarios (nombre, password, rol) VALUES ('"+user.nombre+"','"+user.password+"','"+user.rol+"')";
+		return Conexion.execute(query);
+	}
+	
+	
+	public static boolean bajaUsuario(Usuario user) {
 		return false;
 	}
 	
-	public boolean bajaUsuario() {
-		return false;
-	}
-	
-	public boolean editUsuario() {
+	public static boolean editUsuario(Usuario user, Usuario edit) {
 		return false;
 	}
 }
