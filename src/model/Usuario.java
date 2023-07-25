@@ -12,7 +12,11 @@ public class Usuario {
 	}
 	
 	public static boolean altaUsuario(Usuario user) {
+		
+		//Construir la query
 		String query = "INSERT INTO usuarios (nombre, password, rol) VALUES ('"+user.nombre+"','"+user.password+"','"+user.rol+"')";
+		
+		//Ejecutar la query en la BBDD
 		return Conexion.execute(query);
 	}
 	
