@@ -46,7 +46,7 @@ public class ImportExcel {
         fileInputStream.close();
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         String filePath = "ruta_del_archivo.xlsx";
         try {
             importDataFromExcel(filePath);
@@ -55,5 +55,5 @@ public class ImportExcel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
