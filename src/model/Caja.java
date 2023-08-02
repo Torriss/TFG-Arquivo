@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Caja {
-    private static final int PAGINAS = 100; // N鷐ero de p醙inas que caben en cada caja
+    private static final int PAGINAS = 100; // N锟絤ero de p锟絞inas que caben en cada caja
 
     private int idCaja;
     private int paginas;
-    private String ubicacion;
+    private String ubicacion //con el formato B-19-4-0 Siendo la B la secci贸n(rango A-Z), 19 el n煤mero de estanter铆a donde esta(rango 0-20), 4 el n煤mero de balda(rango 0-5) y 0 la posici贸n en la balda(rango 0-5).;
     private String tipo;
     private int anio;
 
@@ -63,7 +63,7 @@ public class Caja {
         this.anio = anio;
     }
 
-    // M閠odos CRUD
+    // M锟絫odos CRUD
 
     public static boolean crearCaja(Caja caja) {
         String query = "INSERT INTO cajas (paginas, ubicacion, tipo, anio) VALUES (" +
@@ -73,6 +73,12 @@ public class Caja {
                 caja.getAnio() + ")";
         return Conexion.execute(query);
     }
+
+    /*public static boolean crearCaja(Caja caja) {
+        // Validar caja no nula y otros valores si es necesario
+        String query = "INSERT INTO cajas (paginas, ubicacion, tipo, anio) VALUES (?, ?, ?, ?)";
+        return Conexion.executePreparedStatement(query, caja.getPaginas(), caja.getUbicacion(), caja.getTipo(), caja.getAnio());
+    }*/
 
     public static List<Caja> obtenerTodasCajas() {
         List<Caja> cajas = new ArrayList<>();
@@ -104,11 +110,159 @@ public class Caja {
         return Conexion.execute(query);
     }
 
+    /*public static boolean actualizarCaja(Caja caja) {
+        // Validar caja no nula y otros valores si es necesario
+        String query = "UPDATE cajas SET paginas = ?, ubicacion = ?, tipo = ?, anio = ? WHERE idCaja = ?";
+        return Conexion.executePreparedStatement(query, caja.getPaginas(), caja.getUbicacion(), caja.getTipo(), caja.getAnio(), caja.getIdCaja());
+    }*/
+
     public static boolean eliminarCaja(int idCaja) {
         String query = "DELETE FROM cajas WHERE idCaja = " + idCaja;
         return Conexion.execute(query);
     }
 
-    // Resto de m閠odos (omitiendo para abreviar)
+
+    public static Caja obtenerCajaPorID(int idCaja) {
+        String query = "SELECT * FROM cajas WHERE idCaja = ?";
+        ResultSet rs = Conexion.executePreparedStatement(query, idCaja);
+
+        try {
+            if (rs.next()) {
+                int paginas = rs.getInt("paginas");
+                String ubicacion = rs.getString("ubicacion");
+                String tipo = rs.getString("tipo");
+                int anio = rs.getInt("anio");
+                Caja caja = new Caja(paginas, ubicacion, tipo, anio);
+                caja.setIdCaja(idCaja);
+                return caja;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    public String toString() {
+        return "ID Caja: " + idCaja +
+                ", P谩ginas: " + paginas +
+                ", Ubicaci贸n: " + ubicacion +
+                ", Tipo: " + tipo +
+                ", A帽o: " + anio;
+    }
+
+   private static Caja crearNuevaCaja(String tipo, int numPaginas) {
+        // Obtener todas las cajas del mismo tipo con ubicaciones en el formato B-19-4-0
+        List<Caja> cajasMismoTipo = Caja.obtenerCajasPorTipo(tipo);
+        cajasMismoTipo.sort(Comparator.comparing(Caja::getUbicacion)); // Ordenar por ubicaci贸n
+
+        // Calcular la ubicaci贸n de la nueva caja
+        String ubicacionNuevaCaja = generarUbicacionNuevaCaja(cajasMismoTipo);
+
+        // Crear la nueva caja y guardarla en la base de datos
+        Caja nuevaCaja = new Caja(numPaginas, ubicacionNuevaCaja, tipo, obtenerAnioActual());
+        if (Caja.crearCaja(nuevaCaja)) {
+            return nuevaCaja;
+        } else {
+            // Error al crear la nueva caja
+            return null;
+        }
+    }
+
+    private static String generarUbicacionNuevaCaja(List<Caja> cajas) {
+        // Recorrer la lista de cajas y encontrar la 煤ltima ubicaci贸n en el formato B-19-4-0
+        String ultimaUbicacion = "A-0-0-0"; // Supongamos que la primera ubicaci贸n posible es A-0-0-0
+
+        for (Caja caja : cajas) {
+            String ubicacion = caja.getUbicacion();
+            if (ubicacion.matches("[A-Z]-\\d{1,2}-\\d-\\d")) { // Verificar el formato B-19-4-0
+                ultimaUbicacion = ubicacion;
+            }
+        }
+
+        // Extraer los elementos de la 煤ltima ubicaci贸n (secci贸n, estanter铆a, balda y posici贸n)
+        String[] elementosUbicacion = ultimaUbicacion.split("-");
+        char seccion = elementosUbicacion[0].charAt(0);
+        int estanteria = Integer.parseInt(elementosUbicacion[1]);
+        int balda = Integer.parseInt(elementosUbicacion[2]);
+        int posicion = Integer.parseInt(elementosUbicacion[3]);
+
+        // Generar la nueva ubicaci贸n justo despu茅s de la 煤ltima
+        if (posicion < 5) {
+            posicion++;
+        } else {
+            if (balda < 5) {
+                balda++;
+                posicion = 0;
+            } else {
+                estanteria++;
+                balda = 0;
+                posicion = 0;
+            }
+        }
+
+        return String.format("%c-%02d-%d-%d", seccion, estanteria, balda, posicion);
+    }
+
+    public static boolean insertarExpedienteEnCaja(Expediente expediente) {
+        Caja cajaDisponible = obtenerCajaDisponible(expediente.getTipo(), expediente.getNumPaginas());
+        if (cajaDisponible != null) {
+            // Si hay una caja disponible, insertamos el expediente en esa caja
+            expediente.setCaja(cajaDisponible.getIdCaja());
+            return Expediente.insertarExpediente(expediente);
+        } else {
+            // Si no hay caja disponible, creamos una nueva caja y luego insertamos el expediente en ella
+            Caja nuevaCaja = crearNuevaCaja(expediente.getTipo(), expediente.getNumPaginas());
+            if (nuevaCaja != null) {
+                expediente.setCaja(nuevaCaja.getIdCaja());
+                return Expediente.insertarExpediente(expediente);
+            } else {
+                // Error al crear una nueva caja
+                return false;
+            }
+        }
+    }
+
+    private static Caja obtenerCajaDisponible(String tipo, int numPaginas) {
+        // Obtener todas las cajas del mismo tipo
+        List<Caja> cajasMismoTipo = Caja.obtenerCajasPorTipo(tipo);
+
+        // Verificar si alguna caja tiene suficientes p谩ginas disponibles para el expediente
+        for (Caja caja : cajasMismoTipo) {
+            if (caja.getPaginasDisponibles() >= numPaginas) {
+                return caja;
+            }
+        }
+
+        // Si no hay caja disponible del mismo tipo con suficientes p谩ginas, retornar null
+        return null;
+    }    
+
+
+    public static List<Caja> obtenerCajasPorTipo(String tipo) {
+        List<Caja> cajasMismoTipo = new ArrayList<>();
+        String query = "SELECT * FROM cajas WHERE tipo = ?";
+        ResultSet rs = Conexion.executePreparedStatement(query, tipo);
+        try {
+            while (rs.next()) {
+                int idCaja = rs.getInt("idCaja");
+                int paginas = rs.getInt("paginas");
+                String ubicacion = rs.getString("ubicacion");
+                int anio = rs.getInt("anio");
+                Caja caja = new Caja(paginas, ubicacion, tipo, anio);
+                caja.setIdCaja(idCaja);
+                cajasMismoTipo.add(caja);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cajasMismoTipo;
+    }
+
+    public int getPaginasDisponibles() {
+        // Calcular y retornar las p谩ginas disponibles en la caja
+        return paginas - Expediente.calcularPaginasOcupadasEnCaja(idCaja);
+    }
 }
 
