@@ -3,6 +3,7 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Caja {
@@ -121,7 +122,7 @@ public class Caja {
         return Conexion.execute(query);
     }
 
-
+/*
     public static Caja obtenerCajaPorID(int idCaja) {
         String query = "SELECT * FROM cajas WHERE idCaja = ?";
         ResultSet rs = Conexion.executePreparedStatement(query, idCaja);
@@ -141,7 +142,7 @@ public class Caja {
         }
         return null;
     }
-
+*/
 
 
     public String toString() {
@@ -152,7 +153,7 @@ public class Caja {
                 ", Año: " + anio;
     }
 
-   private static Caja crearNuevaCaja(String tipo, int numPaginas) {
+   private static Caja crearNuevaCaja(String tipo, int numPaginas, int anio) {
         // Obtener todas las cajas del mismo tipo con ubicaciones en el formato B-19-4-0
         List<Caja> cajasMismoTipo = Caja.obtenerCajasPorTipo(tipo);
         cajasMismoTipo.sort(Comparator.comparing(Caja::getUbicacion)); // Ordenar por ubicación
@@ -161,7 +162,7 @@ public class Caja {
         String ubicacionNuevaCaja = generarUbicacionNuevaCaja(cajasMismoTipo);
 
         // Crear la nueva caja y guardarla en la base de datos
-        Caja nuevaCaja = new Caja(numPaginas, ubicacionNuevaCaja, tipo, obtenerAnioActual());
+        Caja nuevaCaja = new Caja(numPaginas, ubicacionNuevaCaja, tipo, anio);
         if (Caja.crearCaja(nuevaCaja)) {
             return nuevaCaja;
         } else {
@@ -206,17 +207,17 @@ public class Caja {
     }
 
     public static boolean insertarExpedienteEnCaja(Expediente expediente) {
-        Caja cajaDisponible = obtenerCajaDisponible(expediente.getTipo(), expediente.getNumPaginas());
+        Caja cajaDisponible = obtenerCajaDisponible(expediente.getTipo(), expediente.getPaginas());
         if (cajaDisponible != null) {
             // Si hay una caja disponible, insertamos el expediente en esa caja
             expediente.setCaja(cajaDisponible.getIdCaja());
-            return Expediente.insertarExpediente(expediente);
+            return Expediente.insert(expediente);
         } else {
             // Si no hay caja disponible, creamos una nueva caja y luego insertamos el expediente en ella
-            Caja nuevaCaja = crearNuevaCaja(expediente.getTipo(), expediente.getNumPaginas());
+            Caja nuevaCaja = crearNuevaCaja(expediente.getTipo(), expediente.getPaginas(), expediente.getAnio());
             if (nuevaCaja != null) {
                 expediente.setCaja(nuevaCaja.getIdCaja());
-                return Expediente.insertarExpediente(expediente);
+                return Expediente.insert(expediente);
             } else {
                 // Error al crear una nueva caja
                 return false;
@@ -230,7 +231,7 @@ public class Caja {
 
         // Verificar si alguna caja tiene suficientes páginas disponibles para el expediente
         for (Caja caja : cajasMismoTipo) {
-            if (caja.getPaginasDisponibles() >= numPaginas) {
+            if (caja.getPaginas() >= numPaginas) {
                 return caja;
             }
         }
@@ -243,7 +244,7 @@ public class Caja {
     public static List<Caja> obtenerCajasPorTipo(String tipo) {
         List<Caja> cajasMismoTipo = new ArrayList<>();
         String query = "SELECT * FROM cajas WHERE tipo = ?";
-        ResultSet rs = Conexion.executePreparedStatement(query, tipo);
+        ResultSet rs = Conexion.executeSelect(query);
         try {
             while (rs.next()) {
                 int idCaja = rs.getInt("idCaja");
@@ -260,9 +261,6 @@ public class Caja {
         return cajasMismoTipo;
     }
 
-    public int getPaginasDisponibles() {
-        // Calcular y retornar las páginas disponibles en la caja
-        return paginas - Expediente.calcularPaginasOcupadasEnCaja(idCaja);
-    }
+
 }
 

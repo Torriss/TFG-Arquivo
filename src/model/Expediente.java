@@ -15,8 +15,9 @@ public class Expediente {
 	private String tomos;
 	private String juzgado;
 	private String lugar;
+	private int paginas;
 	
-	public Expediente(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, String tomos, String juzgado, String lugar) {
+	public Expediente(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, String tomos, String juzgado, String lugar, int paginas) {
 		this.numExpediente = numExpediente;
 		this.tipo = tipo;
 		this.caja = caja;
@@ -26,6 +27,7 @@ public class Expediente {
 		this.tomos = tomos;
 		this.juzgado = juzgado;
 		this.lugar = lugar;
+		this.paginas = paginas;
 	}
 	
 	public static boolean insert(Expediente exp) {
@@ -70,8 +72,9 @@ public class Expediente {
             String tomos = rs.getString("tomos");
             String juzgado = rs.getString("juzgado");
             String lugar = rs.getString("lugar");
+            int paginas = rs.getInt("paginas");
 
-            exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar);
+            exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
         }
 
         return exp;
@@ -115,8 +118,9 @@ public class Expediente {
 	        String tomos = rs.getString("tomos");
 	        String juzgado = rs.getString("juzgado");
 	        String lugar = rs.getString("lugar");
+	        int paginas = rs.getInt("paginas");
 	        
-	        Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar);
+	        Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
 	        expedientes.add(exp);
 	    }
 	    
@@ -157,6 +161,14 @@ public class Expediente {
 
 	public String getLugar() {
 	    return lugar;
+	}
+	
+	public void setCaja(int caja) {
+		this.caja = caja;
+	}
+	
+	public int getPaginas() {
+		return paginas;
 	}
 
 	/*public static boolean insertarExpediente(Expediente exp) {
