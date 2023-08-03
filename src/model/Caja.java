@@ -10,7 +10,7 @@ public class Caja {
 
     private int idCaja;
     private int paginas;
-    private String ubicacion //con el formato B-19-4-0 Siendo la B la sección(rango A-Z), 19 el número de estantería donde esta(rango 0-20), 4 el número de balda(rango 0-5) y 0 la posición en la balda(rango 0-5).;
+    private String ubicacion; //con el formato B-19-4-0 Siendo la B la sección(rango A-Z), 19 el número de estantería donde esta(rango 0-20), 4 el número de balda(rango 0-5) y 0 la posición en la balda(rango 0-5).;
     private String tipo;
     private int anio;
 
