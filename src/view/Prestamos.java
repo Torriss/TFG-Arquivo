@@ -1,11 +1,14 @@
 package view;
 
+import model.Expediente;
+import model.Juzgado;
+import model.Prestamo;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -13,12 +16,12 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
 
 public class Prestamos extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 247041135132800079L;
 	private JPanel contentPanePrestamos;
 	private JTextField textFieldNumExp;
@@ -26,11 +29,13 @@ public class Prestamos extends JFrame {
 	private JTextField textFieldSolicitante;
 	private JTextField textFieldLugar;
 	private JTextField textFieldFecha;
+	private JComboBox<String> comboBoxTipoExp;
+	private JComboBox<String> comboBoxEstado;
+	private JComboBox<Juzgado> comboBoxJuzgado;
+	private JButton btnBuscarUbic;
+	private JButton btnImprimir;
 
-	/**
-	 * Create the frame.
-	 */
-	public Prestamos() {
+	public Prestamos() throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPanePrestamos = new JPanel();
@@ -50,8 +55,9 @@ public class Prestamos extends JFrame {
 		JLabel lblExpediente = new JLabel("Expediente");
 		panel_3.add(lblExpediente);
 		
-		JComboBox<String> comboBoxExpediente = new JComboBox<String>();
-		panel_3.add(comboBoxExpediente);
+		comboBoxTipoExp = new JComboBox<String>();
+		iniciarListaTipoExp();
+		panel_3.add(comboBoxTipoExp);
 		
 		JPanel panel_4 = new JPanel();
 		panel_1.add(panel_4);
@@ -82,8 +88,8 @@ public class Prestamos extends JFrame {
 		panel_1.add(panel_6);
 		panel_6.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblLugar = new JLabel("Lugar");
-		panel_6.add(lblLugar);
+		JLabel lblProvincia = new JLabel("Provincia");
+		panel_6.add(lblProvincia);
 		
 		textFieldLugar = new JTextField();
 		panel_6.add(textFieldLugar);
@@ -96,7 +102,8 @@ public class Prestamos extends JFrame {
 		JLabel lblJuzgado = new JLabel("Juzgado");
 		panel_7.add(lblJuzgado);
 		
-		JComboBox comboBoxJuzgado = new JComboBox();
+		comboBoxJuzgado = new JComboBox<Juzgado>();
+		iniciarListaJuzgados();
 		panel_7.add(comboBoxJuzgado);
 		
 		JPanel panel_9 = new JPanel();
@@ -114,7 +121,9 @@ public class Prestamos extends JFrame {
 		panel_10.add(textFieldFecha);
 		textFieldFecha.setColumns(10);
 		
+		// TODO: cambiar por LGoodDatePicker
 		JButton btnCalendario = new JButton("Calendario");
+		btnCalendario.addActionListener(new CalendarioListener());
 		panel_10.add(btnCalendario);
 		
 		JPanel panel = new JPanel();
@@ -129,18 +138,81 @@ public class Prestamos extends JFrame {
 		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_8.add(lblEstado);
 		
-		JComboBox comboBoxEstado = new JComboBox();
+		comboBoxEstado = new JComboBox<String>();
+		iniciarListaEstado();
 		panel_8.add(comboBoxEstado);
 		
 		JPanel panel_5 = new JPanel();
 		panel.add(panel_5);
 		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JButton btnBuscarUbic = new JButton("Buscar ubicacion");
+		btnBuscarUbic = new JButton("Buscar ubicacion");
+		btnBuscarUbic.addActionListener(new BuscarUbicListener());
 		panel_5.add(btnBuscarUbic);
 		
-		JButton btnImprimir = new JButton("Imprimir");
+		btnImprimir = new JButton("Imprimir");
+		btnImprimir.addActionListener(new ImprimirListener());
 		panel_5.add(btnImprimir);
 	}
-
+	
+	private void iniciarListaTipoExp() throws SQLException {
+		ArrayList<String> listaTiposExp = Expediente.getAllTiposExp();
+		
+		comboBoxTipoExp.removeAllItems();
+		
+		for (int i = 0; i<listaTiposExp.size(); i++)
+		{
+			comboBoxEstado.addItem(listaTiposExp.get(i));
+		}
+	}
+	
+	private void iniciarListaJuzgados() {
+		Prestamo prestamo = new Prestamo();
+		ArrayList<Juzgado> listaJuzgados = prestamo.getJuzgados();
+		
+		comboBoxJuzgado.removeAllItems();
+		for (int i = 0; i<listaJuzgados.size(); i++)
+		{
+			comboBoxJuzgado.addItem(listaJuzgados.get(i));
+		}
+	}
+	
+	private void iniciarListaEstado() {
+		ArrayList<String> listaEstados = new ArrayList<String>();
+		listaEstados.add("Consulta");
+		listaEstados.add("No bajado al archivo");
+		listaEstados.add("No encontrado");
+		listaEstados.add("Se presta ahora");
+		listaEstados.add("Ya prestado antes");
+		
+		comboBoxEstado.removeAllItems();
+		
+		for (int i = 0; i<listaEstados.size(); i++)
+		{
+			comboBoxEstado.addItem(listaEstados.get(i));
+		}
+		
+	}
+	
+	public class BuscarUbicListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+			//TODO: crear funcion buscar ubicacion del expediente con tipoExp, numExp, anioExp, juzgado
+		}
+	}
+	
+	public class ImprimirListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+			//TODO: crear funcion imprimir
+		}
+	}
+	
+	public class CalendarioListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+			//TODO: revisar con LGoodDatePicker
+		}
+	}
 }
+

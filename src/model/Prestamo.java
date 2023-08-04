@@ -3,6 +3,7 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Prestamo {
@@ -17,6 +18,9 @@ public class Prestamo {
 	private String lugar;
 	private String fechaPrestamo;
 	
+	
+	public Prestamo() {	}
+	
 	public Prestamo(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, String tomos, 
 					String juzgado, String lugar, String fechaPrestamo, String fechaMaxDevolucion) {
 		this.numExpediente = numExpediente;
@@ -30,7 +34,7 @@ public class Prestamo {
 		this.lugar = lugar;
 		this.fechaPrestamo = fechaPrestamo;
 	}
-	
+
 	public static boolean realizarPrestamo(Expediente exp) {
 	    // Comprobar que el expediente existe en la BBDD
 	    //if (!Expediente.existeExpediente(exp.getNumExpediente(), exp.getTipo(), exp.getAnio(), exp.getCaja(), exp.getUbicacion())) {
@@ -86,5 +90,23 @@ public class Prestamo {
 		return false;
 	}
 	
+	public ArrayList<Juzgado> getJuzgados() {
+		ArrayList<Juzgado> listaJuzgados = new ArrayList<>();
+		
+		try {
+			ResultSet rs = Conexion.executeSelect("");
+			while (rs.next())
+			{
+				Juzgado juzgado = new Juzgado();
+				juzgado.setNombre(rs.getString("nombre"));
+				listaJuzgados.add(juzgado);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return listaJuzgados;
+	}
 	
 }

@@ -170,6 +170,19 @@ public class Expediente {
 	public int getPaginas() {
 		return paginas;
 	}
+	
+	public static ArrayList<String> getAllTiposExp() throws SQLException {
+		ArrayList<String> tiposExp = new ArrayList<>();
+		
+		String sql = "SELECT DISTINCT tipo FROM Expedientes";
+	    ResultSet rs = Conexion.executeSelect(sql);
+	    
+	    while (rs.next()) {
+	        String tipo = rs.getString("tipo");
+	        tiposExp.add(tipo);
+	    }
+	    return tiposExp;
+	}
 
 	/*public static boolean insertarExpediente(Expediente exp) {
         // Validar expediente no nulo y otros valores si es necesario
