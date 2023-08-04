@@ -33,7 +33,8 @@ public class Prestamo {
 	
 	public static boolean realizarPrestamo(Expediente exp) {
 	    // Comprobar que el expediente existe en la BBDD
-	    if (!Expediente.existeExpediente(exp.getNumExpediente(), exp.getTipo(), exp.getAnio(), exp.getCaja(), exp.getUbicacion())) {
+	    //if (!Expediente.existeExpediente(exp.getNumExpediente(), exp.getTipo(), exp.getAnio(), exp.getCaja(), exp.getUbicacion())) {
+		if (!Expediente.existeExpediente(exp.getNumExpediente(), exp.getTipo())) {
 	        System.out.println("El expediente no existe en la base de datos.");
 	        return false;
 	    }

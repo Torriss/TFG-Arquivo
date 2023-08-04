@@ -16,7 +16,7 @@ public class PrestamoForm extends JFrame {
     private JTextField txtUbicacion;
 
     public PrestamoForm() {
-        setTitle("Formulario de Préstamo");
+        setTitle("Formulario de Prï¿½stamo");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 250);
         setLocationRelativeTo(null);
@@ -24,15 +24,15 @@ public class PrestamoForm extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 2));
 
-        JLabel lblNumExpediente = new JLabel("Número de Expediente:");
+        JLabel lblNumExpediente = new JLabel("Nï¿½mero de Expediente:");
         txtNumExpediente = new JTextField();
         JLabel lblTipo = new JLabel("Tipo:");
         txtTipo = new JTextField();
-        JLabel lblAnio = new JLabel("Año:");
+        JLabel lblAnio = new JLabel("Aï¿½o:");
         txtAnio = new JTextField();
         JLabel lblCaja = new JLabel("Caja:");
         txtCaja = new JTextField();
-        JLabel lblUbicacion = new JLabel("Ubicación:");
+        JLabel lblUbicacion = new JLabel("Ubicaciï¿½n:");
         txtUbicacion = new JTextField();
 
         panel.add(lblNumExpediente);
@@ -59,19 +59,20 @@ public class PrestamoForm extends JFrame {
                     String ubicacion = txtUbicacion.getText();
 
                     // Crear el objeto Expediente con los datos del formulario
-                    Expediente expediente = new Expediente(numExpediente, tipo, anio, caja, ubicacion, null, null, null, null);
+                    // TODO: revisar numPaginas a 0
+                    Expediente expediente = new Expediente(numExpediente, tipo, anio, caja, ubicacion, null, null, null, null, 0);
 
-                    // Realizar el préstamo
+                    // Realizar el prï¿½stamo
                     boolean prestamoExitoso = Prestamo.realizarPrestamo(expediente);
 
-                    // Mostrar mensaje de éxito o error
+                    // Mostrar mensaje de ï¿½xito o error
                     if (prestamoExitoso) {
-                        JOptionPane.showMessageDialog(PrestamoForm.this, "Préstamo realizado exitosamente.");
+                        JOptionPane.showMessageDialog(PrestamoForm.this, "Prï¿½stamo realizado exitosamente.");
                     } else {
-                        JOptionPane.showMessageDialog(PrestamoForm.this, "Error al realizar el préstamo.");
+                        JOptionPane.showMessageDialog(PrestamoForm.this, "Error al realizar el prï¿½stamo.");
                     }
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(PrestamoForm.this, "Por favor, ingrese valores numéricos válidos.");
+                    JOptionPane.showMessageDialog(PrestamoForm.this, "Por favor, ingrese valores numï¿½ricos vï¿½lidos.");
                 }
             }
         });

@@ -24,17 +24,19 @@ public class ImportExcel {
 
             int numExpediente = (int) row.getCell(0).getNumericCellValue();
             String tipo = row.getCell(1).getStringCellValue();
-            int año = (int) row.getCell(2).getNumericCellValue();
+            int anio = (int) row.getCell(2).getNumericCellValue();
             int caja = (int) row.getCell(3).getNumericCellValue();
             String ubicacion = row.getCell(4).getStringCellValue();
             String notas = row.getCell(5).getStringCellValue();
             String tomos = row.getCell(6).getStringCellValue();
             String juzgado = row.getCell(7).getStringCellValue();
             String lugar = row.getCell(8).getStringCellValue();
+            int paginas = (int) row.getCell(9).getNumericCellValue();
 
-            Expediente exp = new Expediente(numExpediente, tipo, año, caja, ubicacion, notas, tomos, juzgado, lugar);
+            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
 
-            if (Expediente.existeExpediente(numExpediente, tipo, año, caja, ubicacion)) {
+            //if (Expediente.existeExpediente(numExpediente, tipo, anio, caja, ubicacion)) {
+            if (Expediente.existeExpediente(numExpediente, tipo)) {
                 // Actualizar el expediente existente en la tabla
                 Expediente.update(exp);
             } else {
@@ -43,17 +45,8 @@ public class ImportExcel {
             }
         }
 
+        workbook.close();
         fileInputStream.close();
     }
 
-    /*public static void main(String[] args) {
-        String filePath = "ruta_del_archivo.xlsx";
-        try {
-            importDataFromExcel(filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 }
