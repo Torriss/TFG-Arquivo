@@ -5,11 +5,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.Juzgado;
+import utils.FuncComunes;
+
 import java.awt.GridLayout;
+import java.sql.SQLException;
+
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class Devoluciones extends JFrame {
 
@@ -19,23 +26,34 @@ public class Devoluciones extends JFrame {
 	private static final long serialVersionUID = 3777120968440321060L;
 	private JPanel contentPane;
 	private JTextField textFieldFecha;
-	private JTextField textFieldTipo;
 	private JTextField textFieldNumExp;
 	private JTextField textFieldAnioExp;
 	private JTextField textFieldCaja;
 	private JTextField textFieldTomos;
-	private JTextField textFieldLugar;
 	private JTextField textFieldUbicacion;
 	private JTextField textFieldNotas;
+	private JTextField textFieldLugar;
+	private JComboBox<String> comboBoxTipoExp;
+	private JComboBox<String> comboBoxEstado;
+	private JComboBox<Juzgado> comboBoxJuzgado;
+	private JButton btnBuscarUbic;
+	private JButton btnAsignar;
+	private JButton btnNuevo;
+	private JButton btnUltCajas;
+	private JButton btnImprimir;
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public Devoluciones() {
+	public Devoluciones() throws SQLException {
+		setTitle("Devoluciones");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		FuncComunes func = new FuncComunes();
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(4, 0, 0, 0));
@@ -50,7 +68,8 @@ public class Devoluciones extends JFrame {
 		JLabel lblFecha = new JLabel("Fecha");
 		panel_3.add(lblFecha);
 		
-		JComboBox comboBoxJuzgado = new JComboBox();
+		comboBoxJuzgado = new JComboBox<Juzgado>();
+		comboBoxJuzgado = func.iniciarListaJuzgados(comboBoxJuzgado);
 		panel_3.add(comboBoxJuzgado);
 		
 		JPanel panel_4 = new JPanel();
@@ -60,9 +79,6 @@ public class Devoluciones extends JFrame {
 		textFieldFecha = new JTextField();
 		panel_4.add(textFieldFecha);
 		textFieldFecha.setColumns(10);
-		
-		JButton btnCalendario = new JButton("Calendario");
-		panel_4.add(btnCalendario);
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2);
@@ -99,9 +115,9 @@ public class Devoluciones extends JFrame {
 		panel_5.add(textFieldAnioExp);
 		textFieldAnioExp.setColumns(10);
 		
-		textFieldTipo = new JTextField();
-		panel_2.add(textFieldTipo);
-		textFieldTipo.setColumns(10);
+		comboBoxTipoExp = new JComboBox<String>();
+		comboBoxTipoExp = func.iniciarListaTipoExp(comboBoxTipoExp);
+		panel_2.add(comboBoxTipoExp);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1);
@@ -146,19 +162,35 @@ public class Devoluciones extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(0, 5, 0, 0));
 		
-		JButton btnBuscarUbic = new JButton("Buscar ubicación");
+		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener();
+		btnBuscarUbic = new JButton("Buscar ubicacion");
+		btnBuscarUbic.addActionListener(buscarUbic);
 		panel.add(btnBuscarUbic);
 		
-		JButton btnAsignar = new JButton("Asignar");
+		FuncComunes.CalendarioListener calendario = func.new CalendarioListener();
+		//TODO: revisar con LGoodDatePicker
+		JButton btnCalendario = new JButton("Calendario");
+		btnCalendario.addActionListener(calendario);
+		panel_4.add(btnCalendario);
+		
+		FuncComunes.AsignarListener asignar = func.new AsignarListener();
+		btnAsignar = new JButton("Asignar");
+		btnAsignar.addActionListener(asignar);
 		panel.add(btnAsignar);
 		
-		JButton btnNuevo = new JButton("Nuevo");
+		FuncComunes.NuevoListener nuevo = func.new NuevoListener();
+		btnNuevo = new JButton("Nuevo");
+		btnNuevo.addActionListener(nuevo);
 		panel.add(btnNuevo);
 		
-		JButton btnUltCajas = new JButton("Últimas cajas");
+		FuncComunes.UltCajasListener ultCajas = func.new UltCajasListener();
+		btnUltCajas = new JButton("Últimas cajas");
+		btnUltCajas.addActionListener(ultCajas);
 		panel.add(btnUltCajas);
 		
-		JButton btnImprimir = new JButton("Imprimir");
+		FuncComunes.ImprimirListener imprimir = func.new ImprimirListener();
+		btnImprimir = new JButton("Imprimir");
+		btnImprimir.addActionListener(imprimir);
 		panel.add(btnImprimir);
 	}
 

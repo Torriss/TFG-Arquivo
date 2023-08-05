@@ -174,13 +174,13 @@ public class Expediente {
 	public static ArrayList<String> getAllTiposExp() throws SQLException {
 		ArrayList<String> tiposExp = new ArrayList<>();
 		
-		String sql = "SELECT DISTINCT tipo FROM Expedientes";
-	    ResultSet rs = Conexion.executeSelect(sql);
-	    
-	    while (rs.next()) {
-	        String tipo = rs.getString("tipo");
-	        tiposExp.add(tipo);
-	    }
+//		String sql = "SELECT DISTINCT tipo FROM Expedientes";
+//	    ResultSet rs = Conexion.executeSelect(sql);
+//	    
+//	    while (rs.next()) {
+//	        String tipo = rs.getString("tipo");
+//	        tiposExp.add(tipo);
+//	    }
 	    return tiposExp;
 	}
 

@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Locale;
@@ -19,6 +20,11 @@ import java.awt.event.ActionEvent;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
+import model.Juzgado;
+import utils.FuncComunes;
+import utils.FuncComunes.BuscarUbicListener;
+import utils.FuncComunes.CalendarioListener;
+
 public class Consultas extends JFrame {
 
 	/**
@@ -26,13 +32,17 @@ public class Consultas extends JFrame {
 	 */
 	private static final long serialVersionUID = 2099470413042195375L;
 	private JPanel contentPane;
-	private JTextField textFieldTipo;
+	private JComboBox<String> comboBoxTipoExp;
+	private JComboBox<Juzgado> comboBoxJuzgado;
+	private JButton btnBuscar;
 	private JTextField textFieldLugar;
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public Consultas() {
+	public Consultas() throws SQLException {
+		setTitle("Consultas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -40,6 +50,8 @@ public class Consultas extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(5, 0, 0, 0));
+		
+		FuncComunes func = new FuncComunes();
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1);
@@ -59,7 +71,8 @@ public class Consultas extends JFrame {
 		JLabel lblJuzgado = new JLabel("Juzgado:");
 		panel_5.add(lblJuzgado);
 		
-		JComboBox comboBoxJuzgado = new JComboBox();
+		comboBoxJuzgado = new JComboBox<Juzgado>();
+		comboBoxJuzgado = func.iniciarListaJuzgados(comboBoxJuzgado);
 		panel_5.add(comboBoxJuzgado);
 		
 		JPanel panel_6 = new JPanel();		
@@ -73,6 +86,10 @@ public class Consultas extends JFrame {
 		panel_3.add(panel_7);
 		panel_7.setLayout(new GridLayout(2, 0, 0, 0));
 		
+		//TODO: revisar con LGoodDatePicker
+		FuncComunes.CalendarioListener calendarioIni = func.new CalendarioListener();
+		FuncComunes.CalendarioListener calendarioFin = func.new CalendarioListener();
+		
 		JLabel lblFechaIni = new JLabel("Fecha inicio:");
 		panel_7.add(lblFechaIni);
 		
@@ -83,10 +100,14 @@ public class Consultas extends JFrame {
 		final LocalDate today = LocalDate.now();
 		DatePickerSettings dateSettings = new DatePickerSettings(Locale.getDefault());
 	    dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
-	    dateSettings.setDateRangeLimits(today.minusYears(200), today);
+	    //dateSettings.setDateRangeLimits(today.minusYears(200), today);
 	    
 	    
 	    DatePicker datePickerIni = new DatePicker(dateSettings);
+	    datePickerIni.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    	}
+	    });
 	    datePickerIni.setDateToToday();
 		panel_9.add(datePickerIni);
 		
@@ -100,7 +121,7 @@ public class Consultas extends JFrame {
 		JPanel panel_10 = new JPanel();
 		panel_8.add(panel_10);
 		panel_10.setLayout(new GridLayout(0, 1, 0, 0));
-		DatePicker datePickerFin = new DatePicker(dateSettings);
+		DatePicker datePickerFin = new DatePicker();
 		datePickerFin.setDateToToday();
 		panel_10.add(datePickerFin);
 		
@@ -115,9 +136,9 @@ public class Consultas extends JFrame {
 		JLabel lblTipo = new JLabel("Tipo de expediente:");
 		panel_12.add(lblTipo);
 		
-		textFieldTipo = new JTextField();
-		panel_12.add(textFieldTipo);
-		textFieldTipo.setColumns(10);
+		comboBoxTipoExp = new JComboBox<String>();
+		comboBoxTipoExp = func.iniciarListaTipoExp(comboBoxTipoExp);
+		panel_12.add(comboBoxTipoExp);
 		
 		JPanel panel_13 = new JPanel();
 		panel_4.add(panel_13);
@@ -137,7 +158,9 @@ public class Consultas extends JFrame {
 		JPanel panel_11 = new JPanel();
 		panel.add(panel_11);
 		
-		JButton btnBuscar = new JButton("Buscar");
+		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener();		
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(buscarUbic);
 		panel.add(btnBuscar);
 	}
 

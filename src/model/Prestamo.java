@@ -93,18 +93,18 @@ public class Prestamo {
 	public ArrayList<Juzgado> getJuzgados() {
 		ArrayList<Juzgado> listaJuzgados = new ArrayList<>();
 		
-		try {
-			ResultSet rs = Conexion.executeSelect("");
-			while (rs.next())
-			{
-				Juzgado juzgado = new Juzgado();
-				juzgado.setNombre(rs.getString("nombre"));
-				listaJuzgados.add(juzgado);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+////			ResultSet rs = Conexion.executeSelect("");
+////			while (rs.next())
+////			{
+////				Juzgado juzgado = new Juzgado();
+////				juzgado.setNombre(rs.getString("nombre"));
+////				listaJuzgados.add(juzgado);
+////			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		return listaJuzgados;
 	}

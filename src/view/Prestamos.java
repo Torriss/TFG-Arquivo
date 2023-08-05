@@ -1,5 +1,6 @@
 package view;
 
+import utils.FuncComunes;
 import model.Expediente;
 import model.Juzgado;
 import model.Prestamo;
@@ -36,6 +37,7 @@ public class Prestamos extends JFrame {
 	private JButton btnImprimir;
 
 	public Prestamos() throws SQLException {
+		setTitle("Préstamos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPanePrestamos = new JPanel();
@@ -43,6 +45,8 @@ public class Prestamos extends JFrame {
 
 		setContentPane(contentPanePrestamos);
 		contentPanePrestamos.setLayout(new GridLayout(2, 1, 0, 0));
+		
+		FuncComunes func = new FuncComunes();
 		
 		JPanel panel_1 = new JPanel();
 		contentPanePrestamos.add(panel_1);
@@ -56,7 +60,7 @@ public class Prestamos extends JFrame {
 		panel_3.add(lblExpediente);
 		
 		comboBoxTipoExp = new JComboBox<String>();
-		iniciarListaTipoExp();
+		comboBoxTipoExp = func.iniciarListaTipoExp(comboBoxTipoExp);
 		panel_3.add(comboBoxTipoExp);
 		
 		JPanel panel_4 = new JPanel();
@@ -88,8 +92,8 @@ public class Prestamos extends JFrame {
 		panel_1.add(panel_6);
 		panel_6.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblProvincia = new JLabel("Provincia");
-		panel_6.add(lblProvincia);
+		JLabel lblLugar = new JLabel("Lugar");
+		panel_6.add(lblLugar);
 		
 		textFieldLugar = new JTextField();
 		panel_6.add(textFieldLugar);
@@ -103,7 +107,7 @@ public class Prestamos extends JFrame {
 		panel_7.add(lblJuzgado);
 		
 		comboBoxJuzgado = new JComboBox<Juzgado>();
-		iniciarListaJuzgados();
+		comboBoxJuzgado = func.iniciarListaJuzgados(comboBoxJuzgado);
 		panel_7.add(comboBoxJuzgado);
 		
 		JPanel panel_9 = new JPanel();
@@ -121,9 +125,10 @@ public class Prestamos extends JFrame {
 		panel_10.add(textFieldFecha);
 		textFieldFecha.setColumns(10);
 		
-		// TODO: cambiar por LGoodDatePicker
+		FuncComunes.CalendarioListener calendario = func.new CalendarioListener();
+		//TODO: revisar con LGoodDatePicker
 		JButton btnCalendario = new JButton("Calendario");
-		btnCalendario.addActionListener(new CalendarioListener());
+		btnCalendario.addActionListener(calendario);
 		panel_10.add(btnCalendario);
 		
 		JPanel panel = new JPanel();
@@ -139,80 +144,29 @@ public class Prestamos extends JFrame {
 		panel_8.add(lblEstado);
 		
 		comboBoxEstado = new JComboBox<String>();
-		iniciarListaEstado();
+		comboBoxEstado = func.iniciarListaEstado(comboBoxEstado);
 		panel_8.add(comboBoxEstado);
 		
 		JPanel panel_5 = new JPanel();
 		panel.add(panel_5);
 		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
-		
+
+		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener();
 		btnBuscarUbic = new JButton("Buscar ubicacion");
-		btnBuscarUbic.addActionListener(new BuscarUbicListener());
+		btnBuscarUbic.addActionListener(buscarUbic);
 		panel_5.add(btnBuscarUbic);
 		
+		FuncComunes.ImprimirListener imprimir = func.new ImprimirListener();
 		btnImprimir = new JButton("Imprimir");
-		btnImprimir.addActionListener(new ImprimirListener());
+		btnImprimir.addActionListener(imprimir);
 		panel_5.add(btnImprimir);
 	}
-	
-	private void iniciarListaTipoExp() throws SQLException {
-		ArrayList<String> listaTiposExp = Expediente.getAllTiposExp();
-		
-		comboBoxTipoExp.removeAllItems();
-		
-		for (int i = 0; i<listaTiposExp.size(); i++)
-		{
-			comboBoxEstado.addItem(listaTiposExp.get(i));
-		}
-	}
-	
-	private void iniciarListaJuzgados() {
-		Prestamo prestamo = new Prestamo();
-		ArrayList<Juzgado> listaJuzgados = prestamo.getJuzgados();
-		
-		comboBoxJuzgado.removeAllItems();
-		for (int i = 0; i<listaJuzgados.size(); i++)
-		{
-			comboBoxJuzgado.addItem(listaJuzgados.get(i));
-		}
-	}
-	
-	private void iniciarListaEstado() {
-		ArrayList<String> listaEstados = new ArrayList<String>();
-		listaEstados.add("Consulta");
-		listaEstados.add("No bajado al archivo");
-		listaEstados.add("No encontrado");
-		listaEstados.add("Se presta ahora");
-		listaEstados.add("Ya prestado antes");
-		
-		comboBoxEstado.removeAllItems();
-		
-		for (int i = 0; i<listaEstados.size(); i++)
-		{
-			comboBoxEstado.addItem(listaEstados.get(i));
-		}
-		
-	}
-	
-	public class BuscarUbicListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {	
-			//TODO: crear funcion buscar ubicacion del expediente con tipoExp, numExp, anioExp, juzgado
-		}
-	}
-	
-	public class ImprimirListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {	
-			//TODO: crear funcion imprimir
-		}
-	}
-	
-	public class CalendarioListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {	
-			//TODO: revisar con LGoodDatePicker
-		}
-	}
+
+	//TODO: En caso de incidencia (expediente ya prestado o no en el archivo) 
+	//crear función que permita actualizar solo el estado de un préstamo.
+	//es conveniente que la persona del Archivo que introduce los datos vea 
+	//la información de la ubicación. Ejemplo: si la aplicación ya le informa
+	//que el expediente no se encuentra en el Archivo ya puede actualizar el Estado en ese momento.
+
 }
 

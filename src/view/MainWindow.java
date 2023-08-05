@@ -13,8 +13,13 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLayeredPane;
 
 public class MainWindow extends JFrame {
 
@@ -22,62 +27,49 @@ public class MainWindow extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public MainWindow() {
+	public MainWindow() throws SQLException {
+		Consultas consultas = new Consultas();
+		Prestamos prestamos = new Prestamos();
+		Devoluciones devoluciones = new Devoluciones();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JMenu mnNewMenu = new JMenu("Menu");
-		menuBar.add(mnNewMenu);
-		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Prestamos");
-		mntmNewMenuItem_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		mnNewMenu.add(mntmNewMenuItem_2);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Devoluciones");
-		mntmNewMenuItem.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		mnNewMenu.add(mntmNewMenuItem);
-		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Consultas");
-		mntmNewMenuItem_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		mnNewMenu.add(mntmNewMenuItem_1);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(3, 3, 0, 0));
-	}
-
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
+		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnMenu = new JMenu("Menu");
+		menuBar.add(mnMenu);
+		
+		JMenuItem mntmPrestamos = new JMenuItem("Prestamos");
+		mntmPrestamos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				prestamos.setVisible(true);
 			}
 		});
+		mnMenu.add(mntmPrestamos);
+		
+		JMenuItem mntmDevoluciones = new JMenuItem("Devoluciones");
+		mntmDevoluciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				devoluciones.setVisible(true);
+			}
+		});
+		mnMenu.add(mntmDevoluciones);
+		
+		JMenuItem mntmConsultas = new JMenuItem("Consultas");
+		mntmConsultas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				consultas.setVisible(true);
+			}
+		});
+		mnMenu.add(mntmConsultas);
 	}
 }
