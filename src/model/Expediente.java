@@ -30,7 +30,13 @@ public class Expediente {
         this.paginas = paginas; // Se añade el atributo paginas al constructor
     }
 
-    public int getNumExpediente() {
+    public Expediente(String tipoExp, int numExp, int anioExp) {
+        this.tipo = tipoExp;
+        this.numExpediente = numExp;
+        this.anio = anioExp;
+	}
+
+	public int getNumExpediente() {
         return numExpediente;
     }
 
@@ -207,5 +213,29 @@ public class Expediente {
         }
         
         return expedientes;
+    }
+    
+    public static ArrayList<String> getAllTiposExp() throws SQLException {
+		ArrayList<String> tiposExp = new ArrayList<>();
+
+		String sql = "SELECT DISTINCT tipo FROM Expedientes";
+	    ResultSet rs = Conexion.executeSelect(sql);
+
+	    while (rs.next()) {
+	        String tipo = rs.getString("tipo");
+	        tiposExp.add(tipo);
+	    }
+	    return tiposExp;
+	}
+    
+    public static String getUbicacionExp(Expediente exp) throws SQLException {
+    	String res = "";
+    	String sql = "SELECT ubicacion FROM Expedientes WHERE numExpediente = " + exp.numExpediente;
+        ResultSet rs = Conexion.executeSelect(sql);
+        
+        if (rs.next()) {
+	        res = rs.getString("ubicacion");
+        }
+        return res;
     }
 }

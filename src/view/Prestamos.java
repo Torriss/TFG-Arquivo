@@ -8,6 +8,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.github.lgooddatepicker.components.DatePicker;
+
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -20,6 +23,7 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.TextField;
 
 public class Prestamos extends JFrame {
 
@@ -29,12 +33,12 @@ public class Prestamos extends JFrame {
 	private JTextField textFieldAnioExp;
 	private JTextField textFieldSolicitante;
 	private JTextField textFieldLugar;
-	private JTextField textFieldFecha;
 	private JComboBox<String> comboBoxTipoExp;
 	private JComboBox<String> comboBoxEstado;
 	private JComboBox<Juzgado> comboBoxJuzgado;
 	private JButton btnBuscarUbic;
 	private JButton btnImprimir;
+	private JTextField textFieldJuzgado;
 
 	public Prestamos() throws SQLException {
 		setTitle("Préstamos");
@@ -62,6 +66,9 @@ public class Prestamos extends JFrame {
 		comboBoxTipoExp = new JComboBox<String>();
 		comboBoxTipoExp = func.iniciarListaTipoExp(comboBoxTipoExp);
 		panel_3.add(comboBoxTipoExp);
+		
+		TextField textFieldTipoExp = new TextField();
+		panel_3.add(textFieldTipoExp);
 		
 		JPanel panel_4 = new JPanel();
 		panel_1.add(panel_4);
@@ -110,6 +117,10 @@ public class Prestamos extends JFrame {
 		comboBoxJuzgado = func.iniciarListaJuzgados(comboBoxJuzgado);
 		panel_7.add(comboBoxJuzgado);
 		
+		textFieldJuzgado = new JTextField();
+		panel_7.add(textFieldJuzgado);
+		textFieldJuzgado.setColumns(10);
+		
 		JPanel panel_9 = new JPanel();
 		panel_1.add(panel_9);
 		panel_9.setLayout(new GridLayout(2, 0, 0, 0));
@@ -119,17 +130,17 @@ public class Prestamos extends JFrame {
 		
 		JPanel panel_10 = new JPanel();
 		panel_9.add(panel_10);
-		panel_10.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_10.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		textFieldFecha = new JTextField();
-		panel_10.add(textFieldFecha);
-		textFieldFecha.setColumns(10);
+		DatePicker datePicker = new DatePicker();
+	    datePicker.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    	}
+	    });
+	    datePicker.setDateToToday();
+	    panel_10.add(datePicker);
 		
 		FuncComunes.CalendarioListener calendario = func.new CalendarioListener();
-		//TODO: revisar con LGoodDatePicker
-		JButton btnCalendario = new JButton("Calendario");
-		btnCalendario.addActionListener(calendario);
-		panel_10.add(btnCalendario);
 		
 		JPanel panel = new JPanel();
 		contentPanePrestamos.add(panel);
@@ -151,12 +162,16 @@ public class Prestamos extends JFrame {
 		panel.add(panel_5);
 		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
 
-		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener();
+		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener(textFieldTipoExp.getText(), 
+				textFieldSolicitante.getText(), Integer.parseInt(textFieldNumExp.getText()), Integer.parseInt(textFieldAnioExp.getText()), 
+				textFieldLugar.getText(), datePicker.getDate());
 		btnBuscarUbic = new JButton("Buscar ubicacion");
 		btnBuscarUbic.addActionListener(buscarUbic);
 		panel_5.add(btnBuscarUbic);
 		
-		FuncComunes.ImprimirListener imprimir = func.new ImprimirListener();
+		FuncComunes.ImprimirPrestamoListener imprimir = func.new ImprimirPrestamoListener(textFieldTipoExp.getText(), 
+				textFieldSolicitante.getText(), Integer.parseInt(textFieldNumExp.getText()), Integer.parseInt(textFieldAnioExp.getText()), 
+				textFieldLugar.getText(), datePicker.getDate());
 		btnImprimir = new JButton("Imprimir");
 		btnImprimir.addActionListener(imprimir);
 		panel_5.add(btnImprimir);

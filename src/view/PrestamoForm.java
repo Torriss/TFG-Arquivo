@@ -7,6 +7,7 @@ import model.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class PrestamoForm extends JFrame {
     private JTextField txtNumExpediente;
@@ -63,7 +64,13 @@ public class PrestamoForm extends JFrame {
                     Expediente expediente = new Expediente(numExpediente, tipo, anio, caja, ubicacion, null, null, null, null, 0);
 
                     // Realizar el pr�stamo
-                    boolean prestamoExitoso = Prestamo.realizarPrestamo(expediente);
+                    boolean prestamoExitoso = false;
+					try {
+						prestamoExitoso = Prestamo.realizarPrestamo(expediente);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
                     // Mostrar mensaje de �xito o error
                     if (prestamoExitoso) {

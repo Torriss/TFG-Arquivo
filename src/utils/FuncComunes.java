@@ -3,6 +3,7 @@ package utils;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -66,26 +67,34 @@ public class FuncComunes {
 	}
 	
 	public class BuscarUbicListener implements ActionListener {
+		private String tipoExp;
+		private String solicitante;
+		private int numExp;
+		private int anioExp;
+		private String lugar;
+		private LocalDate fecha;
+		
+		public BuscarUbicListener(String tipoExp, String solicitante, int numExp, int anioExp, String lugar, LocalDate fecha) {
+			this.tipoExp = tipoExp;
+			this.solicitante = solicitante;
+			this.numExp = numExp;
+			this.anioExp = anioExp;
+			this.lugar = lugar;
+			this.fecha = fecha;
+		}
+
+		public BuscarUbicListener(int anioExp, int numExp) {
+			
+			this.anioExp = anioExp;
+			this.numExp = numExp;
+		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//TODO: crear funcion buscar ubicacion del expediente con tipoExp, numExp, anioExp, juzgado
+			Expediente ex = new Expediente(tipoExp, numExp, anioExp);
 			try {
-				Object obj = e.getSource();
-				Consultas cons = new Consultas();
-				Prestamos pr = new Prestamos();
-				Devoluciones dev = new Devoluciones();
-				if (obj.equals(cons))
-				{
-					
-				}
-				else if (obj.equals(pr))
-				{
-					
-				}
-				else if (obj.equals(dev))
-				{
-					
-				}
+				ex = Expediente.getByID(numExp);
+				Expediente.getUbicacionExp(ex);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -114,13 +123,45 @@ public class FuncComunes {
 		}
 	}
 	
-	public class ImprimirListener implements ActionListener {
+	public class ImprimirPrestamoListener implements ActionListener {
+		private String tipoExp;
+		private String solicitante;
+		private int numExp;
+		private int anioExp;
+		private String lugar;
+		private LocalDate fecha;
+		
+		public ImprimirPrestamoListener(String tipoExp, String solicitante, int numExp, int anioExp, String lugar, LocalDate fecha) {
+			this.tipoExp = tipoExp;
+			this.solicitante = solicitante;
+			this.numExp = numExp;
+			this.anioExp = anioExp;
+			this.lugar = lugar;
+			this.fecha = fecha;
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {	
 			//TODO: crear funcion imprimirPapeleta con toda la info del form menos el estado
 			
 			//TODO: crear funcion imprimirTestigo con toda la info del form menos el estado
 			//y añadiendo caja, ubicación, notas, tomos, lugar
+			
+			Expediente ex;
+			try {
+				ex = Expediente.getByID(numExp);
+				Prestamo.realizarPrestamo(ex);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	public class ImprimirDevolucListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+			//TODO: crear funcion 
 		}
 	}
 }

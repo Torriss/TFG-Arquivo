@@ -162,7 +162,7 @@ public class Devoluciones extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(0, 5, 0, 0));
 		
-		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener();
+		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener(1,2);
 		btnBuscarUbic = new JButton("Buscar ubicacion");
 		btnBuscarUbic.addActionListener(buscarUbic);
 		panel.add(btnBuscarUbic);
@@ -188,7 +188,7 @@ public class Devoluciones extends JFrame {
 		btnUltCajas.addActionListener(ultCajas);
 		panel.add(btnUltCajas);
 		
-		FuncComunes.ImprimirListener imprimir = func.new ImprimirListener();
+		FuncComunes.ImprimirDevolucListener imprimir = func.new ImprimirDevolucListener();
 		btnImprimir = new JButton("Imprimir");
 		btnImprimir.addActionListener(imprimir);
 		panel.add(btnImprimir);

@@ -206,7 +206,7 @@ public class Caja {
         return String.format("%c-%02d-%d-%d", seccion, estanteria, balda, posicion);
     }
 
-    public static boolean insertarExpedienteEnCaja(Expediente expediente) {
+    public static boolean insertarExpedienteEnCaja(Expediente expediente) throws SQLException {
         Caja cajaDisponible = obtenerCajaDisponible(expediente.getTipo(), expediente.getPaginas());
         if (cajaDisponible != null) {
             // Si hay una caja disponible, insertamos el expediente en esa caja

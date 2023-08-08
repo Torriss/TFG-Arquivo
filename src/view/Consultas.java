@@ -36,6 +36,7 @@ public class Consultas extends JFrame {
 	private JComboBox<Juzgado> comboBoxJuzgado;
 	private JButton btnBuscar;
 	private JTextField textFieldLugar;
+	private JTextField textFieldTipoExp;
 
 	/**
 	 * Create the frame.
@@ -140,6 +141,10 @@ public class Consultas extends JFrame {
 		comboBoxTipoExp = func.iniciarListaTipoExp(comboBoxTipoExp);
 		panel_12.add(comboBoxTipoExp);
 		
+		textFieldTipoExp = new JTextField();
+		panel_12.add(textFieldTipoExp);
+		textFieldTipoExp.setColumns(10);
+		
 		JPanel panel_13 = new JPanel();
 		panel_4.add(panel_13);
 		panel_13.setLayout(new GridLayout(2, 0, 0, 0));
@@ -158,7 +163,7 @@ public class Consultas extends JFrame {
 		JPanel panel_11 = new JPanel();
 		panel.add(panel_11);
 		
-		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener();		
+		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener(1,2);		
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(buscarUbic);
 		panel.add(btnBuscar);
