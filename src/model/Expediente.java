@@ -6,57 +6,125 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Expediente {
-	private int numExpediente;
-	private String tipo;
-	private int anio;
-	private int caja;
-	private String ubicacion;
-	private String notas;
-	private String tomos;
-	private String juzgado;
-	private String lugar;
-	private int paginas;
-	
-	public Expediente(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, String tomos, String juzgado, String lugar, int paginas) {
-		this.numExpediente = numExpediente;
-		this.tipo = tipo;
-		this.caja = caja;
-		this.anio = anio;
-		this.ubicacion = ubicacion;
-		this.notas = notas;
-		this.tomos = tomos;
-		this.juzgado = juzgado;
-		this.lugar = lugar;
-		this.paginas = paginas;
-	}
-	
-	public static boolean insert(Expediente exp) {
-		//posible comprobacion de no nulos y rangos
-		
-		//Construir la query
-		String query = "INSERT INTO Expedientes (numExpediente, tipo, caja, anio, ubicacion, notas, tomos, juzgado, lugar) VALUES ('"+exp.numExpediente+"','"+exp.tipo+"','"+exp.anio+"','"+exp.caja+"','"+exp.ubicacion+"','"+exp.notas+"','"+exp.tomos+"','"+exp.juzgado+"','"+exp.lugar+"')";
-				
-		//Ejecutar la query en la BBDD
-		return Conexion.execute(query);
-	}
-	
-	//posiblemente tenga que ser con el ID
-	public static boolean eliminarExpediente(int numExpediente) {
-		String query = "DELETE FROM Expedientes WHERE numExpediente = " + numExpediente;
-		return Conexion.execute(query);
-	}
+    private int numExpediente;
+    private String tipo;
+    private int anio;
+    private int caja;
+    private String ubicacion;
+    private String notas;
+    private String tomos;
+    private String juzgado;
+    private String lugar;
+    private int paginas; // Nuevo atributo paginas
 
-	
-	public static boolean update(Expediente exp) {
-		String query = "UPDATE Expedientes SET tipo = '" + exp.tipo + "', anio = " + exp.anio + ", caja = " + exp.caja
-                + ", ubicacion = '" + exp.ubicacion + "', notas = '" + exp.notas + "', tomos = '" + exp.tomos
-                + "', juzgado = '" + exp.juzgado + "', lugar = '" + exp.lugar + "' WHERE numExpediente = "
-                + exp.numExpediente;
-		
-        return Conexion.execute(query); //devuelve numero de filas afectadas
-	}
-	
-	public static Expediente getByID(int id) throws SQLException {
+    public Expediente(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, String tomos, String juzgado, String lugar, int paginas) {
+        this.numExpediente = numExpediente;
+        this.tipo = tipo;
+        this.anio = anio;
+        this.caja = caja;
+        this.ubicacion = ubicacion;
+        this.notas = notas;
+        this.tomos = tomos;
+        this.juzgado = juzgado;
+        this.lugar = lugar;
+        this.paginas = paginas; // Se añade el atributo paginas al constructor
+    }
+
+    public int getNumExpediente() {
+        return numExpediente;
+    }
+
+    public void setNumExpediente(int numExpediente) {
+        this.numExpediente = numExpediente;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public int getCaja() {
+        return caja;
+    }
+
+    public void setCaja(int caja) {
+        this.caja = caja;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public String getNotas() {
+        return notas;
+    }
+
+    public void setNotas(String notas) {
+        this.notas = notas;
+    }
+
+    public String getTomos() {
+        return tomos;
+    }
+
+    public void setTomos(String tomos) {
+        this.tomos = tomos;
+    }
+
+    public String getJuzgado() {
+        return juzgado;
+    }
+
+    public void setJuzgado(String juzgado) {
+        this.juzgado = juzgado;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
+    }
+
+    public int getPaginas() {
+        return paginas;
+    }
+
+    public void setPaginas(int paginas) {
+        this.paginas = paginas;
+    }
+
+    // Métodos CRUD
+
+    public static boolean insert(Expediente exp) throws SQLException{
+        // Posible comprobación de no nulos y rangos
+
+        // Construir la query
+        String query = "INSERT INTO Expedientes (numExpediente, tipo, caja, anio, ubicacion, notas, tomos, juzgado, lugar, paginas) VALUES ('"
+                + exp.numExpediente + "','" + exp.tipo + "','" + exp.caja + "','" + exp.anio + "','" + exp.ubicacion + "','" + exp.notas + "','" + exp.tomos + "','"
+                + exp.juzgado + "','" + exp.lugar + "','" + exp.paginas + "')";
+
+        // Ejecutar la query en la BBDD
+        return Conexion.execute(query);
+    }
+
+    public static Expediente getByID(int id) throws SQLException {
         Expediente exp = null;
 
         String sql = "SELECT * FROM Expedientes WHERE numExpediente = " + id;
@@ -72,157 +140,72 @@ public class Expediente {
             String tomos = rs.getString("tomos");
             String juzgado = rs.getString("juzgado");
             String lugar = rs.getString("lugar");
-            int paginas = rs.getInt("paginas");
+            int paginas = rs.getInt("paginas"); // Se obtiene el número de páginas desde la base de datos
 
             exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
         }
 
         return exp;
     }
-	
-	public static boolean existeExpediente(int numExpediente, String ubicacion) {
-		boolean existe = false;
 
-		try {
-			String query = "SELECT COUNT(*) AS count FROM Expedientes WHERE numExpediente = " + numExpediente +
-					" AND ubicacion = '" + ubicacion + "'";
+    public static boolean update(Expediente exp) throws SQLException{
+        String query = "UPDATE Expedientes SET tipo = '" + exp.tipo + "', anio = " + exp.anio + ", caja = " + exp.caja
+                + ", ubicacion = '" + exp.ubicacion + "', notas = '" + exp.notas + "', tomos = '" + exp.tomos
+                + "', juzgado = '" + exp.juzgado + "', lugar = '" + exp.lugar + "', paginas = " + exp.paginas
+                + " WHERE numExpediente = " + exp.numExpediente;
 
-			ResultSet rs = Conexion.executeSelect(query);
-			if (rs.next()) {
-				int count = rs.getInt("count");
-				existe = count > 0;
-			}
-		} catch (SQLException e) {
-			System.out.println("No se ha podido ejecutar la consulta.");
-			e.printStackTrace();
-		}
-
-		return existe;
-	}
-
-
-	
-	public static List<Expediente> getAllExpedientes() throws SQLException {
-	    List<Expediente> expedientes = new ArrayList<>();
-	    
-	    String sql = "SELECT * FROM Expedientes";
-	    ResultSet rs = Conexion.executeSelect(sql);
-	    
-	    while (rs.next()) {
-	        int numExpediente = rs.getInt("numExpediente");
-	        String tipo = rs.getString("tipo");
-	        int anio = rs.getInt("anio");
-	        int caja = rs.getInt("caja");
-	        String ubicacion = rs.getString("ubicacion");
-	        String notas = rs.getString("notas");
-	        String tomos = rs.getString("tomos");
-	        String juzgado = rs.getString("juzgado");
-	        String lugar = rs.getString("lugar");
-	        int paginas = rs.getInt("paginas");
-	        
-	        Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
-	        expedientes.add(exp);
-	    }
-	    
-	    return expedientes;
-	}
-	
-	public int getNumExpediente() {
-	    return numExpediente;
-	}
-
-	public String getTipo() {
-	    return tipo;
-	}
-
-	public int getAnio() {
-	    return anio;
-	}
-
-	public int getCaja() {
-	    return caja;
-	}
-
-	public String getUbicacion() {
-	    return ubicacion;
-	}
-
-	public String getNotas() {
-	    return notas;
-	}
-
-	public String getTomos() {
-	    return tomos;
-	}
-
-	public String getJuzgado() {
-	    return juzgado;
-	}
-
-	public String getLugar() {
-	    return lugar;
-	}
-	
-	public void setCaja(int caja) {
-		this.caja = caja;
-	}
-	
-	public int getPaginas() {
-		return paginas;
-	}
-	
-	public static ArrayList<String> getAllTiposExp() throws SQLException {
-		ArrayList<String> tiposExp = new ArrayList<>();
-		
-//		String sql = "SELECT DISTINCT tipo FROM Expedientes";
-//	    ResultSet rs = Conexion.executeSelect(sql);
-//	    
-//	    while (rs.next()) {
-//	        String tipo = rs.getString("tipo");
-//	        tiposExp.add(tipo);
-//	    }
-	    return tiposExp;
-	}
-
-	/*public static boolean insertarExpediente(Expediente exp) {
-        // Validar expediente no nulo y otros valores si es necesario
-        String query = "INSERT INTO Expedientes (numExpediente, tipo, caja, anio, ubicacion, notas, tomos, juzgado, lugar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        return Conexion.executePreparedStatement(query, exp.getNumExpediente(), exp.getTipo(), exp.getCaja(), exp.getAnio(),
-                exp.getUbicacion(), exp.getNotas(), exp.getTomos(), exp.getJuzgado(), exp.getLugar());
+        return Conexion.execute(query);
     }
 
-	public static boolean actualizarExpediente(Expediente exp) {
-        // Validar expediente no nulo y otros valores si es necesario
-        String query = "UPDATE Expedientes SET tipo = ?, anio = ?, caja = ?, ubicacion = ?, notas = ?, tomos = ?, juzgado = ?, lugar = ? WHERE numExpediente = ?";
-        return Conexion.executePreparedStatement(query, exp.getTipo(), exp.getAnio(), exp.getCaja(), exp.getUbicacion(),
-                exp.getNotas(), exp.getTomos(), exp.getJuzgado(), exp.getLugar(), exp.getNumExpediente());
+    public static boolean delete(Expediente exp) {
+        // Posible comprobacion de no nulos y rangos
+
+        // Construir la query
+        String query = "DELETE FROM Expedientes WHERE numExpediente = " + exp.numExpediente;
+
+        // Ejecutar la query en la BBDD
+        return Conexion.execute(query);
     }
 
-	public static Expediente obtenerExpedientePorID(int id) {
-        Expediente exp = null;
+    public static boolean existeExpediente(int numExpediente, String tipo, int anio, int caja, String ubicacion) throws SQLException{
+        boolean existe = false;
 
-        String query = "SELECT * FROM Expedientes WHERE numExpediente = ?";
-        ResultSet rs = Conexion.executePreparedStatement(query, id);
+        String query = "SELECT COUNT(*) AS count FROM Expedientes WHERE numExpediente = " + numExpediente +
+        		" AND tipo = '" + tipo + "'" +
+                " AND anio = " + anio +
+                " AND caja = " + caja +
+                " AND ubicacion = '" + ubicacion + "'";
 
-        try {
-            if (rs.next()) {
-                int numExpediente = rs.getInt("numExpediente");
-                String tipo = rs.getString("tipo");
-                int anio = rs.getInt("anio");
-                int caja = rs.getInt("caja");
-                String ubicacion = rs.getString("ubicacion");
-                String notas = rs.getString("notas");
-                String tomos = rs.getString("tomos");
-                String juzgado = rs.getString("juzgado");
-                String lugar = rs.getString("lugar");
-
-                exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ResultSet rs = Conexion.executeSelect(query);
+        if (rs.next()) {
+        	int count = rs.getInt("count");
+        	existe = count > 0;
         }
-
-        return exp;
-    }*/
-
+        return existe;
+    }
+    
+    public static List<Expediente> getAllExpedientes() throws SQLException {
+        List<Expediente> expedientes = new ArrayList<>();
+        
+        String sql = "SELECT * FROM Expedientes";
+        ResultSet rs = Conexion.executeSelect(sql);
+        
+        while (rs.next()) {
+            int numExpediente = rs.getInt("numExpediente");
+            String tipo = rs.getString("tipo");
+            int anio = rs.getInt("anio");
+            int caja = rs.getInt("caja");
+            String ubicacion = rs.getString("ubicacion");
+            String notas = rs.getString("notas");
+            String tomos = rs.getString("tomos");
+            String juzgado = rs.getString("juzgado");
+            String lugar = rs.getString("lugar");
+            int paginas = rs.getInt("paginas");
+            
+            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
+            expedientes.add(exp);
+        }
+        
+        return expedientes;
+    }
 }

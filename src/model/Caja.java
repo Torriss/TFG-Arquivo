@@ -7,16 +7,16 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Caja {
-    private static final int PAGINAS = 100; // N�mero de p�ginas que caben en cada caja
+	private static final int PAGINAS_FIJAS = 100; // Número de páginas fijas que caben en cada caja
 
     private int idCaja;
     private int paginas;
-    private String ubicacion; //con el formato B-19-4-0 Siendo la B la sección(rango A-Z), 19 el número de estantería donde esta(rango 0-20), 4 el número de balda(rango 0-5) y 0 la posición en la balda(rango 0-5).;
+    private String ubicacion;
     private String tipo;
     private int anio;
 
     public Caja(int paginas, String ubicacion, String tipo, int anio) {
-        this.paginas = PAGINAS;
+        this.paginas = PAGINAS_FIJAS; // Revierto el cambio para establecer el valor fijo de páginas.
         this.ubicacion = ubicacion;
         this.tipo = tipo;
         this.anio = anio;

@@ -30,7 +30,7 @@ public class Conexion {
 			
 		}
 		catch(SQLException ex){
-			System.out.println("Hubo un problema al intentar conectarse a la base de datos: "+ url);
+			System.out.println("Hubo un problema al intentar conecarse a la base de datos"+ url);
 			ex.printStackTrace();
 		}
 	}
@@ -66,13 +66,14 @@ public class Conexion {
 			Statement statement =  instance.createStatement();
 			rs = statement.executeQuery(query); 
 		} catch (SQLException e) {
-			System.out.println("No se ha podido ejecutar la query: '" + query + "'");
+			System.out.println("No se ha podido ejecutar al query: '" + query + "'");
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return rs;
 	}
+}
 	
 	//esta la hice yo, posiblemente para nada
 	/*public static Connection getConexion() {
@@ -235,4 +236,3 @@ public class Conexion {
 	//protected abstract void initStructure();
 
 	//protected abstract String[] extractDatos(T t);
-}
