@@ -199,6 +199,31 @@ public class Expediente {
         return expedientes;
     }
     
+    public static Expediente buscaExpedientesTomos(int numExpe, String tipe, int year, String tomos) throws SQLException{
+    	Expediente exp = null;
+        String query = "SELECT * FROM Expedientes WHERE numExpediente = " + numExpe +
+        		" AND tipo = '" + tipe + "'" +
+                " AND anio = " + year + "" +
+                " AND tomos = '" + tomos + "'";
+
+        ResultSet rs = Conexion.executeSelect(query);
+        if (rs.next()) {
+        	int numExpediente = rs.getInt("numExpediente");
+            String tipo = rs.getString("tipo");
+            int anio = rs.getInt("anio");
+            int caja = rs.getInt("caja");
+            String ubicacion = rs.getString("ubicacion");
+            String notas = rs.getString("notas");
+            String tomo = rs.getString("tomos");
+            String juzgado = rs.getString("juzgado");
+            String lugar = rs.getString("lugar");
+            int paginas = rs.getInt("paginas");
+            
+            exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomo, juzgado, lugar, paginas);
+        }
+        return exp;
+    }
+    
     public static boolean existeExpediente(int numExpediente, String tipo, int anio) throws SQLException{
         boolean existe = false;
 

@@ -36,6 +36,46 @@ public class Prestamo {
 		this.fechaPrestamo = fechaPrestamo;
 	}
 	
+	public int getNumExpediente() {
+        return numExpediente;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public int getCaja() {
+        return caja;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public String getNotas() {
+        return notas;
+    }
+
+    public String getTomos() {
+        return tomos;
+    }
+
+    public String getJuzgado() {
+        return juzgado;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public String getFechaPrestamo() {
+        return fechaPrestamo;
+    }
+	
 	public static List<Expediente> realizarPrestamo(int numExp, String tipo, int anio) throws SQLException{
 	    // Comprobar que el expediente existe en la BBDD
 		// TODO: revisar: al solicitar un prestamo no sabes en que caja ni ubicacion esta el expediente.
@@ -86,53 +126,64 @@ public class Prestamo {
 	    }
 	    return false;
 	}
+	
+	public static boolean eliminarPrestamo(int numExpediente, String tipo, int anio, String tomos) {
+        String query = "DELETE FROM Prestamos WHERE numExpediente = " + numExpediente +
+                " AND tipo = '" + tipo + "'" +
+                " AND anio = " + anio +
+                " AND tomos = '" + tomos + "'";
+        return Conexion.execute(query);
+    }
 
-//	public boolean realizarDevolucion() throws SQLException {
-//		// Comprobar si el préstamo existe en la base de datos
-//		if (!existePrestamo(numExpediente, tipo, anio, caja, ubicacion)) {
-//		// Si el préstamo no existe, buscar una ubicación disponible para el expediente
-//			String nuevaUbicacion = Caja.buscarUbi(paginas);
-//			if (nuevaUbicacion != null) {
-//				return nuevaUbicacion; // Devolver nueva ubicación encontrada
-//			} else {
-//				System.out.println("No hay cajas disponibles para el expediente.");
-//				return false;
-//		    }
-//		}
-//
-//		  // Obtener el expediente asociado al préstamo
-//		  Expediente expediente = Expediente.getByID(numExpediente);
-//
-//		  // Comparar el número de páginas del expediente con el expediente en la base de datos
-//		  int paginasExpedienteEnDB = expediente.getPaginas();
-//		  if (paginas > paginasExpedienteEnDB) {
-//			  // Si el número de páginas ha aumentado, comprobar si cabe en la caja original
-//			  Caja cajaOriginal = Caja.getCajaPorUbicacion(ubicacion);
-//			  if (cajaOriginal.getPaginasDisponibles() >= (paginas - paginasExpedienteEnDB)) {
-//				  // Si cabe, actualizar el número de páginas en el expediente de la base de datos
-//				  expediente.setPaginas(paginas);
-//				  Expediente.update(expediente);
-//				  cajaOriginal.restarPaginasUtilizadas(paginas - paginasExpedienteEnDB); // Restar páginas utilizadas
-//				  return cajaOriginal.getUbicacion(); // Devolver ubicación de la caja original
-//			  } else {
-//				  // Si no cabe, buscar una nueva ubicación en otra caja
-//				  String nuevaUbicacion = Caja.buscarUbi(paginas);
-//				  if (nuevaUbicacion != null) {
-//					  expediente.setUbicacion(nuevaUbicacion);
-//					  expediente.setPaginas(paginas);
-//					  Expediente.update(expediente);
-//					  return nuevaUbicacion; // Devolver nueva ubicación encontrada
-//				  } else {
-//					  System.out.println("No hay cajas disponibles para el expediente.");
-//					  return false;
-//				  }
-//			  }
-//		  } else {
-//		            // Si el número de páginas no ha aumentado, simplemente devolver la ubicación de la caja
-//		            return caja.getUbicacion();
-//		  }
-//	}
-//	
+	public Caja realizarDevolucion(Expediente expediente) throws SQLException {
+		//Comprobar si el prestamo existe en la base de datos
+		if (!existePrestamo(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio())) {
+		//Si el prestamo no existe, buscar una ubicacion disponible para el expediente, pues se trata de un alta
+			Caja.insertarExpedienteEnCaja(expediente);
+			Prestamo.eliminarPrestamo(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getTomos());
+			return Caja.getById(expediente.getCaja());
+		}
+		else {
+			//Obtener el expediente asociado al prestamo
+			//Esto podria no ser necesario segun la informacion  que introduzca el usuario en el formulario, de momento se queda para evitar posibles problemas
+			Expediente exp = Expediente.buscaExpedientesTomos(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getTomos());
+
+			//Comparar el numero de paginas del expediente con el expediente en la base de datos
+			int paginasNuevas = expediente.getPaginas(), paginasViejas = exp.getPaginas();
+			if (paginasNuevas > paginasViejas) {
+			  //Si el numero de paginas ha aumentado, comprobar si cabe en la caja original
+			  Caja cajaOriginal = Caja.getById(exp.getCaja());
+			  if (cajaOriginal.getPaginas() >= (paginasNuevas - paginasViejas)) {
+				  //Si cabe, actualizar el numero de paginas en el expediente de la base de datos
+				  exp.setPaginas(paginasNuevas);
+				  Expediente.update(exp); //Actualizar en BD
+				  cajaOriginal.restarPaginas(paginasNuevas-paginasViejas); //Restar paginas utilizadas
+				  Caja.update(cajaOriginal); //Actualizar en BD
+				  return cajaOriginal; //Devolver caja original
+			  } else {
+				  //Si no cabe, buscar una nueva ubicacion en otra caja
+				  //Cambiar caja del expediente
+				  //Settear paginas del expediente
+				  //Actualizar expediente en BD
+				  //Aniadir paginas a caja de la que se saca expediente--SUMAR!!!!! NO HACER SET!!!!!!!!!
+				  String nuevaUbicacion = Caja.buscarUbi(paginas);
+				  if (nuevaUbicacion != null) {
+					  expediente.setCaja(nuevaUbicacion);
+					  expediente.setPaginas(paginas);
+					  Expediente.update(expediente);
+					  return cajaNueva; //Devolver nueva ubicacion encontrada
+				  } else {
+					  System.out.println("No hay cajas disponibles para el expediente.");
+					  return false;
+				  }
+			  }
+			} else {
+		            //Si el numero de paginas no ha aumentado, simplemente devolver la ubicacion de la caja
+		            return caja.getUbicacion();
+			}
+		}
+	}
+	
 	public ArrayList<Juzgado> getJuzgados() {
 		ArrayList<Juzgado> listaJuzgados = new ArrayList<>();
 

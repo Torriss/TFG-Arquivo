@@ -63,10 +63,16 @@ public class Caja {
     public void setAnio(int anio) {
         this.anio = anio;
     }
+    
+    public void restarPaginas(int resta) {
+    	this.paginas =- resta;
+    }
+    
+    public void sumarPaginas(int suma) {
+    	this.paginas =+ suma;
+    }
 
-    // M�todos CRUD
-
-    public static boolean crearCaja(Caja caja) {
+    public static boolean insert(Caja caja) {
         String query = "INSERT INTO cajas (paginas, ubicacion, tipo, anio) VALUES (" +
                 caja.getPaginas() + ", '" +
                 caja.getUbicacion() + "', '" +
@@ -102,7 +108,7 @@ public class Caja {
         return cajas;
     }
 
-    public static boolean actualizarCaja(Caja caja) {
+    public static boolean update(Caja caja) {
         String query = "UPDATE cajas SET paginas = " + caja.getPaginas() +
                 ", ubicacion = '" + caja.getUbicacion() +
                 "', tipo = '" + caja.getTipo() +
@@ -117,40 +123,37 @@ public class Caja {
         return Conexion.executePreparedStatement(query, caja.getPaginas(), caja.getUbicacion(), caja.getTipo(), caja.getAnio(), caja.getIdCaja());
     }*/
 
-    public static boolean eliminarCaja(int idCaja) {
+    public static boolean delete(int idCaja) {
         String query = "DELETE FROM cajas WHERE idCaja = " + idCaja;
         return Conexion.execute(query);
     }
+    
+    public static Caja getById(int idCaja) throws SQLException {
+        String query = "SELECT * FROM cajas WHERE idCaja = " + idCaja;
+        ResultSet rs = Conexion.executeSelect(query);
 
-/*
-    public static Caja obtenerCajaPorID(int idCaja) {
-        String query = "SELECT * FROM cajas WHERE idCaja = ?";
-        ResultSet rs = Conexion.executePreparedStatement(query, idCaja);
+        if (rs.next()) {
+            int paginas = rs.getInt("paginas");
+            String ubicacion = rs.getString("ubicacion");
+            String tipo = rs.getString("tipo");
+            int anio = rs.getInt("anio");
 
-        try {
-            if (rs.next()) {
-                int paginas = rs.getInt("paginas");
-                String ubicacion = rs.getString("ubicacion");
-                String tipo = rs.getString("tipo");
-                int anio = rs.getInt("anio");
-                Caja caja = new Caja(paginas, ubicacion, tipo, anio);
-                caja.setIdCaja(idCaja);
-                return caja;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            Caja caja = new Caja(paginas, ubicacion, tipo, anio);
+            caja.setIdCaja(idCaja);
+
+            return caja;
         }
-        return null;
+
+        return null; // Retorna null si no se encuentra la caja con el ID especificado
     }
-*/
 
 
     public String toString() {
         return "ID Caja: " + idCaja +
-                ", Páginas: " + paginas +
-                ", Ubicación: " + ubicacion +
+                ", Paginas: " + paginas +
+                ", Ubicacion: " + ubicacion +
                 ", Tipo: " + tipo +
-                ", Año: " + anio;
+                ", Anio: " + anio;
     }
 
    private static Caja crearNuevaCaja(String tipo, int numPaginas, int anio) {
@@ -163,7 +166,7 @@ public class Caja {
 
         // Crear la nueva caja y guardarla en la base de datos
         Caja nuevaCaja = new Caja(numPaginas, ubicacionNuevaCaja, tipo, anio);
-        if (Caja.crearCaja(nuevaCaja)) {
+        if (Caja.insert(nuevaCaja)) {
             return nuevaCaja;
         } else {
             // Error al crear la nueva caja
