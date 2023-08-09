@@ -1,4 +1,5 @@
-/launcher/
-/model/
 /view/
 /utils/
+/model/
+/launcher/
+/control/

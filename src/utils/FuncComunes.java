@@ -68,58 +68,48 @@ public class FuncComunes {
 	
 	public class BuscarUbicListener implements ActionListener {
 		private String tipoExp;
-		private String solicitante;
 		private int numExp;
 		private int anioExp;
-		private String lugar;
-		private LocalDate fecha;
+		private String juzgado;
+		private String ubicacion;
 		
-		public BuscarUbicListener(String tipoExp, String solicitante, int numExp, int anioExp, String lugar, LocalDate fecha) {
+		public BuscarUbicListener(String tipoExp, int numExp, int anioExp, String juzgado) {
 			this.tipoExp = tipoExp;
-			this.solicitante = solicitante;
 			this.numExp = numExp;
 			this.anioExp = anioExp;
-			this.lugar = lugar;
-			this.fecha = fecha;
+			this.juzgado = juzgado;
 		}
 
-		public BuscarUbicListener(int anioExp, int numExp) {
-			
-			this.anioExp = anioExp;
-			this.numExp = numExp;
-		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//TODO: crear funcion buscar ubicacion del expediente con tipoExp, numExp, anioExp, juzgado
-			Expediente ex = new Expediente(tipoExp, numExp, anioExp);
 			try {
-				ex = Expediente.getByID(numExp);
-				Expediente.getUbicacionExp(ex);
+				ubicacion = Expediente.getUbicacionExp(tipoExp, numExp, anioExp, juzgado);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
+		
+		public String getUbicacion() {
+			return ubicacion;
+		}
 	}
 	
 	public class AsignarListener implements ActionListener {
 		@Override
-		public void actionPerformed(ActionEvent e) {	
-			//TODO: crear funcion buscar ubicacion del expediente con tipoExp, numExp, anioExp, juzgado
+		public void actionPerformed(ActionEvent e) {
 		}
 	}
 	
 	public class NuevoListener implements ActionListener {
 		@Override
-		public void actionPerformed(ActionEvent e) {	
-			//TODO: crear funcion buscar ubicacion del expediente con tipoExp, numExp, anioExp, juzgado
+		public void actionPerformed(ActionEvent e) {
 		}
 	}
 	
 	public class UltCajasListener implements ActionListener {
 		@Override
-		public void actionPerformed(ActionEvent e) {	
-			//TODO: crear funcion buscar ubicacion del expediente con tipoExp, numExp, anioExp, juzgado
+		public void actionPerformed(ActionEvent e) {
 		}
 	}
 	
@@ -143,14 +133,10 @@ public class FuncComunes {
 		@Override
 		public void actionPerformed(ActionEvent e) {	
 			//TODO: crear funcion imprimirPapeleta con toda la info del form menos el estado
-			
 			//TODO: crear funcion imprimirTestigo con toda la info del form menos el estado
 			//y añadiendo caja, ubicación, notas, tomos, lugar
-			
-			Expediente ex;
 			try {
-				ex = Expediente.getByID(numExp);
-				Prestamo.realizarPrestamo(ex);
+				Prestamo.realizarPrestamo(numExp, tipoExp, anioExp);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

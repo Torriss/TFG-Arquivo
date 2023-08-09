@@ -287,4 +287,18 @@ public class Expediente {
         }
         return res;
     }
+
+	public static String getUbicacionExp(String tipoExp, int numExp, int anioExp, String juzgado) throws SQLException {
+		String res = "";
+    	String sql = "SELECT ubicacion FROM Expedientes WHERE numExpediente = " + numExp + 
+    			" AND tipo = '" + tipoExp + "'" +
+                " AND anio = " + anioExp + 
+                " AND juzgado = '" + juzgado + "'";
+        ResultSet rs = Conexion.executeSelect(sql);
+        
+        if (rs.next()) {
+	        res = rs.getString("ubicacion");
+        }
+        return res;
+	}
 }

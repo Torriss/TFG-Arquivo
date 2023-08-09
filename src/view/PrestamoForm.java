@@ -65,12 +65,12 @@ public class PrestamoForm extends JFrame {
 
                     // Realizar el pr�stamo
                     boolean prestamoExitoso = false;
-					try {
-						prestamoExitoso = Prestamo.realizarPrestamo(expediente);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+//					try {
+//						prestamoExitoso = Prestamo.realizarPrestamo(expediente);
+//					} catch (SQLException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
 
                     // Mostrar mensaje de �xito o error
                     if (prestamoExitoso) {
