@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Prestamo {
 	private int numExpediente;
@@ -35,42 +36,48 @@ public class Prestamo {
 		this.fechaPrestamo = fechaPrestamo;
 	}
 	
-	public static boolean realizarPrestamo(Expediente exp) throws SQLException{
+	public static List<Expediente> realizarPrestamo(int numExp, String tipo, int anio) throws SQLException{
 	    // Comprobar que el expediente existe en la BBDD
-		// TODO: revisar: al solicitar un prestamo no sabes en que caja ni ubicacion está el expediente.
+		// TODO: revisar: al solicitar un prestamo no sabes en que caja ni ubicacion esta el expediente.
 		// Solicitas un expediente de un tipo, con numero, año, y de un juzgado. Esto hace una consulta de ese expediente en la bd
 		// y esa consulta es la que devuelve toda la info del expediente, incluida la ubicacion
-	    if (!Expediente.existeExpediente(exp.getNumExpediente(), exp.getTipo(), exp.getAnio(), exp.getCaja(), exp.getUbicacion())) {
+	    
+		List<Expediente> expList = new ArrayList<>();
+		
+		if (!Expediente.existeExpediente(numExp, tipo, anio)) {
 	        System.out.println("El expediente no existe en la base de datos.");
-	        return false;
+	        return expList;
 	    }
 	    
 	    // Comprobar que el expediente no esta en la tabla prestamos
-	    if (existePrestamo(exp.getNumExpediente(), exp.getTipo(), exp.getAnio(), exp.getCaja(), exp.getUbicacion())) {
+	    if (existePrestamo(numExp, tipo, anio)) {
 	        System.out.println("El expediente ya ha sido prestado.");
-	        return false;
+	        return expList;
 	    }
 	    
 	    // Obtener la fecha y hora actual del sistema
 	    LocalDate fechaActual = LocalDate.now();
 	    
-	    // Construir la query del prestamo
-	    String query = "INSERT INTO Prestamos (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, fechaPrestamo) " +
-                "VALUES ('" + exp.getNumExpediente() + "', '" + exp.getTipo() + "', " + exp.getAnio() + ", " + exp.getCaja() +
-                ", '" + exp.getUbicacion() + "', '" + exp.getNotas() + "', '" + exp.getTomos() + "', '" + exp.getJuzgado() +
-                "', '" + exp.getLugar() + "', '" + fechaActual + "')";
-
-        // Ejecutar la query en la BBDD
-	    return Conexion.execute(query);
+	    //Recorremos lista expedientes para a�adirlos a la tabla prestamos
+	    expList = Expediente.buscaExpedientes(numExp, tipo, anio);
+	    for (Expediente exp : expList) {
+	    	//Construimos query
+	    	String query = "INSERT INTO Prestamos (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, fechaPrestamo) " +
+	                "VALUES ('" + exp.getNumExpediente() + "', '" + exp.getTipo() + "', " + exp.getAnio() + ", " + exp.getCaja() +
+	                ", '" + exp.getUbicacion() + "', '" + exp.getNotas() + "', '" + exp.getTomos() + "', '" + exp.getJuzgado() +
+	                "', '" + exp.getLugar() + "', '" + fechaActual + "')";
+	    	//Ejecutamos query
+	    	Conexion.execute(query);
+	    }
+	    
+	    return expList;
 	}
 
 
-	private static boolean existePrestamo(int numExpediente, String tipo, int anio, int caja, String ubicacion) throws SQLException{
+	private static boolean existePrestamo(int numExpediente, String tipo, int anio) throws SQLException{
 	    String query = "SELECT COUNT(*) AS count FROM Prestamos WHERE numExpediente = " + numExpediente +
 	            " AND tipo = '" + tipo + "'" +
-	            " AND anio = " + anio +
-	            " AND caja = " + caja +
-	            " AND ubicacion = '" + ubicacion + "'";
+	            " AND anio = " + anio + "";
 	    ResultSet rs = Conexion.executeSelect(query);
 	    
 	    if (rs.next()) {

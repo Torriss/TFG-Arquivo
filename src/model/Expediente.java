@@ -173,14 +173,38 @@ public class Expediente {
         return Conexion.execute(query);
     }
 
-    public static boolean existeExpediente(int numExpediente, String tipo, int anio, int caja, String ubicacion) throws SQLException{
+    public static List<Expediente> buscaExpedientes(int numExpe, String tipe, int year) throws SQLException{
+    	List<Expediente> expedientes = new ArrayList<>();
+
+        String query = "SELECT * FROM Expedientes WHERE numExpediente = " + numExpe +
+        		" AND tipo = '" + tipe + "'" +
+                " AND anio = " + year + "";
+
+        ResultSet rs = Conexion.executeSelect(query);
+        while (rs.next()) {
+        	int numExpediente = rs.getInt("numExpediente");
+            String tipo = rs.getString("tipo");
+            int anio = rs.getInt("anio");
+            int caja = rs.getInt("caja");
+            String ubicacion = rs.getString("ubicacion");
+            String notas = rs.getString("notas");
+            String tomos = rs.getString("tomos");
+            String juzgado = rs.getString("juzgado");
+            String lugar = rs.getString("lugar");
+            int paginas = rs.getInt("paginas");
+            
+            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
+            expedientes.add(exp);
+        }
+        return expedientes;
+    }
+    
+    public static boolean existeExpediente(int numExpediente, String tipo, int anio) throws SQLException{
         boolean existe = false;
 
         String query = "SELECT COUNT(*) AS count FROM Expedientes WHERE numExpediente = " + numExpediente +
         		" AND tipo = '" + tipo + "'" +
-                " AND anio = " + anio +
-                " AND caja = " + caja +
-                " AND ubicacion = '" + ubicacion + "'";
+                " AND anio = " + anio + "";
 
         ResultSet rs = Conexion.executeSelect(query);
         if (rs.next()) {
