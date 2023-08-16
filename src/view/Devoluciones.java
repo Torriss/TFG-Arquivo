@@ -41,6 +41,8 @@ public class Devoluciones extends JFrame {
 	private JButton btnNuevo;
 	private JButton btnUltCajas;
 	private JButton btnImprimir;
+	private JTextField textFieldTipoExp;
+	private JTextField textFieldJuzgado;
 
 	/**
 	 * Create the frame.
@@ -71,6 +73,10 @@ public class Devoluciones extends JFrame {
 		comboBoxJuzgado = new JComboBox<Juzgado>();
 		comboBoxJuzgado = func.iniciarListaJuzgados(comboBoxJuzgado);
 		panel_3.add(comboBoxJuzgado);
+		
+		textFieldJuzgado = new JTextField();
+		panel_3.add(textFieldJuzgado);
+		textFieldJuzgado.setColumns(10);
 		
 		JPanel panel_4 = new JPanel();
 		panel_3.add(panel_4);
@@ -119,6 +125,10 @@ public class Devoluciones extends JFrame {
 		comboBoxTipoExp = func.iniciarListaTipoExp(comboBoxTipoExp);
 		panel_2.add(comboBoxTipoExp);
 		
+		textFieldTipoExp = new JTextField();
+		panel_2.add(textFieldTipoExp);
+		textFieldTipoExp.setColumns(10);
+		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
@@ -162,7 +172,9 @@ public class Devoluciones extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(0, 5, 0, 0));
 		
-		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener(1,2);
+		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener(textFieldTipoExp.getText(), 
+				Integer.parseInt(textFieldNumExp.getText()), Integer.parseInt(textFieldAnioExp.getText()), 
+				textFieldJuzgado.getText());
 		btnBuscarUbic = new JButton("Buscar ubicacion");
 		btnBuscarUbic.addActionListener(buscarUbic);
 		panel.add(btnBuscarUbic);

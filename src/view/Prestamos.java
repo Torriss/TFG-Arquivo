@@ -14,6 +14,7 @@ import com.github.lgooddatepicker.components.DatePicker;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.Component;
@@ -163,10 +164,13 @@ public class Prestamos extends JFrame {
 		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
 
 		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener(textFieldTipoExp.getText(), 
-				textFieldSolicitante.getText(), Integer.parseInt(textFieldNumExp.getText()), Integer.parseInt(textFieldAnioExp.getText()), 
-				textFieldLugar.getText(), datePicker.getDate());
+				Integer.parseInt(textFieldNumExp.getText()), Integer.parseInt(textFieldAnioExp.getText()), 
+				textFieldJuzgado.getText());
 		btnBuscarUbic = new JButton("Buscar ubicacion");
 		btnBuscarUbic.addActionListener(buscarUbic);
+		if (btnBuscarUbic.PRESSED_ICON_CHANGED_PROPERTY == "pressedIcon")  {
+			JOptionPane.showMessageDialog(this, buscarUbic.getUbicacion());
+		}
 		panel_5.add(btnBuscarUbic);
 		
 		FuncComunes.ImprimirPrestamoListener imprimir = func.new ImprimirPrestamoListener(textFieldTipoExp.getText(), 
