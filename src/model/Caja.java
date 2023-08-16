@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Caja {
-	private static final int PAGINAS_FIJAS = 100; // Número de páginas fijas que caben en cada caja
+	private static final int PAGINAS_FIJAS = 100; // Numero de paginas fijas que caben en cada caja
 
     private int idCaja;
     private int paginas;
@@ -16,8 +16,7 @@ public class Caja {
     private int anio;
 
     public Caja(int paginas, String ubicacion, String tipo, int anio) {
-        this.paginas = PAGINAS_FIJAS; // Revierto el cambio para establecer el valor fijo de páginas.
-        this.ubicacion = ubicacion;
+        this.paginas = PAGINAS_FIJAS;
         this.tipo = tipo;
         this.anio = anio;
     }

@@ -15,7 +15,7 @@ public class Conexion {
 	
 	protected static Connection instance = null;
 	private static String usuario ="root";
-	private static String password = "";
+	private static String password = "1234";
 	private static String _bd = "arquivo";
 	private static String url = "jdbc:mysql://localhost/" + _bd;
 	//protected HashMap<consult, String> structConsult;

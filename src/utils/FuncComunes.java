@@ -161,7 +161,7 @@ public class FuncComunes {
 	public class ImprimirDevolucListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {	
-			//TODO: crear funcion 
+			//TODO: crear funcion
 		}
 	}
 }
