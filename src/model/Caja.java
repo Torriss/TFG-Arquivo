@@ -263,6 +263,51 @@ public class Caja {
         return cajasMismoTipo;
     }
 
+    public static Caja buscarCajaDisponible(String tipo, int anio, int numPaginasExpediente) {
+        List<Caja> cajasDisponibles = new ArrayList<>();
+        
+        // Obtener todas las cajas del mismo tipo y año
+        List<Caja> cajasMismoTipoYAnio = obtenerCajasPorTipoYAnio(tipo, anio);
+        
+        // Filtrar las cajas que tienen suficientes páginas disponibles para el expediente
+        for (Caja caja : cajasMismoTipoYAnio) {
+            if (caja.getPaginas() >= numPaginasExpediente) {
+                cajasDisponibles.add(caja);
+            }
+        }
+
+        // Si se encontró una caja adecuada, devolverla
+        if (!cajasDisponibles.isEmpty()) {
+            // Ordenar las cajas disponibles por cantidad de páginas (ascendente)
+            cajasDisponibles.sort(Comparator.comparingInt(Caja::getPaginas));
+            return cajasDisponibles.get(0); // Devolver la primera caja con suficiente espacio
+        }
+
+        return null; // No se encontró una caja adecuada
+    }
+
+    private static List<Caja> obtenerCajasPorTipoYAnio(String tipo, int anio) {
+        List<Caja> cajasMismoTipoYAnio = new ArrayList<>();
+        String query = "SELECT * FROM cajas WHERE tipo = ? AND anio = ?";
+        ResultSet rs = Conexion.executePreparedStatement(query, tipo, anio);
+        
+        try {
+            while (rs.next()) {
+                int idCaja = rs.getInt("idCaja");
+                int paginas = rs.getInt("paginas");
+                String ubicacion = rs.getString("ubicacion");
+                Caja caja = new Caja(paginas, ubicacion, tipo, anio);
+                caja.setIdCaja(idCaja);
+                cajasMismoTipoYAnio.add(caja);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return cajasMismoTipoYAnio;
+    }
+
+    
 
 }
 

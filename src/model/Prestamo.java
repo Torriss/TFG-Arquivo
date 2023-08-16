@@ -79,7 +79,7 @@ public class Prestamo {
 	    // Obtener la fecha y hora actual del sistema
 	    LocalDate fechaActual = LocalDate.now();
 	    
-	    //Recorremos lista expedientes para añadirlos a la tabla prestamos
+	    //Recorremos lista expedientes para aï¿½adirlos a la tabla prestamos
 	    expList = Expediente.buscaExpedientes(numExp, tipo, anio);
 	    for (Expediente exp : expList) {
 	    	//Construimos query
@@ -140,6 +140,25 @@ public class Prestamo {
 			  Caja.update(cajaOriginal); //Actualizar en BD
 			  return cajaOriginal; //Devolver caja original
 		  } else {
+			  
+			  
+			String tipoExpediente = expediente.getTipo();
+			int anioExpediente = expediente.getAnio();
+			int numPaginasExpediente = expediente.getNumPaginas();
+				
+			Caja cajaAdecuada = Caja.buscarCajaDisponible(tipoExpediente, anioExpediente, numPaginasExpediente);
+				
+			if (cajaAdecuada != null) {
+				// Insertar el expediente en la caja adecuada
+				expediente.setCaja(cajaAdecuada.getIdCaja());
+				Expediente.insert(expediente);
+				cajaAdecuada.restarPaginas(numPaginasExpediente);
+				Caja.update(cajaAdecuada);
+				System.out.println("Expediente insertado correctamente en la caja con ID: " + cajaAdecuada.getIdCaja());
+				} else {
+				    System.out.println("No se encontrÃ³ una caja adecuada para el expediente.");
+				}
+			  
 			  //Si no cabe, buscar una nueva ubicacion en otra caja
 			  //Cambiar caja del expediente
 			  //Restar paginas de nueva caja
