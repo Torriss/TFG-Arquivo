@@ -11,9 +11,6 @@ import javax.swing.JComboBox;
 import model.Expediente;
 import model.Juzgado;
 import model.Prestamo;
-import view.Consultas;
-import view.Devoluciones;
-import view.Prestamos;
 
 public class FuncComunes {
 	
@@ -66,88 +63,18 @@ public class FuncComunes {
 		}
 	}
 	
-	public class BuscarUbicListener implements ActionListener {
-		private String tipoExp;
-		private int numExp;
-		private int anioExp;
-		private String juzgado;
-		private String ubicacion;
-		
-		public BuscarUbicListener(String tipoExp, int numExp, int anioExp, String juzgado) {
-			this.tipoExp = tipoExp;
-			this.numExp = numExp;
-			this.anioExp = anioExp;
-			this.juzgado = juzgado;
-		}
+//	public class UltCajasListener implements ActionListener {
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//		}
+//	}
+	
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {
-				ubicacion = Expediente.getUbicacionExp(tipoExp, numExp, anioExp, juzgado);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		
-		public String getUbicacion() {
-			return ubicacion;
-		}
-	}
 	
-	public class AsignarListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
-	
-	public class NuevoListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
-	
-	public class UltCajasListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
-	
-	public class ImprimirPrestamoListener implements ActionListener {
-		private String tipoExp;
-		private String solicitante;
-		private int numExp;
-		private int anioExp;
-		private String lugar;
-		private LocalDate fecha;
-		
-		public ImprimirPrestamoListener(String tipoExp, String solicitante, int numExp, int anioExp, String lugar, LocalDate fecha) {
-			this.tipoExp = tipoExp;
-			this.solicitante = solicitante;
-			this.numExp = numExp;
-			this.anioExp = anioExp;
-			this.lugar = lugar;
-			this.fecha = fecha;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {	
-			//TODO: crear funcion imprimirPapeleta con toda la info del form menos el estado
-			//TODO: crear funcion imprimirTestigo con toda la info del form menos el estado
-			//y añadiendo caja, ubicación, notas, tomos, lugar
-			try {
-				Prestamo.realizarPrestamo(numExp, tipoExp, anioExp);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-	}
-	
-	public class ImprimirDevolucListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {	
-			//TODO: crear funcion
-		}
-	}
+//	public class ImprimirDevolucListener implements ActionListener {
+//		@Override
+//		public void actionPerformed(ActionEvent e) {	
+//			//TODO: crear funcion
+//		}
+//	}
 }

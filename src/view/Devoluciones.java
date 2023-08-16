@@ -6,11 +6,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.Expediente;
 import model.Juzgado;
 import utils.FuncComunes;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -37,12 +42,11 @@ public class Devoluciones extends JFrame {
 	private JComboBox<String> comboBoxEstado;
 	private JComboBox<Juzgado> comboBoxJuzgado;
 	private JButton btnBuscarUbic;
-	private JButton btnAsignar;
+	private JButton btnDevolver;
 	private JButton btnNuevo;
-	private JButton btnUltCajas;
-	private JButton btnImprimir;
 	private JTextField textFieldTipoExp;
 	private JTextField textFieldJuzgado;
+	private JTextField textFieldPaginas;
 
 	/**
 	 * Create the frame.
@@ -58,7 +62,7 @@ public class Devoluciones extends JFrame {
 		FuncComunes func = new FuncComunes();
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(4, 0, 0, 0));
+		contentPane.setLayout(new GridLayout(5, 0, 0, 0));
 		
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
@@ -133,20 +137,18 @@ public class Devoluciones extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
 		
+		JLabel lblPaginas = new JLabel("Paginas:");
+		panel_1.add(lblPaginas);
+		
 		JLabel lblCaja = new JLabel("Caja:");
 		panel_1.add(lblCaja);
 		
 		JLabel lblUbicacion = new JLabel("Ubicación:");
 		panel_1.add(lblUbicacion);
 		
-		JLabel lblNotas = new JLabel("Notas:");
-		panel_1.add(lblNotas);
-		
-		JLabel lblTomos = new JLabel("Tomos:");
-		panel_1.add(lblTomos);
-		
-		JLabel lblLugar = new JLabel("Lugar:");
-		panel_1.add(lblLugar);
+		textFieldPaginas = new JTextField();
+		panel_1.add(textFieldPaginas);
+		textFieldPaginas.setColumns(10);
 		
 		textFieldCaja = new JTextField();
 		panel_1.add(textFieldCaja);
@@ -156,28 +158,30 @@ public class Devoluciones extends JFrame {
 		panel_1.add(textFieldUbicacion);
 		textFieldUbicacion.setColumns(10);
 		
+		JPanel panel = new JPanel();
+		contentPane.add(panel);
+		panel.setLayout(new GridLayout(2, 3, 0, 0));
+		
+		JLabel lblNotas = new JLabel("Notas:");
+		panel.add(lblNotas);
+		
+		JLabel lblTomos = new JLabel("Tomos:");
+		panel.add(lblTomos);
+		
+		JLabel lblLugar = new JLabel("Lugar:");
+		panel.add(lblLugar);
+		
 		textFieldNotas = new JTextField();
-		panel_1.add(textFieldNotas);
+		panel.add(textFieldNotas);
 		textFieldNotas.setColumns(10);
 		
 		textFieldTomos = new JTextField();
-		panel_1.add(textFieldTomos);
+		panel.add(textFieldTomos);
 		textFieldTomos.setColumns(10);
 		
 		textFieldLugar = new JTextField();
-		panel_1.add(textFieldLugar);
+		panel.add(textFieldLugar);
 		textFieldLugar.setColumns(10);
-		
-		JPanel panel = new JPanel();
-		contentPane.add(panel);
-		panel.setLayout(new GridLayout(0, 5, 0, 0));
-		
-		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener(textFieldTipoExp.getText(), 
-				Integer.parseInt(textFieldNumExp.getText()), Integer.parseInt(textFieldAnioExp.getText()), 
-				textFieldJuzgado.getText());
-		btnBuscarUbic = new JButton("Buscar ubicacion");
-		btnBuscarUbic.addActionListener(buscarUbic);
-		panel.add(btnBuscarUbic);
 		
 		FuncComunes.CalendarioListener calendario = func.new CalendarioListener();
 		//TODO: revisar con LGoodDatePicker
@@ -185,25 +189,76 @@ public class Devoluciones extends JFrame {
 		btnCalendario.addActionListener(calendario);
 		panel_4.add(btnCalendario);
 		
-		FuncComunes.AsignarListener asignar = func.new AsignarListener();
-		btnAsignar = new JButton("Asignar");
-		btnAsignar.addActionListener(asignar);
-		panel.add(btnAsignar);
+		JPanel panel_8 = new JPanel();
+		contentPane.add(panel_8);
 		
-		FuncComunes.NuevoListener nuevo = func.new NuevoListener();
+		btnBuscarUbic = new JButton("Buscar ubicación");
+		panel_8.add(btnBuscarUbic);
+		
+		btnDevolver = new JButton("Devolver");
+		panel_8.add(btnDevolver);
+		btnDevolver.addActionListener(new DevolverListener());
+		btnDevolver.setEnabled(false);
+		
 		btnNuevo = new JButton("Nuevo");
-		btnNuevo.addActionListener(nuevo);
-		panel.add(btnNuevo);
+		panel_8.add(btnNuevo);
+		btnNuevo.setEnabled(false);
+		btnNuevo.addActionListener(new NuevoListener());
+		btnBuscarUbic.addActionListener(new BuscarUbicListener());
 		
-		FuncComunes.UltCajasListener ultCajas = func.new UltCajasListener();
-		btnUltCajas = new JButton("Últimas cajas");
-		btnUltCajas.addActionListener(ultCajas);
-		panel.add(btnUltCajas);
+		//FuncComunes.UltCajasListener ultCajas = func.new UltCajasListener();
 		
-		FuncComunes.ImprimirDevolucListener imprimir = func.new ImprimirDevolucListener();
-		btnImprimir = new JButton("Imprimir");
-		btnImprimir.addActionListener(imprimir);
-		panel.add(btnImprimir);
+		//FuncComunes.ImprimirDevolucListener imprimir = func.new ImprimirDevolucListener();
+	}
+	
+	public class BuscarUbicListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				List<Expediente> expedientes = new ArrayList<>();
+				expedientes = Expediente.buscaExpediente(Integer.parseInt(textFieldNumExp.getText()),
+						textFieldTipoExp.getText(),Integer.parseInt(textFieldAnioExp.getText()));
+				if(expedientes.isEmpty())
+				{
+					btnDevolver.setEnabled(false);
+					btnNuevo.setEnabled(true);
+				}
+				else
+				{
+					btnDevolver.setEnabled(true);
+					btnNuevo.setEnabled(false);
+					//TODO: parsear info devuelta e insertarla en los textBox
+				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	public class DevolverListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			//TODO: pasar info de los textBox a devolucion(...)
+			
+		}
+	}
+	
+	public class NuevoListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Expediente exp = new Expediente(Integer.parseInt(textFieldNumExp.getText()), textFieldTipoExp.getText(),
+					Integer.parseInt(textFieldAnioExp.getText()), Integer.parseInt(textFieldCaja.getText()), 
+					textFieldUbicacion.getText(), textFieldNotas.getText(), textFieldTomos.getText(), 
+					textFieldJuzgado.getText(), textFieldLugar.getText(), Integer.parseInt(textFieldPaginas.getText()));
+			try {
+				Expediente.insert(exp);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 
 }

@@ -13,6 +13,8 @@ import com.github.lgooddatepicker.components.DatePicker;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
@@ -23,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import java.awt.TextField;
 
@@ -34,6 +37,7 @@ public class Prestamos extends JFrame {
 	private JTextField textFieldAnioExp;
 	private JTextField textFieldSolicitante;
 	private JTextField textFieldLugar;
+	private JTextField textFieldTipoExp;
 	private JComboBox<String> comboBoxTipoExp;
 	private JComboBox<String> comboBoxEstado;
 	private JComboBox<Juzgado> comboBoxJuzgado;
@@ -68,7 +72,7 @@ public class Prestamos extends JFrame {
 		comboBoxTipoExp = func.iniciarListaTipoExp(comboBoxTipoExp);
 		panel_3.add(comboBoxTipoExp);
 		
-		TextField textFieldTipoExp = new TextField();
+		textFieldTipoExp = new JTextField();
 		panel_3.add(textFieldTipoExp);
 		
 		JPanel panel_4 = new JPanel();
@@ -163,29 +167,64 @@ public class Prestamos extends JFrame {
 		panel.add(panel_5);
 		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
 
-		FuncComunes.BuscarUbicListener buscarUbic = func.new BuscarUbicListener(textFieldTipoExp.getText(), 
-				Integer.parseInt(textFieldNumExp.getText()), Integer.parseInt(textFieldAnioExp.getText()), 
-				textFieldJuzgado.getText());
 		btnBuscarUbic = new JButton("Buscar ubicacion");
-		btnBuscarUbic.addActionListener(buscarUbic);
-		if (btnBuscarUbic.PRESSED_ICON_CHANGED_PROPERTY == "pressedIcon")  {
-			JOptionPane.showMessageDialog(this, buscarUbic.getUbicacion());
-		}
+		btnBuscarUbic.addActionListener(new BuscarUbicListener());
 		panel_5.add(btnBuscarUbic);
 		
-		FuncComunes.ImprimirPrestamoListener imprimir = func.new ImprimirPrestamoListener(textFieldTipoExp.getText(), 
-				textFieldSolicitante.getText(), Integer.parseInt(textFieldNumExp.getText()), Integer.parseInt(textFieldAnioExp.getText()), 
-				textFieldLugar.getText(), datePicker.getDate());
 		btnImprimir = new JButton("Imprimir");
-		btnImprimir.addActionListener(imprimir);
+		btnImprimir.addActionListener(new ImprimirPrestamoListener());
 		panel_5.add(btnImprimir);
 	}
 
-	//TODO: En caso de incidencia (expediente ya prestado o no en el archivo) 
+	//TODO ?? En caso de incidencia (expediente ya prestado o no en el archivo) 
 	//crear función que permita actualizar solo el estado de un préstamo.
 	//es conveniente que la persona del Archivo que introduce los datos vea 
 	//la información de la ubicación. Ejemplo: si la aplicación ya le informa
 	//que el expediente no se encuentra en el Archivo ya puede actualizar el Estado en ese momento.
+	
+	public class BuscarUbicListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				List<Expediente> expedientes = new ArrayList<>();
+				expedientes = Expediente.buscaExpediente(Integer.parseInt(textFieldNumExp.getText()),
+						textFieldTipoExp.getText(),Integer.parseInt(textFieldAnioExp.getText()));
+				if(expedientes.isEmpty())
+				{
+					JOptionPane.showMessageDialog(null,
+							"El expediente no se encuentra en el archivo", "Ubicacion",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else
+				{
+					// TODO: pensar como mostar la lista en el dialogo
+					JOptionPane.showMessageDialog(null,
+							"El expediente se encuentra en: ", "Ubicacion",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	public class ImprimirPrestamoListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+			//TODO: crear funcion imprimirPapeleta con toda la info del form menos el estado
+			//TODO: crear funcion imprimirTestigo con toda la info del form menos el estado
+			//y añadiendo caja, ubicación, notas, tomos, lugar
+			try {
+				Prestamo.realizarPrestamo(Integer.parseInt(textFieldNumExp.getText()), textFieldTipoExp.getText(),
+						Integer.parseInt(textFieldAnioExp.getText()), textFieldSolicitante.getText());
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
 
 }
 

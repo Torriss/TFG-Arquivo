@@ -173,11 +173,11 @@ public class Expediente {
         return Conexion.execute(query);
     }
 
-    public static List<Expediente> buscaExpedientes(int numExpe, String tipe, int year) throws SQLException{
+    public static List<Expediente> buscaExpediente(int numExpe, String type, int year) throws SQLException{
     	List<Expediente> expedientes = new ArrayList<>();
 
         String query = "SELECT * FROM Expedientes WHERE numExpediente = " + numExpe +
-        		" AND tipo = '" + tipe + "'" +
+        		" AND tipo = '" + type + "'" +
                 " AND anio = " + year + "";
 
         ResultSet rs = Conexion.executeSelect(query);

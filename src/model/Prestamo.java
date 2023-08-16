@@ -80,7 +80,7 @@ public class Prestamo {
 	    LocalDate fechaActual = LocalDate.now();
 	    
 	    //Recorremos lista expedientes para a�adirlos a la tabla prestamos
-	    expList = Expediente.buscaExpedientes(numExp, tipo, anio);
+	    expList = Expediente.buscaExpediente(numExp, tipo, anio);
 	    for (Expediente exp : expList) {
 	    	//Construimos query
 	    	String query = "INSERT INTO Prestamos (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, fechaPrestamo, solicitante) " +
