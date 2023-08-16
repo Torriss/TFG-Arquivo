@@ -150,7 +150,9 @@ public class Prestamo {
 				
 			if (cajaAdecuada != null) {
 				// Insertar el expediente en la caja adecuada
+				//falta eliminar de la caja anterior las paginas que tenia el expediente, que no he sido capaz
 				expediente.setCaja(cajaAdecuada.getIdCaja());
+				expediente.setUbicacion(cajaAdecuada.getUbicacion());
 				Expediente.insert(expediente);
 				cajaAdecuada.restarPaginas(numPaginasExpediente);
 				Caja.update(cajaAdecuada);
