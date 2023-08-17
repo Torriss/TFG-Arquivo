@@ -245,7 +245,7 @@ public class Caja {
 
     public static List<Caja> obtenerCajasPorTipo(String tipo) {
         List<Caja> cajasMismoTipo = new ArrayList<>();
-        String query = "SELECT * FROM cajas WHERE tipo = ?";
+        String query = "SELECT * FROM cajas WHERE tipo = "+ tipo;
         ResultSet rs = Conexion.executeSelect(query);
         try {
             while (rs.next()) {
@@ -288,8 +288,8 @@ public class Caja {
 
     private static List<Caja> obtenerCajasPorTipoYAnio(String tipo, int anio) {
         List<Caja> cajasMismoTipoYAnio = new ArrayList<>();
-        String query = "SELECT * FROM cajas WHERE tipo = ? AND anio = ?";
-        ResultSet rs = Conexion.executePreparedStatement(query, tipo, anio);
+        String query = "SELECT * FROM cajas WHERE tipo = " + tipo + "AND anio = " + anio;
+        ResultSet rs = Conexion.executeSelect(query);
         
         try {
             while (rs.next()) {
