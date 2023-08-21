@@ -2,3 +2,5 @@
 -Independixar realizarDEvolucion
 -Implementar expurgo
 -Implementar transferencia/remision (creo que es lo mismo)
+-Apañar importar excel
+-Apañar exportar excel
