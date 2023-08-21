@@ -1,10 +1,5 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Expediente {
     private int numExpediente;
     private String tipo;
@@ -15,7 +10,7 @@ public class Expediente {
     private String tomos;
     private String juzgado;
     private String lugar;
-    private int paginas; // Nuevo atributo paginas
+    private int paginas;
 
     public Expediente(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, String tomos, String juzgado, String lugar, int paginas) {
         this.numExpediente = numExpediente;
@@ -118,7 +113,7 @@ public class Expediente {
 
     // Métodos CRUD
 
-    public static boolean insert(Expediente exp) throws SQLException{
+    /*public static boolean insert(Expediente exp) throws SQLException{
         // Posible comprobación de no nulos y rangos
 
         // Construir la query
@@ -173,12 +168,13 @@ public class Expediente {
         return Conexion.execute(query);
     }
 
-    public static List<Expediente> buscaExpediente(int numExpe, String type, int year) throws SQLException{
+    public static List<Expediente> buscaExpediente(int numExpe, String type, int year, String judge) throws SQLException{
     	List<Expediente> expedientes = new ArrayList<>();
 
         String query = "SELECT * FROM Expedientes WHERE numExpediente = " + numExpe +
         		" AND tipo = '" + type + "'" +
-                " AND anio = " + year + "";
+                " AND anio = " + year + "" +
+        		" AND juzgado = '" + judge + "'";
 
         ResultSet rs = Conexion.executeSelect(query);
         while (rs.next()) {
@@ -224,12 +220,13 @@ public class Expediente {
         return exp;
     }
     
-    public static boolean existeExpediente(int numExpediente, String tipo, int anio) throws SQLException{
+    public static boolean existeExpediente(int numExpediente, String tipo, int anio, String juzgado) throws SQLException{
         boolean existe = false;
 
         String query = "SELECT COUNT(*) AS count FROM Expedientes WHERE numExpediente = " + numExpediente +
         		" AND tipo = '" + tipo + "'" +
-                " AND anio = " + anio + "";
+                " AND anio = " + anio + "" +
+                " AND juzgado = '" + juzgado + "'";
 
         ResultSet rs = Conexion.executeSelect(query);
         if (rs.next()) {
@@ -300,5 +297,5 @@ public class Expediente {
 	        res = rs.getString("ubicacion");
         }
         return res;
-	}
+	}*/
 }

@@ -70,7 +70,16 @@ public class Caja {
     public void sumarPaginas(int suma) {
     	this.paginas =+ suma;
     }
-
+    
+    public String toString() {
+        return "ID Caja: " + idCaja +
+                ", Paginas: " + paginas +
+                ", Ubicacion: " + ubicacion +
+                ", Tipo: " + tipo +
+                ", Anio: " + anio;
+    }
+    
+    /*
     public static boolean insert(Caja caja) {
         String query = "INSERT INTO cajas (paginas, ubicacion, tipo, anio) VALUES (" +
                 caja.getPaginas() + ", '" +
@@ -80,11 +89,11 @@ public class Caja {
         return Conexion.execute(query);
     }
 
-    /*public static boolean crearCaja(Caja caja) {
+    public static boolean crearCaja(Caja caja) {
         // Validar caja no nula y otros valores si es necesario
         String query = "INSERT INTO cajas (paginas, ubicacion, tipo, anio) VALUES (?, ?, ?, ?)";
         return Conexion.executePreparedStatement(query, caja.getPaginas(), caja.getUbicacion(), caja.getTipo(), caja.getAnio());
-    }*/
+    }
 
     public static List<Caja> obtenerTodasCajas() {
         List<Caja> cajas = new ArrayList<>();
@@ -120,7 +129,7 @@ public class Caja {
         // Validar caja no nula y otros valores si es necesario
         String query = "UPDATE cajas SET paginas = ?, ubicacion = ?, tipo = ?, anio = ? WHERE idCaja = ?";
         return Conexion.executePreparedStatement(query, caja.getPaginas(), caja.getUbicacion(), caja.getTipo(), caja.getAnio(), caja.getIdCaja());
-    }*/
+    }
 
     public static boolean delete(int idCaja) {
         String query = "DELETE FROM cajas WHERE idCaja = " + idCaja;
@@ -306,7 +315,7 @@ public class Caja {
         
         return cajasMismoTipoYAnio;
     }
-
+    */
     
 
 }
