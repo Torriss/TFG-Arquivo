@@ -146,19 +146,19 @@ public class Caja {
         int posicion = Integer.parseInt(ultimaUbicacion.substring(8, 9));
 
         posicion++;
-        // si se ha alcanzado el límite de posición en la balda, mover al siguiente nivel
+        // si se ha alcanzado el limite de posición en la balda, mover al siguiente nivel
         if (posicion > 5) {
             posicion = 0;
             balda++;
         }
 
-        // si se ha alcanzado el límite de balda, mover a la siguiente estantería
+        // si se ha alcanzado el limite de balda, mover a la siguiente estantería
         if (balda > 5) {
             balda = 0;
             estanteria++;
         }
 
-        // si se ha alcanzado el límite de estantería, cambiar a la siguiente sección
+        // si se ha alcanzado el limite de estantería, cambiar a la siguiente sección
         if (estanteria > 20) {
             estanteria = 0;
             seccion++;
