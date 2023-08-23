@@ -13,7 +13,9 @@ public interface CajaDAO {
 	boolean update(Caja caja) throws SQLException;
     boolean delete(int idCaja) throws SQLException;
     Caja getById(int idCaja) throws SQLException;
-    boolean insertarExpedienteEnCaja(Expediente expediente) throws SQLException;
-    List<Caja> obtenerCajasPorTipo(String tipo) throws SQLException;
-    Caja buscarCajaDisponible(String tipo, int anio, int numPaginasExpediente) throws SQLException;
+    List<Caja> buscarCajasParaExpedienteNuevo(int paginasExpediente) throws SQLException;
+    String buscarNuevaUbicacionContigua(String ultimaUbicacion);
+    //boolean insertarExpedienteEnCaja(Expediente expediente) throws SQLException;
+    //List<Caja> obtenerCajasPorTipo(String tipo) throws SQLException;
+    //Caja buscarCajaDisponible(String tipo, int anio, int numPaginasExpediente) throws SQLException;
 }

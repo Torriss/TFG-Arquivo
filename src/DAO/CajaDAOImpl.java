@@ -78,7 +78,7 @@ public class CajaDAOImpl implements CajaDAO {
         return null; // Retorna null si no se encuentra la caja con el ID especificado
     }
 
-   private Caja crearNuevaCaja(String tipo, int numPaginas, int anio) throws SQLException{
+   /*private Caja crearNuevaCaja(String tipo, int numPaginas, int anio) throws SQLException{
         // Obtener todas las cajas del mismo tipo con ubicaciones en el formato B-19-4-0
         List<Caja> cajasMismoTipo = obtenerCajasPorTipo(tipo);
         cajasMismoTipo.sort(Comparator.comparing(Caja::getUbicacion)); // Ordenar por ubicación
@@ -96,7 +96,7 @@ public class CajaDAOImpl implements CajaDAO {
         }
     }
 
-    private String generarUbicacionNuevaCaja(List<Caja> cajas) {
+    /*private String generarUbicacionNuevaCaja(List<Caja> cajas) {
         // Recorrer la lista de cajas y encontrar la última ubicación en el formato B-19-4-0
         String ultimaUbicacion = "A-0-0-0"; // Supongamos que la primera ubicación posible es A-0-0-0
 
@@ -131,7 +131,7 @@ public class CajaDAOImpl implements CajaDAO {
         return String.format("%c-%02d-%d-%d", seccion, estanteria, balda, posicion);
     }
 
-    @Override
+    /*@Override
     public boolean insertarExpedienteEnCaja(Expediente expediente) throws SQLException {
     	ExpedienteDAO exp = new ExpedienteDAOImpl();
     	
@@ -153,7 +153,7 @@ public class CajaDAOImpl implements CajaDAO {
         }
     }
 
-    private Caja obtenerCajaDisponible(String tipo, int numPaginas) throws SQLException{
+    /*private Caja obtenerCajaDisponible(String tipo, int numPaginas) throws SQLException{
         // Obtener todas las cajas del mismo tipo
         List<Caja> cajasMismoTipo = obtenerCajasPorTipo(tipo);
 
@@ -165,7 +165,7 @@ public class CajaDAOImpl implements CajaDAO {
         return null;
     }    
 
-    @Override
+    /*@Override
     public List<Caja> obtenerCajasPorTipo(String tipo) throws SQLException{
         List<Caja> cajasMismoTipo = new ArrayList<>();
         String query = "SELECT * FROM cajas WHERE tipo = "+ tipo;
@@ -183,7 +183,7 @@ public class CajaDAOImpl implements CajaDAO {
         return cajasMismoTipo;
     }
 
-    @Override
+    /*@Override
     public Caja buscarCajaDisponible(String tipo, int anio, int numPaginasExpediente) throws SQLException {
         List<Caja> cajasDisponibles = new ArrayList<>();
         // Obtener todas las cajas del mismo tipo y anio
@@ -201,23 +201,93 @@ public class CajaDAOImpl implements CajaDAO {
         }
 
         return null; // No se encuentra una caja adecuada
+    }*/
+
+
+    
+    public List<Caja> buscarCajasParaExpedienteNuevo(int paginasExpediente) throws SQLException{
+        List<Caja> cajasMismoTipoYAnio = obtenerCajasPorTipoYAnio(tipo, anio);
+        List<Caja> cajasDisponibles = new ArrayList<>();
+
+        for (Caja caja : cajasMismoTipoYAnio) {
+            if (caja.getEspacioDisponible() >= paginasExpediente) {
+                cajasDisponibles.add(caja);
+            }
+        }
+
+        List<Caja> combinacionCajas = new ArrayList<>();
+        int paginasRestantes = paginasExpediente;
+
+        for (Caja caja : cajasDisponibles) {
+            if (paginasRestantes <= 0) {
+                break;
+            }
+
+            int paginasUsadas = Math.min(paginasRestantes, caja.getEspacioDisponible());
+            combinacionCajas.add(caja);
+            paginasRestantes -= paginasUsadas;
+        }
+
+        if (paginasRestantes <= 0) {
+            return combinacionCajas;
+        }
+
+        // si no se encuentra una combinación de cajas chula, buscar una ubicación contigua y crear una nueva caja
+        String ultimaUbicacion = cajasMismoTipoYAnio.get(cajasMismoTipoYAnio.size() - 1).getUbicacion();
+        String nuevaUbicacion = buscarNuevaUbicacionContigua(ultimaUbicacion);
+        //aqui hay que crear una nueva caja en la base de datos, que supongo que sera cn el DAO pero no estaba seguro y luego esa caja se añade debajo
+        combinacionCajas.add(nuevaCaja);
+        return combinacionCajas;
     }
 
+    //este metodo tampoco estoy seguro de que tenga que estar aqui, no se si deberia estar en DAO
     private List<Caja> obtenerCajasPorTipoYAnio(String tipo, int anio) throws SQLException{
         List<Caja> cajasMismoTipoYAnio = new ArrayList<>();
         String query = "SELECT * FROM cajas WHERE tipo = " + tipo + "AND anio = " + anio;
         ResultSet rs = Conexion.executeSelect(query);
         
-        while (rs.next()) {
-        	int idCaja = rs.getInt("idCaja");
-        	int paginas = rs.getInt("paginas");
-        	String ubicacion = rs.getString("ubicacion");
-        	Caja caja = new Caja(paginas, ubicacion, tipo, anio);
-        	caja.setIdCaja(idCaja);
-        	cajasMismoTipoYAnio.add(caja);
+        try {
+            while (rs.next()) {
+                int idCaja = rs.getInt("idCaja");
+                int paginas = rs.getInt("paginas");
+                String ubicacion = rs.getString("ubicacion");
+                Caja caja = new Caja(paginas, ubicacion, tipo, anio);
+                caja.setIdCaja(idCaja);
+                cajasMismoTipoYAnio.add(caja);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         
         return cajasMismoTipoYAnio;
     }
+    
+    public String buscarNuevaUbicacionContigua(String ultimaUbicacion) {
+        char seccion = ultimaUbicacion.charAt(0);
+        int estanteria = Integer.parseInt(ultimaUbicacion.substring(2, 4));
+        int balda = Integer.parseInt(ultimaUbicacion.substring(5, 6));
+        int posicion = Integer.parseInt(ultimaUbicacion.substring(8, 9));
+
+        posicion++;
+        // si se ha alcanzado el limite de posición en la balda, mover al siguiente nivel
+        if (posicion > 5) {
+            posicion = 0;
+            balda++;
+        }
+
+        // si se ha alcanzado el limite de balda, mover a la siguiente estantería
+        if (balda > 5) {
+            balda = 0;
+            estanteria++;
+        }
+
+        // si se ha alcanzado el limite de estantería, cambiar a la siguiente sección
+        if (estanteria > 20) {
+            estanteria = 0;
+            seccion++;
+        }
+        return seccion + "-" + String.format("%02d", estanteria) + "-" + balda + "-" + posicion;
+    }
+
 
 }
