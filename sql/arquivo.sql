@@ -1,6 +1,6 @@
 use arquivo;
 
-CREATE TABLE `arquivo.expedientes` (
+CREATE TABLE `expedientes` (
   `numExpediente` int NOT NULL,
   `tipo` varchar(45) NOT NULL,
   `anio` int NOT NULL,
@@ -20,7 +20,7 @@ VALUES ('2', 'oral','2010', '101', 'B-1-3', null, null, 'guardia', 'archivo gene
 INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas) 
 VALUES ('3', 'oral','2011', '102', 'C-2-2', null, null, 'penal', 'archivo general', '22');
 
-CREATE TABLE `arquivo.prestamos` (
+CREATE TABLE `prestamos` (
   `numExpediente` int NOT NULL,
   `tipo` varchar(45) NOT NULL,
   `anio` int NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `arquivo.prestamos` (
   `solicitante` VARCHAR(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `arquivo.cajas` (
+CREATE TABLE `cajas` (
   `idCaja` int NOT NULL,
   `anio` int NOT NULL,
   `tipo` varchar(45) NOT NULL,

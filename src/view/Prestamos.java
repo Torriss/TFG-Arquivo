@@ -3,13 +3,15 @@ package view;
 import utils.FuncComunes;
 import model.Expediente;
 import model.Juzgado;
-import model.Prestamo;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.github.lgooddatepicker.components.DatePicker;
+
+import DAO.ExpedienteDAOImpl;
+import DAO.PrestamoDAOImpl;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -44,6 +46,9 @@ public class Prestamos extends JFrame {
 	private JButton btnBuscarUbic;
 	private JButton btnImprimir;
 	private JTextField textFieldJuzgado;
+	
+	private PrestamoDAOImpl prestamo = new PrestamoDAOImpl();
+	private ExpedienteDAOImpl expediente = new ExpedienteDAOImpl();
 
 	public Prestamos() throws SQLException {
 		setTitle("Préstamos");
@@ -176,19 +181,13 @@ public class Prestamos extends JFrame {
 		panel_5.add(btnImprimir);
 	}
 
-	//TODO ?? En caso de incidencia (expediente ya prestado o no en el archivo) 
-	//crear función que permita actualizar solo el estado de un préstamo.
-	//es conveniente que la persona del Archivo que introduce los datos vea 
-	//la información de la ubicación. Ejemplo: si la aplicación ya le informa
-	//que el expediente no se encuentra en el Archivo ya puede actualizar el Estado en ese momento.
-	
 	public class BuscarUbicListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
 				List<Expediente> expedientes = new ArrayList<>();
-				expedientes = Expediente.buscaExpediente(Integer.parseInt(textFieldNumExp.getText()),
-						textFieldTipoExp.getText(),Integer.parseInt(textFieldAnioExp.getText()));
+				expedientes = expediente.buscaExpediente(Integer.parseInt(textFieldNumExp.getText()),
+						textFieldTipoExp.getText(),Integer.parseInt(textFieldAnioExp.getText()), textFieldJuzgado.getText());
 				if(expedientes.isEmpty())
 				{
 					JOptionPane.showMessageDialog(null,
@@ -213,12 +212,25 @@ public class Prestamos extends JFrame {
 	public class ImprimirPrestamoListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {	
-			//TODO: crear funcion imprimirPapeleta con toda la info del form menos el estado
-			//TODO: crear funcion imprimirTestigo con toda la info del form menos el estado
-			//y añadiendo caja, ubicación, notas, tomos, lugar
 			try {
-				Prestamo.realizarPrestamo(Integer.parseInt(textFieldNumExp.getText()), textFieldTipoExp.getText(),
-						Integer.parseInt(textFieldAnioExp.getText()), textFieldSolicitante.getText());
+				List<Expediente> expedientes = new ArrayList<>();
+				expedientes = prestamo.realizarPrestamo(Integer.parseInt(textFieldNumExp.getText()), textFieldTipoExp.getText(),
+						Integer.parseInt(textFieldAnioExp.getText()), textFieldSolicitante.getText(), textFieldJuzgado.getText());
+				if(expedientes.isEmpty())
+				{
+					JOptionPane.showMessageDialog(null,
+							"El expediente no se encuentra en el archivo", "Ubicacion",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else
+				{
+					//TODO: crear funcion imprimirPapeleta con toda la info del form menos el estado
+					//TODO: crear funcion imprimirTestigo con toda la info del form menos el estado
+					//y añadiendo caja, ubicación, notas, tomos, lugar
+					JOptionPane.showMessageDialog(null,
+							"El expediente se encuentra en: ", "Ubicacion",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

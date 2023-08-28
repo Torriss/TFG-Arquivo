@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import DAO.ExpedienteDAOImpl;
 import model.Expediente;
 import model.Juzgado;
 import utils.FuncComunes;
@@ -48,6 +49,8 @@ public class Devoluciones extends JFrame {
 	private JTextField textFieldJuzgado;
 	private JTextField textFieldPaginas;
 
+	private ExpedienteDAOImpl expediente = new ExpedienteDAOImpl();
+	
 	/**
 	 * Create the frame.
 	 * @throws SQLException 
@@ -216,8 +219,8 @@ public class Devoluciones extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				List<Expediente> expedientes = new ArrayList<>();
-				expedientes = Expediente.buscaExpediente(Integer.parseInt(textFieldNumExp.getText()),
-						textFieldTipoExp.getText(),Integer.parseInt(textFieldAnioExp.getText()));
+				expedientes = expediente.buscaExpediente(Integer.parseInt(textFieldNumExp.getText()),
+						textFieldTipoExp.getText(),Integer.parseInt(textFieldAnioExp.getText()), textFieldJuzgado.getText());
 				if(expedientes.isEmpty())
 				{
 					btnDevolver.setEnabled(false);
@@ -253,7 +256,7 @@ public class Devoluciones extends JFrame {
 					textFieldUbicacion.getText(), textFieldNotas.getText(), textFieldTomos.getText(), 
 					textFieldJuzgado.getText(), textFieldLugar.getText(), Integer.parseInt(textFieldPaginas.getText()));
 			try {
-				Expediente.insert(exp);
+				expediente.insert(exp);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

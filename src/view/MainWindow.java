@@ -30,7 +30,7 @@ public class MainWindow extends JFrame {
 	 * @throws SQLException 
 	 */
 	public MainWindow() throws SQLException {
-		Consultas consultas = new Consultas();
+		//Consultas consultas = new Consultas();
 		Prestamos prestamos = new Prestamos();
 		Devoluciones devoluciones = new Devoluciones();
 		
@@ -64,12 +64,12 @@ public class MainWindow extends JFrame {
 		});
 		mnMenu.add(mntmDevoluciones);
 		
-		JMenuItem mntmConsultas = new JMenuItem("Consultas");
-		mntmConsultas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				consultas.setVisible(true);
-			}
-		});
-		mnMenu.add(mntmConsultas);
+//		JMenuItem mntmConsultas = new JMenuItem("Consultas");
+//		mntmConsultas.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				consultas.setVisible(true);
+//			}
+//		});
+//		mnMenu.add(mntmConsultas);
 	}
 }

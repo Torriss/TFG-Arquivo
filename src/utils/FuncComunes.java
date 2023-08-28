@@ -8,11 +8,15 @@ import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 
+import DAO.ExpedienteDAOImpl;
+import DAO.PrestamoDAOImpl;
 import model.Expediente;
 import model.Juzgado;
 import model.Prestamo;
 
 public class FuncComunes {
+
+	private ExpedienteDAOImpl expediente = new ExpedienteDAOImpl();
 	
 	public JComboBox<String> iniciarListaEstado(JComboBox<String> comboBoxEstado) {
 		ArrayList<String> listaEstados = new ArrayList<String>();
@@ -32,9 +36,9 @@ public class FuncComunes {
 		
 	}
 	
-	public JComboBox<Juzgado> iniciarListaJuzgados(JComboBox<Juzgado> comboBoxJuzgado) {
-		Prestamo prestamo = new Prestamo();
-		ArrayList<Juzgado> listaJuzgados = prestamo.getJuzgados();
+	public JComboBox<Juzgado> iniciarListaJuzgados(JComboBox<Juzgado> comboBoxJuzgado) throws SQLException {
+		Juzgado juzgado = new Juzgado();
+		ArrayList<Juzgado> listaJuzgados = juzgado.getJuzgados();
 		
 		comboBoxJuzgado.removeAllItems();
 		for (int i = 0; i<listaJuzgados.size(); i++)
@@ -45,7 +49,7 @@ public class FuncComunes {
 	}
 	
 	public JComboBox<String> iniciarListaTipoExp(JComboBox<String> comboBoxTipoExp) throws SQLException {
-		ArrayList<String> listaTiposExp = Expediente.getAllTiposExp();
+		ArrayList<String> listaTiposExp = expediente.getAllTiposExp();
 		
 		comboBoxTipoExp.removeAllItems();
 		
