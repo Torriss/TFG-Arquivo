@@ -16,6 +16,7 @@ public interface ExpedienteDAO {
     boolean existeExpediente(int numExpediente, String tipo, int anio, String juzgado) throws SQLException;
     List<Expediente> getAllExpedientes() throws SQLException;
     ArrayList<String> getAllTiposExp() throws SQLException;
+    ArrayList<String> getAllJuzgados() throws SQLException;
     //String getUbicacionExp(Expediente exp);
 	String getUbicacionExp(String tipoExp, int numExp, int anioExp, String juzgado) throws SQLException;
 

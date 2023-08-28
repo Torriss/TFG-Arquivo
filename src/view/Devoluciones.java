@@ -1,36 +1,27 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import DAO.ExpedienteDAOImpl;
-import model.Expediente;
-import model.Juzgado;
+import com.github.lgooddatepicker.components.DatePicker;
+
 import utils.FuncComunes;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
 
 public class Devoluciones extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3777120968440321060L;
-	private JPanel contentPane;
 	private JTextField textFieldFecha;
 	private JTextField textFieldNumExp;
 	private JTextField textFieldAnioExp;
@@ -41,16 +32,132 @@ public class Devoluciones extends JFrame {
 	private JTextField textFieldLugar;
 	private JComboBox<String> comboBoxTipoExp;
 	private JComboBox<String> comboBoxEstado;
-	private JComboBox<Juzgado> comboBoxJuzgado;
+	private JComboBox<String> comboBoxJuzgado;
 	private JButton btnBuscarUbic;
 	private JButton btnDevolver;
 	private JButton btnNuevo;
-	private JTextField textFieldTipoExp;
-	private JTextField textFieldJuzgado;
 	private JTextField textFieldPaginas;
-
-	private ExpedienteDAOImpl expediente = new ExpedienteDAOImpl();
 	
+	public JTextField getTextFieldFecha() {
+		return textFieldFecha;
+	}
+
+	public void setTextFieldFecha(JTextField textFieldFecha) {
+		this.textFieldFecha = textFieldFecha;
+	}
+
+	public JTextField getTextFieldNumExp() {
+		return textFieldNumExp;
+	}
+
+	public void setTextFieldNumExp(JTextField textFieldNumExp) {
+		this.textFieldNumExp = textFieldNumExp;
+	}
+
+	public JTextField getTextFieldAnioExp() {
+		return textFieldAnioExp;
+	}
+
+	public void setTextFieldAnioExp(JTextField textFieldAnioExp) {
+		this.textFieldAnioExp = textFieldAnioExp;
+	}
+
+	public JTextField getTextFieldCaja() {
+		return textFieldCaja;
+	}
+
+	public void setTextFieldCaja(JTextField textFieldCaja) {
+		this.textFieldCaja = textFieldCaja;
+	}
+
+	public JTextField getTextFieldTomos() {
+		return textFieldTomos;
+	}
+
+	public void setTextFieldTomos(JTextField textFieldTomos) {
+		this.textFieldTomos = textFieldTomos;
+	}
+
+	public JTextField getTextFieldUbicacion() {
+		return textFieldUbicacion;
+	}
+
+	public void setTextFieldUbicacion(JTextField textFieldUbicacion) {
+		this.textFieldUbicacion = textFieldUbicacion;
+	}
+
+	public JTextField getTextFieldNotas() {
+		return textFieldNotas;
+	}
+
+	public void setTextFieldNotas(JTextField textFieldNotas) {
+		this.textFieldNotas = textFieldNotas;
+	}
+
+	public JTextField getTextFieldLugar() {
+		return textFieldLugar;
+	}
+
+	public void setTextFieldLugar(JTextField textFieldLugar) {
+		this.textFieldLugar = textFieldLugar;
+	}
+
+	public JComboBox<String> getComboBoxTipoExp() {
+		return comboBoxTipoExp;
+	}
+
+	public void setComboBoxTipoExp(JComboBox<String> comboBoxTipoExp) {
+		this.comboBoxTipoExp = comboBoxTipoExp;
+	}
+
+	public JComboBox<String> getComboBoxEstado() {
+		return comboBoxEstado;
+	}
+
+	public void setComboBoxEstado(JComboBox<String> comboBoxEstado) {
+		this.comboBoxEstado = comboBoxEstado;
+	}
+
+	public JComboBox<String> getComboBoxJuzgado() {
+		return comboBoxJuzgado;
+	}
+
+	public void setComboBoxJuzgado(JComboBox<String> comboBoxJuzgado) {
+		this.comboBoxJuzgado = comboBoxJuzgado;
+	}
+
+	public JButton getBtnBuscarUbic() {
+		return btnBuscarUbic;
+	}
+
+	public void setBtnBuscarUbic(JButton btnBuscarUbic) {
+		this.btnBuscarUbic = btnBuscarUbic;
+	}
+
+	public JButton getBtnDevolver() {
+		return btnDevolver;
+	}
+
+	public void setBtnDevolver(JButton btnDevolver) {
+		this.btnDevolver = btnDevolver;
+	}
+
+	public JButton getBtnNuevo() {
+		return btnNuevo;
+	}
+
+	public void setBtnNuevo(JButton btnNuevo) {
+		this.btnNuevo = btnNuevo;
+	}
+
+	public JTextField getTextFieldPaginas() {
+		return textFieldPaginas;
+	}
+
+	public void setTextFieldPaginas(JTextField textFieldPaginas) {
+		this.textFieldPaginas = textFieldPaginas;
+	}
+
 	/**
 	 * Create the frame.
 	 * @throws SQLException 
@@ -59,7 +166,7 @@ public class Devoluciones extends JFrame {
 		setTitle("Devoluciones");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		FuncComunes func = new FuncComunes();
@@ -71,27 +178,28 @@ public class Devoluciones extends JFrame {
 		contentPane.add(panel_3);
 		panel_3.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JLabel lblJuzgado = new JLabel("Juzgado");
+		JLabel lblJuzgado = new JLabel("Juzgado:");
 		panel_3.add(lblJuzgado);
 		
-		JLabel lblFecha = new JLabel("Fecha");
+		JLabel lblFecha = new JLabel("Fecha:");
 		panel_3.add(lblFecha);
 		
-		comboBoxJuzgado = new JComboBox<Juzgado>();
+		comboBoxJuzgado = new JComboBox<String>();
 		comboBoxJuzgado = func.iniciarListaJuzgados(comboBoxJuzgado);
 		panel_3.add(comboBoxJuzgado);
 		
-		textFieldJuzgado = new JTextField();
-		panel_3.add(textFieldJuzgado);
-		textFieldJuzgado.setColumns(10);
-		
 		JPanel panel_4 = new JPanel();
 		panel_3.add(panel_4);
-		panel_4.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		textFieldFecha = new JTextField();
-		panel_4.add(textFieldFecha);
-		textFieldFecha.setColumns(10);
+		DatePicker datePicker = new DatePicker();
+	    datePicker.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    	}
+	    });
+	    datePicker.setDateToToday();
+		
+		panel_4.add(datePicker);
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2);
@@ -99,25 +207,25 @@ public class Devoluciones extends JFrame {
 		
 		JPanel panel_6 = new JPanel();
 		panel_2.add(panel_6);
-		panel_6.setLayout(new GridLayout(0, 3, 0, 0));
+		panel_6.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblExpediente = new JLabel("Expediente:");
+		JLabel lblExpediente = new JLabel("Num. expediente:");
+		lblExpediente.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_6.add(lblExpediente);
 		
-		JPanel panel_7 = new JPanel();
-		panel_6.add(panel_7);
-		
 		JLabel lblAnio = new JLabel("Año:");
+		lblAnio.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_6.add(lblAnio);
 		
-		JLabel lblTipo = new JLabel("Tipo");
+		JLabel lblTipo = new JLabel("Tipo:");
 		panel_2.add(lblTipo);
 		
 		JPanel panel_5 = new JPanel();
 		panel_2.add(panel_5);
-		panel_5.setLayout(new GridLayout(0, 3, 0, 0));
+		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		textFieldNumExp = new JTextField();
+		textFieldNumExp.setToolTipText("Número de expediente");
 		panel_5.add(textFieldNumExp);
 		textFieldNumExp.setColumns(10);
 		
@@ -125,6 +233,7 @@ public class Devoluciones extends JFrame {
 		panel_5.add(lblNewLabel);
 		
 		textFieldAnioExp = new JTextField();
+		textFieldAnioExp.setToolTipText("Año");
 		panel_5.add(textFieldAnioExp);
 		textFieldAnioExp.setColumns(10);
 		
@@ -132,15 +241,11 @@ public class Devoluciones extends JFrame {
 		comboBoxTipoExp = func.iniciarListaTipoExp(comboBoxTipoExp);
 		panel_2.add(comboBoxTipoExp);
 		
-		textFieldTipoExp = new JTextField();
-		panel_2.add(textFieldTipoExp);
-		textFieldTipoExp.setColumns(10);
-		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
 		
-		JLabel lblPaginas = new JLabel("Paginas:");
+		JLabel lblPaginas = new JLabel("Páginas:");
 		panel_1.add(lblPaginas);
 		
 		JLabel lblCaja = new JLabel("Caja:");
@@ -186,12 +291,6 @@ public class Devoluciones extends JFrame {
 		panel.add(textFieldLugar);
 		textFieldLugar.setColumns(10);
 		
-		FuncComunes.CalendarioListener calendario = func.new CalendarioListener();
-		//TODO: revisar con LGoodDatePicker
-		JButton btnCalendario = new JButton("Calendario");
-		btnCalendario.addActionListener(calendario);
-		panel_4.add(btnCalendario);
-		
 		JPanel panel_8 = new JPanel();
 		contentPane.add(panel_8);
 		
@@ -200,68 +299,11 @@ public class Devoluciones extends JFrame {
 		
 		btnDevolver = new JButton("Devolver");
 		panel_8.add(btnDevolver);
-		btnDevolver.addActionListener(new DevolverListener());
 		btnDevolver.setEnabled(false);
 		
 		btnNuevo = new JButton("Nuevo");
 		panel_8.add(btnNuevo);
 		btnNuevo.setEnabled(false);
-		btnNuevo.addActionListener(new NuevoListener());
-		btnBuscarUbic.addActionListener(new BuscarUbicListener());
-		
-		//FuncComunes.UltCajasListener ultCajas = func.new UltCajasListener();
-		
-		//FuncComunes.ImprimirDevolucListener imprimir = func.new ImprimirDevolucListener();
-	}
-	
-	public class BuscarUbicListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {
-				List<Expediente> expedientes = new ArrayList<>();
-				expedientes = expediente.buscaExpediente(Integer.parseInt(textFieldNumExp.getText()),
-						textFieldTipoExp.getText(),Integer.parseInt(textFieldAnioExp.getText()), textFieldJuzgado.getText());
-				if(expedientes.isEmpty())
-				{
-					btnDevolver.setEnabled(false);
-					btnNuevo.setEnabled(true);
-				}
-				else
-				{
-					btnDevolver.setEnabled(true);
-					btnNuevo.setEnabled(false);
-					//TODO: parsear info devuelta e insertarla en los textBox
-				}
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-	}
-	
-	public class DevolverListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			//TODO: pasar info de los textBox a devolucion(...)
-			
-		}
-	}
-	
-	public class NuevoListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Expediente exp = new Expediente(Integer.parseInt(textFieldNumExp.getText()), textFieldTipoExp.getText(),
-					Integer.parseInt(textFieldAnioExp.getText()), Integer.parseInt(textFieldCaja.getText()), 
-					textFieldUbicacion.getText(), textFieldNotas.getText(), textFieldTomos.getText(), 
-					textFieldJuzgado.getText(), textFieldLugar.getText(), Integer.parseInt(textFieldPaginas.getText()));
-			try {
-				expediente.insert(exp);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
 	}
 
 }

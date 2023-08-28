@@ -131,6 +131,20 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	}
 
 	@Override
+    public ArrayList<String> getAllJuzgados() throws SQLException {
+		ArrayList<String> juzgados = new ArrayList<>();
+
+		String sql = "SELECT DISTINCT juzgado FROM Expedientes";
+	    ResultSet rs = Conexion.executeSelect(sql);
+
+	    while (rs.next()) {
+	        String juzgado = rs.getString("juzgado");
+	        juzgados.add(juzgado);
+	    }
+	    return juzgados;
+	}
+    
+	@Override
 	public String getUbicacionExp(String tipoExp, int numExp, int anioExp, String juzgado) throws SQLException {
 		String res = "";
     	String sql = "SELECT ubicacion FROM Expedientes WHERE numExpediente = " + numExp + 

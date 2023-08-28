@@ -3,16 +3,11 @@ package utils;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 
 import DAO.ExpedienteDAOImpl;
-import DAO.PrestamoDAOImpl;
-import model.Expediente;
-import model.Juzgado;
-import model.Prestamo;
 
 public class FuncComunes {
 
@@ -36,9 +31,8 @@ public class FuncComunes {
 		
 	}
 	
-	public JComboBox<Juzgado> iniciarListaJuzgados(JComboBox<Juzgado> comboBoxJuzgado) throws SQLException {
-		Juzgado juzgado = new Juzgado();
-		ArrayList<Juzgado> listaJuzgados = juzgado.getJuzgados();
+	public JComboBox<String> iniciarListaJuzgados(JComboBox<String> comboBoxJuzgado) throws SQLException {
+		ArrayList<String> listaJuzgados = expediente.getAllJuzgados();
 		
 		comboBoxJuzgado.removeAllItems();
 		for (int i = 0; i<listaJuzgados.size(); i++)
