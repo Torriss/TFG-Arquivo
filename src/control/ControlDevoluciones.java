@@ -7,14 +7,9 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import DAO.ExpedienteDAOImpl;
-import DAO.PrestamoDAOImpl;
 import model.Expediente;
 import utils.FuncComunes;
 import view.Devoluciones;
-import view.Prestamos;
-import view.Devoluciones.BuscarUbicListener;
-import view.Devoluciones.DevolverListener;
-import view.Devoluciones.NuevoListener;
 
 public class ControlDevoluciones {
 	
@@ -50,19 +45,37 @@ public class ControlDevoluciones {
 	private void buscarUbicacion() {
 		try {
 			List<Expediente> expedientes = new ArrayList<>();
-			expedientes = expediente.buscaExpediente(Integer.parseInt(textFieldNumExp.getText()),
-					comboBoxTipoExp.getSelectedItem().toString(), Integer.parseInt(textFieldAnioExp.getText()),
-					comboBoxJuzgado.getSelectedItem().toString());
+			int numExp = Integer.parseInt(devoluciones.getTextFieldNumExp().getText());
+			int anioExp = Integer.parseInt(devoluciones.getTextFieldAnioExp().getText());
+			String tipoExp = devoluciones.getComboBoxTipoExp().getSelectedItem().toString();
+			String juzgado = devoluciones.getComboBoxJuzgado().getSelectedItem().toString();
+			expedientes = expediente.buscaExpediente(numExp, tipoExp, anioExp, juzgado);
 			if(expedientes.isEmpty())
 			{
-				btnDevolver.setEnabled(false);
-				btnNuevo.setEnabled(true);
+				devoluciones.getBtnDevolver().setEnabled(false);
+				devoluciones.getBtnNuevo().setEnabled(true);
 			}
 			else
 			{
-				btnDevolver.setEnabled(true);
-				btnNuevo.setEnabled(false);
-				//TODO: parsear info devuelta e insertarla en los textBox
+				devoluciones.getBtnDevolver().setEnabled(true);
+				devoluciones.getBtnNuevo().setEnabled(false);
+
+				//TODO: parsear info devuelta e insertarla en textbox
+				if (!expedientes.isEmpty())
+				{
+		            int caja = expedientes.get(0).getCaja();
+		            String ubicacion = expedientes.get(0).getUbicacion();
+		            String tomos = expedientes.get(0).getTomos();
+		            String lugar = expedientes.get(0).getLugar();
+		            int paginas = expedientes.get(0).getPaginas();
+		            
+		            //devoluciones.getTextFieldCaja().setText(caja);
+		            devoluciones.getTextFieldUbicacion().setText(ubicacion);
+		            devoluciones.getTextFieldTomos().setText(tomos);
+		            devoluciones.getTextFieldLugar().setText(lugar);
+		            //devoluciones.getTextFieldPaginas().setText(paginas);
+				}
+				
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -75,11 +88,18 @@ public class ControlDevoluciones {
 	}
 
 	private void nuevoExpediente() {
-		Expediente exp = new Expediente(Integer.parseInt(textFieldNumExp.getText()), comboBoxTipoExp.getSelectedItem().toString(),
-				Integer.parseInt(textFieldAnioExp.getText()), Integer.parseInt(textFieldCaja.getText()), 
-				textFieldUbicacion.getText(), textFieldNotas.getText(), textFieldTomos.getText(), 
-				comboBoxJuzgado.getSelectedItem().toString(), textFieldLugar.getText(), 
-				Integer.parseInt(textFieldPaginas.getText()));
+		int numExp = Integer.parseInt(devoluciones.getTextFieldNumExp().getText());
+		int anioExp = Integer.parseInt(devoluciones.getTextFieldAnioExp().getText());
+		int caja = Integer.parseInt(devoluciones.getTextFieldCaja().getText());
+		int pags = Integer.parseInt(devoluciones.getTextFieldPaginas().getText());
+		String tipoExp = devoluciones.getComboBoxTipoExp().getSelectedItem().toString();
+		String juzgado = devoluciones.getComboBoxJuzgado().getSelectedItem().toString();
+		String ubicacion = devoluciones.getTextFieldUbicacion().getText();
+		String notas = devoluciones.getTextFieldNotas().getText();
+		String tomos = devoluciones.getTextFieldTomos().getText();
+		String lugar = devoluciones.getTextFieldLugar().getText();
+		
+		Expediente exp = new Expediente(numExp, tipoExp, anioExp, caja, ubicacion, notas, tomos, juzgado, lugar, pags);
 		try {
 			expediente.insert(exp);
 		} catch (SQLException e1) {
