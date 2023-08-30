@@ -49,8 +49,8 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	    return expList;
 	}
 
-
-	private boolean existePrestamo(int numExpediente, String tipo, int anio) throws SQLException{
+	@Override
+	public boolean existePrestamo(int numExpediente, String tipo, int anio, String juzgado) throws SQLException{
 	    String query = "SELECT COUNT(*) AS count FROM Prestamos WHERE numExpediente = " + numExpediente +
 	            " AND tipo = '" + tipo + "'" +
 	            " AND anio = " + anio + "";
@@ -63,7 +63,8 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	    return false;
 	}
 	
-	public boolean eliminarPrestamo(int numExpediente, String tipo, int anio, String tomos) {
+	@Override
+	public boolean eliminarPrestamo(int numExpediente, String tipo, int anio, String tomos) throws SQLException{
         String query = "DELETE FROM Prestamos WHERE numExpediente = " + numExpediente +
                 " AND tipo = '" + tipo + "'" +
                 " AND anio = " + anio +
