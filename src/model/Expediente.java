@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Expediente {
     private int numExpediente;
     private String tipo;
@@ -10,9 +12,12 @@ public class Expediente {
     private String tomos;
     private String juzgado;
     private String lugar;
+    private String solicitante;
+    private LocalDate fechaPrestamo;
     private int paginas;
 
-    public Expediente(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, String tomos, String juzgado, String lugar, int paginas) {
+    public Expediente(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, 
+    					String tomos, String juzgado, String lugar, int paginas, String solicitante, LocalDate fechaPrestamo) {
         this.numExpediente = numExpediente;
         this.tipo = tipo;
         this.anio = anio;
@@ -22,7 +27,9 @@ public class Expediente {
         this.tomos = tomos;
         this.juzgado = juzgado;
         this.lugar = lugar;
-        this.paginas = paginas; // Se añade el atributo paginas al constructor
+        this.paginas = paginas;
+        this.solicitante = solicitante;
+        this.fechaPrestamo = fechaPrestamo;
     }
 
     public Expediente(String tipoExp, int numExp, int anioExp) {
@@ -109,6 +116,26 @@ public class Expediente {
 
     public void setPaginas(int paginas) {
         this.paginas = paginas;
+    }
+    
+    public void sumarPaginas(int paginas) {
+    	this.paginas =+ paginas;
+    }
+    
+    public String getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(String solicitante) {
+        this.solicitante = solicitante;
+    }
+    
+    public LocalDate getFechaPrestamo() {
+        return fechaPrestamo;
+    }
+
+    public void setFechaPrestamo(LocalDate fechaActual) {
+        this.fechaPrestamo = fechaActual;
     }
 
 }

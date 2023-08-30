@@ -10,24 +10,26 @@ CREATE TABLE `expedientes` (
   `tomos` varchar(45) DEFAULT NULL,
   `juzgado` varchar(45) NOT NULL,
   `lugar` varchar(45) NOT NULL,
-  `paginas` int NOT NULL
+  `paginas` int NOT NULL,
+  `solicitante` varchar(45) DEFAULT NULL,
+  `fechaPrestamo` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas) 
-VALUES ('1', 'oral','2009', '100', 'A-1-2', null, null, 'instruccion', 'archivo general', '30');
-INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas) 
-VALUES ('2', 'oral','2010', '101', 'B-1-3', null, null, 'guardia', 'archivo general', '33');
-INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas) 
-VALUES ('3', 'oral','2011', '102', 'C-2-2', null, null, 'penal', 'archivo general', '22');
+INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo) 
+VALUES ('1', 'oral','2009', '100', 'A-1-2', null, null, 'instruccion', 'archivo general', '30', null, null);
+INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo) 
+VALUES ('2', 'oral','2010', '101', 'B-1-3', null, null, 'guardia', 'archivo general', '33', null, null);
+INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo) 
+VALUES ('3', 'oral','2011', '102', 'C-2-2', null, null, 'penal', 'archivo general', '22', null, null);
 
-CREATE TABLE `prestamos` (
-  `numExpediente` int NOT NULL,
-  `tipo` varchar(45) NOT NULL,
-  `anio` int NOT NULL,
-  `juzgado` varchar(45) NOT NULL,
-  `fechaPrestamo` date NOT NULL,
-  `solicitante` VARCHAR(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+--CREATE TABLE `prestamos` (
+--  `numExpediente` int NOT NULL,
+--  `tipo` varchar(45) NOT NULL,
+--  `anio` int NOT NULL,
+--  `juzgado` varchar(45) NOT NULL,
+--  `fechaPrestamo` date NOT NULL,
+--  `solicitante` VARCHAR(45) NOT NULL
+--) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `cajas` (
   `idCaja` int NOT NULL,

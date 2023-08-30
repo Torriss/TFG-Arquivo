@@ -205,12 +205,12 @@ public class CajaDAOImpl implements CajaDAO {
 
 
     
-    public List<Caja> buscarCajasParaExpedienteNuevo(int paginasExpediente) throws SQLException{
+    public List<Caja> buscarCajasParaExpedienteNuevo(int anio, String tipo, int paginasExpediente) throws SQLException{
         List<Caja> cajasMismoTipoYAnio = obtenerCajasPorTipoYAnio(tipo, anio);
         List<Caja> cajasDisponibles = new ArrayList<>();
 
         for (Caja caja : cajasMismoTipoYAnio) {
-            if (caja.getEspacioDisponible() >= paginasExpediente) {
+            if (caja.getPaginas() >= paginasExpediente) {
                 cajasDisponibles.add(caja);
             }
         }
@@ -223,7 +223,7 @@ public class CajaDAOImpl implements CajaDAO {
                 break;
             }
 
-            int paginasUsadas = Math.min(paginasRestantes, caja.getEspacioDisponible());
+            int paginasUsadas = Math.min(paginasRestantes, caja.getPaginas());
             combinacionCajas.add(caja);
             paginasRestantes -= paginasUsadas;
         }
@@ -269,19 +269,19 @@ public class CajaDAOImpl implements CajaDAO {
         int posicion = Integer.parseInt(ultimaUbicacion.substring(8, 9));
 
         posicion++;
-        // si se ha alcanzado el limite de posición en la balda, mover al siguiente nivel
+        // si se ha alcanzado el limite de posicion en la balda, mover al siguiente nivel
         if (posicion > 5) {
             posicion = 0;
             balda++;
         }
 
-        // si se ha alcanzado el limite de balda, mover a la siguiente estantería
+        // si se ha alcanzado el limite de balda, mover a la siguiente estanteria
         if (balda > 5) {
             balda = 0;
             estanteria++;
         }
 
-        // si se ha alcanzado el limite de estantería, cambiar a la siguiente sección
+        // si se ha alcanzado el limite de estanteria, cambiar a la siguiente seccion
         if (estanteria > 20) {
             estanteria = 0;
             seccion++;

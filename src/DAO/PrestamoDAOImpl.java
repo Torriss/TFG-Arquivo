@@ -21,13 +21,6 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 		List<Expediente> expList = new ArrayList<>();
 		
 		if (!exp.existeExpediente(numExp, tipo, anio, juzgado)) {
-	        System.out.println("El expediente no existe en la base de datos.");
-	        return expList;
-	    }
-	    
-	    // Comprobar que el expediente no esta en la tabla prestamos
-	    if (existePrestamo(numExp, tipo, anio)) {
-	        System.out.println("El expediente ya ha sido prestado.");
 	        return expList;
 	    }
 	    
@@ -37,38 +30,34 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	    //Recorremos lista expedientes para a�adirlos a la tabla prestamos
 	    expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
 	    for (Expediente expediente : expList) {
-	    	//Construimos query
-	    	String query = "INSERT INTO Prestamos (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, fechaPrestamo, solicitante) " +
-	                "VALUES ('" + expediente.getNumExpediente() + "', '" + expediente.getTipo() + "', " + expediente.getAnio() + ", " + expediente.getCaja() +
-	                ", '" + expediente.getUbicacion() + "', '" + expediente.getNotas() + "', '" + expediente.getTomos() + "', '" + expediente.getJuzgado() +
-	                "', '" + expediente.getLugar() + "', '" + fechaActual + "', '" + solicitante + "')";
+	    	expediente.setFechaPrestamo(fechaActual);
 	    	//Ejecutamos query
-	    	Conexion.execute(query);
+	    	//Conexion.execute(query);
 	    }
 	    
 	    return expList;
 	}
 
-	@Override
-	public boolean existePrestamo(int numExpediente, String tipo, int anio, String juzgado) throws SQLException{
-	    String query = "SELECT COUNT(*) AS count FROM Prestamos WHERE numExpediente = " + numExpediente +
-	            " AND tipo = '" + tipo + "'" +
-	            " AND anio = " + anio + "";
-	    ResultSet rs = Conexion.executeSelect(query);
-	    
-	    if (rs.next()) {
-	    	int count = rs.getInt("count");
-	        return count > 0;
-	    }
-	    return false;
-	}
-	
-	@Override
-	public boolean eliminarPrestamo(int numExpediente, String tipo, int anio, String tomos) throws SQLException{
-        String query = "DELETE FROM Prestamos WHERE numExpediente = " + numExpediente +
-                " AND tipo = '" + tipo + "'" +
-                " AND anio = " + anio +
-                " AND tomos = '" + tomos + "'";
-        return Conexion.execute(query);
-    }
+//	@Override
+//	public boolean existePrestamo(int numExpediente, String tipo, int anio, String juzgado) throws SQLException{
+//	    String query = "SELECT COUNT(*) AS count FROM Prestamos WHERE numExpediente = " + numExpediente +
+//	            " AND tipo = '" + tipo + "'" +
+//	            " AND anio = " + anio + "";
+//	    ResultSet rs = Conexion.executeSelect(query);
+//	    
+//	    if (rs.next()) {
+//	    	int count = rs.getInt("count");
+//	        return count > 0;
+//	    }
+//	    return false;
+//	}
+//	
+//	@Override
+//	public boolean eliminarPrestamo(int numExpediente, String tipo, int anio, String tomos) throws SQLException{
+//        String query = "DELETE FROM Prestamos WHERE numExpediente = " + numExpediente +
+//                " AND tipo = '" + tipo + "'" +
+//                " AND anio = " + anio +
+//                " AND tomos = '" + tomos + "'";
+//        return Conexion.execute(query);
+//    }
 }

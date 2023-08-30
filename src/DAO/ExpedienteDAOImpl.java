@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,11 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         // Posible comprobacion de no nulos y rangos
 
         // Construir la query
-        String query = "INSERT INTO Expedientes (numExpediente, tipo, caja, anio, ubicacion, notas, tomos, juzgado, lugar, paginas) VALUES ('"
-                + exp.getNumExpediente() + "','" + exp.getTipo() + "','" + exp.getCaja() + "','" + exp.getAnio() + "','"
-        		+ exp.getUbicacion() + "','" + exp.getNotas() + "','" + exp.getTomos() + "','"
-                + exp.getJuzgado() + "','" + exp.getLugar() + "','" + exp.getPaginas() + "')";
+        String query = "INSERT INTO Expedientes (numExpediente, tipo, caja, anio, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo) VALUES ('"
+                + exp.getNumExpediente() + "','" + exp.getTipo() + "','" + exp.getCaja() + "','"
+        		+ exp.getAnio() + "','" + exp.getUbicacion() + "','" + exp.getNotas() + "','"
+                + exp.getTomos() + "','" + exp.getJuzgado() + "','" + exp.getLugar() + "','"
+        		+ exp.getPaginas() + "','" + exp.getSolicitante() + "','" + exp.getFechaPrestamo() + "')";
 
         // Ejecutar la query en la BBDD
         return Conexion.execute(query);
@@ -29,6 +31,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         String query = "UPDATE Expedientes SET tipo = '" + exp.getTipo() + "', anio = " + exp.getAnio() + ", caja = " + exp.getCaja()
                 + ", ubicacion = '" + exp.getUbicacion() + "', notas = '" + exp.getNotas() + "', tomos = '" + exp.getTomos()
                 + "', juzgado = '" + exp.getJuzgado() + "', lugar = '" + exp.getLugar() + "', paginas = " + exp.getPaginas()
+                + "', solicitante = '" + exp.getSolicitante() + "', fechaPrestamo = '" + exp.getFechaPrestamo()
                 + " WHERE numExpediente = " + exp.getNumExpediente();
 
         return Conexion.execute(query);
@@ -66,8 +69,10 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             String juzgado = rs.getString("juzgado");
             String lugar = rs.getString("lugar");
             int paginas = rs.getInt("paginas");
+            String solicitante = rs.getString("solicitante");
+            LocalDate fechaPrestamo = rs.getda("fechaPrestamo");
             
-            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
+            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo);
             expedientes.add(exp);
         }
         return expedientes;
@@ -108,8 +113,10 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             String juzgado = rs.getString("juzgado");
             String lugar = rs.getString("lugar");
             int paginas = rs.getInt("paginas");
+            String solicitante = rs.getString("solicitante");
+            Date fechaPrestamo = rs.getDate("fechaPrestamo");
             
-            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
+            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo);
             expedientes.add(exp);
         }
         

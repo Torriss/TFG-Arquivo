@@ -1,6 +1,8 @@
 -Aplicar patron DAO 											OK
 -Independixar realizarDEvolucion								OK
--Implementar expurgo											
+-Implementar expurgo											excel en blanco, meten expedientes a eliminar(numexp,tipo,anio y juzgado), comprobamos ubis y se 
+																devuelve listaExpedientes a marta. Despues habrá que eliminar expedientes de bbdd
+
 -Implementar transferencia/remision (creo que es lo mismo)		
 -Apañar importar excel											falta comprobar compilacion
--Apañar exportar excel											falta comprobar compilacion
+-Apañar exportar excel											falta comprobar celdas correctas
