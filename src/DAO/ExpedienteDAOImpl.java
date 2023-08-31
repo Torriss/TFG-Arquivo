@@ -1,8 +1,8 @@
 package DAO;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             String lugar = rs.getString("lugar");
             int paginas = rs.getInt("paginas");
             String solicitante = rs.getString("solicitante");
-            LocalDate fechaPrestamo = rs.getda("fechaPrestamo");
+            Date fechaPrestamo = rs.getDate("fechaPrestamo");
             
             Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo);
             expedientes.add(exp);

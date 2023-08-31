@@ -1,5 +1,6 @@
 package DAO;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import model.Expediente;
 
 public class PrestamoDAOImpl implements PrestamoDAO{
 	
-	public List<Expediente> realizarPrestamo(int numExp, String tipo, int anio, String solicitante, String juzgado) throws SQLException{
+	public List<Expediente> realizarPrestamo(int numExp, String tipo, int anio, String solicitante, String juzgado, Date fechaPrestamo) throws SQLException{
 	    // Comprobar que el expediente existe en la BBDD
 		// TODO: revisar: al solicitar un prestamo no sabes en que caja ni ubicacion esta el expediente.
 		// Solicitas un expediente de un tipo, con numero, año, y de un juzgado. Esto hace una consulta de ese expediente en la bd
@@ -25,15 +26,16 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	    }
 	    
 	    // Obtener la fecha y hora actual del sistema
-	    LocalDate fechaActual = LocalDate.now();
+	    //LocalDate fechaActual = LocalDate.now();
 	    
-	    //Recorremos lista expedientes para a�adirlos a la tabla prestamos
 	    expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
 	    for (Expediente expediente : expList) {
-	    	expediente.setFechaPrestamo(fechaActual);
-	    	//Ejecutamos query
-	    	//Conexion.execute(query);
+	    	expediente.setFechaPrestamo(fechaPrestamo);
+	    	expediente.setSolicitante(solicitante);
 	    }
+	    
+	    //Cogemos primer expediente y actualizamos fecha y solicitante de todos en la bbdd
+	    exp.update(expList.get(0));
 	    
 	    return expList;
 	}

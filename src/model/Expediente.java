@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Expediente {
@@ -13,11 +14,11 @@ public class Expediente {
     private String juzgado;
     private String lugar;
     private String solicitante;
-    private LocalDate fechaPrestamo;
+    private Date fechaPrestamo;
     private int paginas;
 
     public Expediente(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, 
-    					String tomos, String juzgado, String lugar, int paginas, String solicitante, LocalDate fechaPrestamo) {
+    					String tomos, String juzgado, String lugar, int paginas, String solicitante, Date fechaPrestamo) {
         this.numExpediente = numExpediente;
         this.tipo = tipo;
         this.anio = anio;
@@ -130,11 +131,11 @@ public class Expediente {
         this.solicitante = solicitante;
     }
     
-    public LocalDate getFechaPrestamo() {
+    public Date getFechaPrestamo() {
         return fechaPrestamo;
     }
 
-    public void setFechaPrestamo(LocalDate fechaActual) {
+    public void setFechaPrestamo(Date fechaActual) {
         this.fechaPrestamo = fechaActual;
     }
 

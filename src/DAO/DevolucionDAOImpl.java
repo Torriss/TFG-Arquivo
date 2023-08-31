@@ -5,7 +5,6 @@ import java.util.List;
 
 import model.Caja;
 import model.Expediente;
-import model.Prestamo;
 
 public class DevolucionDAOImpl implements DevolucionDAO {
 	
@@ -39,13 +38,17 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 		return expList;
 	}
 	
-	//ojito con valor de retorno, podria ser una lista
 	@Override
-	public Expediente nuevo(int numExp, int anio, String tipo, String juzgado) throws SQLException {
-		//Si el prestamo no existe, buscar una ubicacion disponible para el expediente, pues se trata de un alta
-		Caja.insertarExpedienteEnCaja(expediente);
-		//Prestamo.eliminarPrestamo(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getTomos());
-		return Caja.getById(expediente.getCaja());
+	public Expediente nuevo(int numExp, int anio, String tipo, String juzgado, int paginas) throws SQLException {
+		CajaDAO caja = new CajaDAOImpl();
+		
+		//buscar caja nuevi expediente
+		List<Caja> cajas = caja.buscarCajasParaExpedienteNuevo(anio, tipo, paginas);
+		//asignar nueva caja al expediente
+		Expediente expediente = new Expediente(numExp, tipo, anio,);
+		//restar paginas de caja
+		//actualizar bd
+		return expediente;
 	}
 
 }
