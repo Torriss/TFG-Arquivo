@@ -14,7 +14,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 		CajaDAO caja = new CajaDAOImpl();
 		List<Expediente> expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
 		
-		int paginasTotales = 0; //Sumamos paginas del expediente para saber si ha aumentado de tamaño
+		int paginasTotales = 0; //Sumamos paginas del expediente para saber si ha aumentado de tamaï¿½o
 		for(Expediente expediente : expList) paginasTotales =+ expediente.getPaginas();
 		if(paginasNuevas > paginasTotales) {
 			Caja cajaOriginal = caja.getById(expList.get(expList.size() - 1).getCaja());
@@ -45,7 +45,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 		//buscar caja nuevi expediente
 		List<Caja> cajas = caja.buscarCajasParaExpedienteNuevo(anio, tipo, paginas);
 		//asignar nueva caja al expediente
-		Expediente expediente = new Expediente(numExp, tipo, anio,);
+		Expediente expediente = new Expediente(tipo, numExp, anio);
 		//restar paginas de caja
 		//actualizar bd
 		return expediente;

@@ -61,20 +61,17 @@ public class ControlDevoluciones {
 				devoluciones.getBtnNuevo().setEnabled(false);
 
 				//TODO: parsear info devuelta e insertarla en textbox
-				if (!expedientes.isEmpty())
-				{
-		            int caja = expedientes.get(0).getCaja();
-		            String ubicacion = expedientes.get(0).getUbicacion();
-		            String tomos = expedientes.get(0).getTomos();
-		            String lugar = expedientes.get(0).getLugar();
-		            int paginas = expedientes.get(0).getPaginas();
-		            
-		            //devoluciones.getTextFieldCaja().setText(caja);
-		            devoluciones.getTextFieldUbicacion().setText(ubicacion);
-		            devoluciones.getTextFieldTomos().setText(tomos);
-		            devoluciones.getTextFieldLugar().setText(lugar);
-		            //devoluciones.getTextFieldPaginas().setText(paginas);
-				}
+				int caja = expedientes.get(0).getCaja();
+	            String ubicacion = expedientes.get(0).getUbicacion();
+	            String tomos = expedientes.get(0).getTomos();
+	            String lugar = expedientes.get(0).getLugar();
+	            int paginas = expedientes.get(0).getPaginas();
+	            
+	            //devoluciones.getTextFieldCaja().setText(caja);
+	            devoluciones.getTextFieldUbicacion().setText(ubicacion);
+	            devoluciones.getTextFieldTomos().setText(tomos);
+	            devoluciones.getTextFieldLugar().setText(lugar);
+	            //devoluciones.getTextFieldPaginas().setText(paginas);
 				
 			}
 		} catch (SQLException e1) {
@@ -85,6 +82,8 @@ public class ControlDevoluciones {
 	
 	private void devolverExpediente() {
 		//TODO: pasar info de los textBox a devolucion(...)
+		
+		
 	}
 
 	private void nuevoExpediente() {
@@ -99,7 +98,8 @@ public class ControlDevoluciones {
 		String tomos = devoluciones.getTextFieldTomos().getText();
 		String lugar = devoluciones.getTextFieldLugar().getText();
 		
-		Expediente exp = new Expediente(numExp, tipoExp, anioExp, caja, ubicacion, notas, tomos, juzgado, lugar, pags);
+		Expediente exp = new Expediente(numExp, tipoExp, anioExp, caja, ubicacion,
+				notas, tomos, juzgado, lugar, pags, null, null);
 		try {
 			expediente.insert(exp);
 		} catch (SQLException e1) {

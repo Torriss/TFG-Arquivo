@@ -50,8 +50,11 @@ public class ControlPrestamos{
 	private void buscarUbicacion() {
 		try {
 			List<Expediente> expedientes = new ArrayList<>();
-			expedientes = expediente.buscaExpediente(Integer.parseInt(textFieldNumExp.getText()),
-					comboBoxTipoExp.getSelectedItem().toString(), Integer.parseInt(textFieldAnioExp.getText()), textFieldJuzgado.getText());
+			int numExp = Integer.parseInt(prestamos.getTextFieldNumExp().getText());
+			int anioExp = Integer.parseInt(prestamos.getTextFieldAnioExp().getText());
+			String tipoExp = prestamos.getComboBoxTipoExp().getSelectedItem().toString();
+			String juzgado = prestamos.getComboBoxJuzgado().getSelectedItem().toString();
+			expedientes = expediente.buscaExpediente(numExp, tipoExp, anioExp, juzgado);
 			if(expedientes.isEmpty())
 			{
 				JOptionPane.showMessageDialog(null,
@@ -76,8 +79,14 @@ public class ControlPrestamos{
 	private void imprimirPrestamo() {
 		try {
 			List<Expediente> expedientes = new ArrayList<>();
-			expedientes = prestamo.realizarPrestamo(Integer.parseInt(textFieldNumExp.getText()), comboBoxTipoExp.getSelectedItem().toString(),
-					Integer.parseInt(textFieldAnioExp.getText()), textFieldSolicitante.getText(), textFieldJuzgado.getText());
+			int numExp = Integer.parseInt(prestamos.getTextFieldNumExp().getText());
+			int anioExp = Integer.parseInt(prestamos.getTextFieldAnioExp().getText());
+			String tipoExp = prestamos.getComboBoxTipoExp().getSelectedItem().toString();
+			String solicitante = prestamos.getTextFieldSolicitante().getText();
+			String juzgado = prestamos.getComboBoxJuzgado().getSelectedItem().toString();
+			String fecha = prestamos.getDatePicker().getDateStringOrEmptyString();
+
+			expedientes = prestamo.realizarPrestamo(numExp, tipoExp, anioExp, solicitante, juzgado, fecha);
 			if(expedientes.isEmpty())
 			{
 				JOptionPane.showMessageDialog(null,

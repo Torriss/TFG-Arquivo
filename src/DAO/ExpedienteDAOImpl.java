@@ -70,7 +70,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             String lugar = rs.getString("lugar");
             int paginas = rs.getInt("paginas");
             String solicitante = rs.getString("solicitante");
-            Date fechaPrestamo = rs.getDate("fechaPrestamo");
+            String fechaPrestamo = rs.getString("fechaPrestamo");
             
             Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo);
             expedientes.add(exp);
@@ -114,7 +114,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             String lugar = rs.getString("lugar");
             int paginas = rs.getInt("paginas");
             String solicitante = rs.getString("solicitante");
-            Date fechaPrestamo = rs.getDate("fechaPrestamo");
+            String fechaPrestamo = rs.getString("fechaPrestamo");
             
             Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo);
             expedientes.add(exp);

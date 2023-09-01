@@ -236,7 +236,7 @@ public class CajaDAOImpl implements CajaDAO {
         String ultimaUbicacion = cajasMismoTipoYAnio.get(cajasMismoTipoYAnio.size() - 1).getUbicacion();
         String nuevaUbicacion = buscarNuevaUbicacionContigua(ultimaUbicacion);
         //aqui hay que crear una nueva caja en la base de datos, que supongo que sera cn el DAO pero no estaba seguro y luego esa caja se añade debajo
-        combinacionCajas.add(nuevaCaja);
+        //combinacionCajas.add(nuevaCaja);
         return combinacionCajas;
     }
 

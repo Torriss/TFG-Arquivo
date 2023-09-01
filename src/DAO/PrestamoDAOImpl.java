@@ -12,7 +12,7 @@ import model.Expediente;
 
 public class PrestamoDAOImpl implements PrestamoDAO{
 	
-	public List<Expediente> realizarPrestamo(int numExp, String tipo, int anio, String solicitante, String juzgado, Date fechaPrestamo) throws SQLException{
+	public List<Expediente> realizarPrestamo(int numExp, String tipo, int anio, String solicitante, String juzgado, String fechaPrestamo) throws SQLException{
 	    // Comprobar que el expediente existe en la BBDD
 		// TODO: revisar: al solicitar un prestamo no sabes en que caja ni ubicacion esta el expediente.
 		// Solicitas un expediente de un tipo, con numero, año, y de un juzgado. Esto hace una consulta de ese expediente en la bd

@@ -7,7 +7,7 @@ import java.util.List;
 import model.Expediente;
 
 public interface PrestamoDAO {
-	List<Expediente> realizarPrestamo(int numExp, String tipo, int anio, String solicitante, String juzgado, Date fechaPrestamo) throws SQLException;
+	List<Expediente> realizarPrestamo(int numExp, String tipo, int anio, String solicitante, String juzgado, String fechaPrestamo) throws SQLException;
 	//boolean existePrestamo(int numExp, String tipo, int anio, String juzgado) throws SQLException;
 	//boolean eliminarPrestamo(int numExpediente, String tipo, int anio, String juzgado) throws SQLException;
 }
