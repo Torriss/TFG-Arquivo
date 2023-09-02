@@ -9,14 +9,25 @@ public class Caja {
     private String tipo;
     private int anio;
 
-    public Caja(int paginas, String ubicacion, String tipo, int anio) {
-        this.paginas = PAGINAS_FIJAS;
+    public Caja(int idCaja, int paginas, String ubicacion, String tipo, int anio) {
+        this.paginas = paginas;
         this.tipo = tipo;
         this.anio = anio;
+        this.ubicacion = ubicacion;
+    }
+    public Caja(String ubicacion, String tipo, int anio) {
+    	this.paginas = PAGINAS_FIJAS;
+        this.tipo = tipo;
+        this.anio = anio;
+        this.ubicacion = ubicacion;
     }
 
     // Getters y setters
-
+    
+    public int getPaginasFijas() {
+    	return Caja.PAGINAS_FIJAS;
+    }
+    
     public int getIdCaja() {
         return idCaja;
     }

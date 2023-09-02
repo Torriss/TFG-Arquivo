@@ -32,7 +32,8 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
                 + ", ubicacion = '" + exp.getUbicacion() + "', notas = '" + exp.getNotas() + "', tomos = '" + exp.getTomos()
                 + "', juzgado = '" + exp.getJuzgado() + "', lugar = '" + exp.getLugar() + "', paginas = " + exp.getPaginas()
                 + "', solicitante = '" + exp.getSolicitante() + "', fechaPrestamo = '" + exp.getFechaPrestamo()
-                + " WHERE numExpediente = " + exp.getNumExpediente();
+                + " WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() 
+                + "' AND anio = " + exp.getAnio() + " AND tomos = " + exp.getTomos();
 
         return Conexion.execute(query);
     }

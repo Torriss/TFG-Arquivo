@@ -8,3 +8,6 @@
 -Apañar exportar excel											falta comprobar celdas correctas
 -Echar un ojo excepciones
 -Implementar imprimir
+-Comprobar que se resta adecuadamente paginas de caja y expediente y se actualiza bbdd
+-Explicar memoria cosas que se han dado por hecho (tamaño de cajas y estanterias)
+-Explicar algoritmo utilizado para gestionar cajas
