@@ -6,3 +6,5 @@
 -Implementar transferencia/remision (creo que es lo mismo)		
 -Apañar importar excel											falta comprobar compilacion
 -Apañar exportar excel											falta comprobar celdas correctas
+-Echar un ojo excepciones
+-Implementar imprimir

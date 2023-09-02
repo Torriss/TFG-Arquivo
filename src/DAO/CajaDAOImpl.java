@@ -232,15 +232,14 @@ public class CajaDAOImpl implements CajaDAO {
             return combinacionCajas;
         }
 
-        // si no se encuentra una combinación de cajas chula, buscar una ubicación contigua y crear una nueva caja
+        // si no se encuentra una combinacion de cajas chula, buscar una ubicacion contigua y crear una nueva caja
         String ultimaUbicacion = cajasMismoTipoYAnio.get(cajasMismoTipoYAnio.size() - 1).getUbicacion();
         String nuevaUbicacion = buscarNuevaUbicacionContigua(ultimaUbicacion);
-        //aqui hay que crear una nueva caja en la base de datos, que supongo que sera cn el DAO pero no estaba seguro y luego esa caja se añade debajo
+        //aqui hay que crear una nueva caja en la base de datos, que supongo que sera cn el DAO pero no estaba seguro y luego esa caja se aniade debajo
         //combinacionCajas.add(nuevaCaja);
         return combinacionCajas;
     }
 
-    //este metodo tampoco estoy seguro de que tenga que estar aqui, no se si deberia estar en DAO
     private List<Caja> obtenerCajasPorTipoYAnio(String tipo, int anio) throws SQLException{
         List<Caja> cajasMismoTipoYAnio = new ArrayList<>();
         String query = "SELECT * FROM cajas WHERE tipo = " + tipo + "AND anio = " + anio;
