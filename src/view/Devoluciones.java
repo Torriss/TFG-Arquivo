@@ -6,8 +6,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.github.lgooddatepicker.components.DatePicker;
 
-import utils.FuncComunes;
-
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +20,6 @@ import java.awt.FlowLayout;
 public class Devoluciones extends JFrame {
 
 	private static final long serialVersionUID = 3777120968440321060L;
-	private JTextField textFieldFecha;
 	private JTextField textFieldNumExp;
 	private JTextField textFieldAnioExp;
 	private JTextField textFieldCaja;
@@ -37,14 +34,7 @@ public class Devoluciones extends JFrame {
 	private JButton btnDevolver;
 	private JButton btnNuevo;
 	private JTextField textFieldPaginas;
-	
-	public JTextField getTextFieldFecha() {
-		return textFieldFecha;
-	}
-
-	public void setTextFieldFecha(JTextField textFieldFecha) {
-		this.textFieldFecha = textFieldFecha;
-	}
+	private DatePicker datePicker;
 
 	public JTextField getTextFieldNumExp() {
 		return textFieldNumExp;
@@ -158,18 +148,24 @@ public class Devoluciones extends JFrame {
 		this.textFieldPaginas = textFieldPaginas;
 	}
 
+	public DatePicker getDatePicker() {
+		return datePicker;
+	}
+
+	public void setDatePicker(DatePicker datePicker) {
+		this.datePicker = datePicker;
+	}
+	
 	/**
 	 * Create the frame.
 	 * @throws SQLException 
 	 */
 	public Devoluciones() throws SQLException {
 		setTitle("Devoluciones");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		FuncComunes func = new FuncComunes();
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(5, 0, 0, 0));
@@ -185,14 +181,13 @@ public class Devoluciones extends JFrame {
 		panel_3.add(lblFecha);
 		
 		comboBoxJuzgado = new JComboBox<String>();
-		comboBoxJuzgado = func.iniciarListaJuzgados(comboBoxJuzgado);
 		panel_3.add(comboBoxJuzgado);
 		
 		JPanel panel_4 = new JPanel();
 		panel_3.add(panel_4);
 		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		DatePicker datePicker = new DatePicker();
+		datePicker = new DatePicker();
 	    datePicker.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    	}
@@ -238,7 +233,6 @@ public class Devoluciones extends JFrame {
 		textFieldAnioExp.setColumns(10);
 		
 		comboBoxTipoExp = new JComboBox<String>();
-		comboBoxTipoExp = func.iniciarListaTipoExp(comboBoxTipoExp);
 		panel_2.add(comboBoxTipoExp);
 		
 		JPanel panel_1 = new JPanel();
@@ -255,14 +249,17 @@ public class Devoluciones extends JFrame {
 		panel_1.add(lblUbicacion);
 		
 		textFieldPaginas = new JTextField();
+		textFieldPaginas.setEnabled(false);
 		panel_1.add(textFieldPaginas);
 		textFieldPaginas.setColumns(10);
 		
 		textFieldCaja = new JTextField();
+		textFieldCaja.setEnabled(false);
 		panel_1.add(textFieldCaja);
 		textFieldCaja.setColumns(10);
 		
 		textFieldUbicacion = new JTextField();
+		textFieldUbicacion.setEnabled(false);
 		panel_1.add(textFieldUbicacion);
 		textFieldUbicacion.setColumns(10);
 		
@@ -280,14 +277,17 @@ public class Devoluciones extends JFrame {
 		panel.add(lblLugar);
 		
 		textFieldNotas = new JTextField();
+		textFieldNotas.setEnabled(false);
 		panel.add(textFieldNotas);
 		textFieldNotas.setColumns(10);
 		
 		textFieldTomos = new JTextField();
+		textFieldTomos.setEnabled(false);
 		panel.add(textFieldTomos);
 		textFieldTomos.setColumns(10);
 		
 		textFieldLugar = new JTextField();
+		textFieldLugar.setEnabled(false);
 		panel.add(textFieldLugar);
 		textFieldLugar.setColumns(10);
 		

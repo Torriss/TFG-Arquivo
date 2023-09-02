@@ -1,7 +1,5 @@
 package control;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +17,19 @@ public class ControlPrestamos{
 
 	private PrestamoDAOImpl prestamo = new PrestamoDAOImpl(); //Modelo
 	private ExpedienteDAOImpl expediente = new ExpedienteDAOImpl(); //Modelo
-	Prestamos prestamos; //Vista
-	FuncComunes func;
+	private Prestamos prestamos; //Vista
+	private FuncComunes func;
+	private List<Expediente> expedientes;
 	
 	public ControlPrestamos (Prestamos pr) {
 		prestamos = pr;
 		func = new FuncComunes();
+		expedientes = new ArrayList<>();
+		initView();
 	}
 	
 	private void initView() {
 		try {
-			JComboBox<String> comboBoxEstado = func.iniciarListaEstado(prestamos.getComboBoxEstado());
-			prestamos.setComboBoxEstado(comboBoxEstado);
 			JComboBox<String> comboBoxJuzgado;
 			comboBoxJuzgado = func.iniciarListaJuzgados(prestamos.getComboBoxJuzgado());
 			prestamos.setComboBoxJuzgado(comboBoxJuzgado);
@@ -42,14 +41,23 @@ public class ControlPrestamos{
 		}
 	}
 	
-	private void initControl() {
+	public void initControl() {
 		prestamos.getBtnBuscarUbic().addActionListener(e -> buscarUbicacion());
 		prestamos.getBtnImprimir().addActionListener(e -> imprimirPrestamo());
 	}
 
+	private void clearControl() {
+		prestamos.getTextFieldNumExp().setText("");
+		prestamos.getTextFieldAnioExp().setText("");
+		prestamos.getTextFieldSolicitante().setText("");
+		prestamos.getDatePicker().setText("");
+		prestamos.getTextFieldLugar().setText("");
+		
+		prestamos.getBtnImprimir().setEnabled(false);
+	}
+	
 	private void buscarUbicacion() {
 		try {
-			List<Expediente> expedientes = new ArrayList<>();
 			int numExp = Integer.parseInt(prestamos.getTextFieldNumExp().getText());
 			int anioExp = Integer.parseInt(prestamos.getTextFieldAnioExp().getText());
 			String tipoExp = prestamos.getComboBoxTipoExp().getSelectedItem().toString();
@@ -63,8 +71,8 @@ public class ControlPrestamos{
 			}
 			else
 			{
-				//TODO: actualizar estado y habilitar boton imprimir si esta disponible
 				// TODO: pensar como mostar la lista en el dialogo
+				prestamos.getBtnImprimir().setEnabled(true);
 				JOptionPane.showMessageDialog(null,
 						"El expediente se encuentra en: ", "Ubicación",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -78,12 +86,11 @@ public class ControlPrestamos{
 
 	private void imprimirPrestamo() {
 		try {
-			List<Expediente> expedientes = new ArrayList<>();
-			int numExp = Integer.parseInt(prestamos.getTextFieldNumExp().getText());
-			int anioExp = Integer.parseInt(prestamos.getTextFieldAnioExp().getText());
-			String tipoExp = prestamos.getComboBoxTipoExp().getSelectedItem().toString();
+			int numExp = expedientes.get(0).getNumExpediente();
+			int anioExp = expedientes.get(0).getAnio();
+			String tipoExp = expedientes.get(0).getTipo();
+			String juzgado = expedientes.get(0).getJuzgado();
 			String solicitante = prestamos.getTextFieldSolicitante().getText();
-			String juzgado = prestamos.getComboBoxJuzgado().getSelectedItem().toString();
 			String fecha = prestamos.getDatePicker().getDateStringOrEmptyString();
 
 			expedientes = prestamo.realizarPrestamo(numExp, tipoExp, anioExp, solicitante, juzgado, fecha);
@@ -102,6 +109,9 @@ public class ControlPrestamos{
 						"El expediente se encuentra en: ", "Ubicación",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
+			
+			expedientes.clear();
+			clearControl();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

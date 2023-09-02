@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -25,7 +24,6 @@ public class Prestamos extends JFrame {
 	private JTextField textFieldSolicitante;
 	private JTextField textFieldLugar;
 	private JComboBox<String> comboBoxTipoExp;
-	private JComboBox<String> comboBoxEstado;
 	private JComboBox<String> comboBoxJuzgado;
 	private JButton btnBuscarUbic;
 	private JButton btnImprimir;
@@ -72,14 +70,6 @@ public class Prestamos extends JFrame {
 		this.comboBoxTipoExp = comboBoxTipoExp;
 	}
 
-	public JComboBox<String> getComboBoxEstado() {
-		return comboBoxEstado;
-	}
-
-	public void setComboBoxEstado(JComboBox<String> comboBoxEstado) {
-		this.comboBoxEstado = comboBoxEstado;
-	}
-
 	public JComboBox<String> getComboBoxJuzgado() {
 		return comboBoxJuzgado;
 	}
@@ -122,14 +112,14 @@ public class Prestamos extends JFrame {
 
 	public Prestamos() throws SQLException {
 		setTitle("Préstamos");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		JPanel contentPanePrestamos = new JPanel();
 		contentPanePrestamos.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPanePrestamos);
 		contentPanePrestamos.setLayout(new GridLayout(2, 1, 0, 0));
-		
+
 		JPanel panel_1 = new JPanel();
 		contentPanePrestamos.add(panel_1);
 		panel_1.setLayout(new GridLayout(3, 2, 0, 0));
@@ -219,13 +209,6 @@ public class Prestamos extends JFrame {
 		panel.add(panel_8);
 		panel_8.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblEstado = new JLabel("Estado:");
-		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_8.add(lblEstado);
-		
-		comboBoxEstado = new JComboBox<String>();
-		panel_8.add(comboBoxEstado);
-		
 		JPanel panel_5 = new JPanel();
 		panel.add(panel_5);
 
@@ -234,6 +217,7 @@ public class Prestamos extends JFrame {
 		panel_5.add(btnBuscarUbic);
 		
 		btnImprimir = new JButton("Imprimir");
+		btnImprimir.setEnabled(false);
 		panel_5.add(btnImprimir);
 	}
 

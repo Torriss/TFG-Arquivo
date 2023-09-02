@@ -9,7 +9,7 @@ import model.Expediente;
 public class DevolucionDAOImpl implements DevolucionDAO {
 	
 	@Override
-	public List<Expediente> devolucion(int numExp, int anio, String tipo, String juzgado, int paginasNuevas) throws SQLException {
+	public List<Expediente> devolucion(int numExp, int anio, String tipo, String juzgado, String notas, int paginasNuevas) throws SQLException {
 		ExpedienteDAO exp = new ExpedienteDAOImpl();
 		CajaDAO caja = new CajaDAOImpl();
 		List<Expediente> expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);

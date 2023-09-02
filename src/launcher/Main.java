@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.sql.SQLException;
 
 import DAO.*;
+import control.ControlMenu;
 import view.*;
 
 public class Main {
@@ -17,8 +18,10 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindow mainWindow = new MainWindow();
+					Menu mainWindow = new Menu();
 					mainWindow.setVisible(true);
+					ControlMenu mainWindowContr = new ControlMenu();
+					mainWindowContr.initControl();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
