@@ -52,6 +52,15 @@ public class PrestamoDAOImpl implements PrestamoDAO{
     }
 	
 	@Override
+    public boolean update(Prestamo prest) throws SQLException, ClassNotFoundException{
+        String query = "UPDATE prestamos SET fechaDevolucion = '" + prest.getFechaDevolucion() 
+                + " WHERE numExpediente = " + prest.getNumExpediente() + " AND tipo = '" + prest.getTipo() 
+                + "' AND anio = " + prest.getAnio() + " AND fechaPrestamo = " + prest.getFechaPrestamo();
+
+        return Conexion.execute(query);
+    }
+	
+	@Override
 	public boolean expedienteDisponible(int numExpediente, String tipo, int anio, String juzgado) throws SQLException, ClassNotFoundException{
 	    String query = "SELECT DISTINCT * FROM expedientes WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
 	    				+ " AND anio = " + anio + "" + " AND juzgado = " + juzgado + "";
@@ -64,13 +73,19 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	    if(estado == "expurgado" || estado == "prestado") return false;
 	    else return true;
 	}
-//	
-//	@Override
-//	public boolean eliminarPrestamo(int numExpediente, String tipo, int anio, String tomos) throws SQLException{
-//        String query = "DELETE FROM Prestamos WHERE numExpediente = " + numExpediente +
-//                " AND tipo = '" + tipo + "'" +
-//                " AND anio = " + anio +
-//                " AND tomos = '" + tomos + "'";
-//        return Conexion.execute(query);
-//    }
+	
+	@Override
+	public Prestamo existePrestamoSinDevolver(int numExpediente, String tipo, int anio, String juzgado) throws ClassNotFoundException, SQLException {
+		String query = "SELECT * FROM prestamos WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
+				+ " AND anio = " + anio + "" + " AND juzgado = " + juzgado + " AND fechaDevolucion = " + null + "";
+		ResultSet rs = Conexion.executeSelect(query);
+		Prestamo prestamo = null;
+
+		if (rs.next()) {
+            String fechaPrestamo = rs.getString("fechaPrestamo");
+            int idSolicitante = rs.getInt("idSolicitante");
+            prestamo = new Prestamo(numExpediente, tipo, anio, juzgado, fechaPrestamo, null, idSolicitante);
+		}
+		return prestamo;
+	}
 }

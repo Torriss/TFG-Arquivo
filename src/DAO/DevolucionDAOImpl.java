@@ -5,17 +5,23 @@ import java.util.List;
 
 import model.Caja;
 import model.Expediente;
+import model.Prestamo;
 
 public class DevolucionDAOImpl implements DevolucionDAO {
 	
 	@Override
 	public List<Expediente> devolucion(int numExp, int anio, String tipo, String juzgado, String notas, int paginasNuevas, String fechaDevolucion) throws SQLException, ClassNotFoundException {
 		ExpedienteDAO exp = new ExpedienteDAOImpl();
+		PrestamoDAO prest = new PrestamoDAOImpl();
 		CajaDAO caja = new CajaDAOImpl();
 		List<Expediente> expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
 		
-		int paginasTotales = 0; //Sumamos paginas del expediente para saber si ha aumentado de tamanio
-		for(Expediente expediente : expList) paginasTotales =+ expediente.getPaginas();
+		int paginasTotales = 0; //Sumamos paginas del expediente para saber si ha aumentado de tamanio y de paso actualizamos estado
+		for(Expediente expediente : expList) {
+			paginasTotales =+ expediente.getPaginas();
+			expediente.setNotas(notas);
+			expediente.setEstado("disponible");
+		}
 		if(paginasNuevas > paginasTotales) {
 			Caja cajaOriginal = caja.getById(expList.get(expList.size() - 1).getCaja());
 			//si la caja del ultimo tomo tiene espacio suficiente para las nuevas paginas, se mantiene todo, sino se reubican todas las cajas
@@ -50,6 +56,11 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 				caja.update(ultCaja);
 			}
 		}
+		//aniadimos fechaDevolucion al prestamo
+		Prestamo prestamo = prest.existePrestamoSinDevolver(numExp, tipo, anio, juzgado);
+		prestamo.setFechaDevolucion(fechaDevolucion);
+		prest.update(prestamo);
+		
 		return expList;
 	}
 	
