@@ -26,7 +26,7 @@ public class Transferencia {
             FileInputStream fis = new FileInputStream(new File(filePath));
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-            // Leer la primera hoja del archivo Excel (ajusta esto según tu estructura)
+            // Leer la primera hoja del archivo Excel (ajusta esto segï¿½n tu estructura)
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = sheet.iterator();
@@ -41,20 +41,20 @@ public class Transferencia {
                 Iterator<Cell> cellIterator = row.cellIterator();
 
                 // Crear un objeto Expediente y asignar valores desde el archivo Excel
-                Expediente expediente = new Expediente();
-
-                expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
-                expediente.setTipo(cellIterator.next().getStringCellValue());
-                expediente.setAnio((int) cellIterator.next().getNumericCellValue());
-                // ... asignar otros atributos de expediente
-                
-                CajaDAO cajas = new CajaDAOImpl();
-                List<Caja> caja = cajas.buscarCajasParaExpedienteNuevo(expediente.getAnio(), expediente.getTipo(), expediente.getPaginas());
-                //actualizar ubi de expediente
-                //actualizar caja de expediente
-                //restar paginas de caja
-                
-                expedientes.add(expediente);
+//                Expediente expediente = new Expediente();
+//
+//                expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
+//                expediente.setTipo(cellIterator.next().getStringCellValue());
+//                expediente.setAnio((int) cellIterator.next().getNumericCellValue());
+//                // ... asignar otros atributos de expediente
+//                
+//                CajaDAO cajas = new CajaDAOImpl();
+//                List<Caja> caja = cajas.buscarCajasParaExpedienteNuevo(expediente.getAnio(), expediente.getTipo(), expediente.getPaginas());
+//                //actualizar ubi de expediente
+//                //actualizar caja de expediente
+//                //restar paginas de caja
+//                
+//                expedientes.add(expediente);
             }
 
             fis.close();
@@ -63,10 +63,10 @@ public class Transferencia {
             e.printStackTrace();
         }
 
-        // Llamar a la función buscarNuevaCaja para actualizar la ubicación de los expedientes
+        // Llamar a la funciï¿½n buscarNuevaCaja para actualizar la ubicaciï¿½n de los expedientes
         ExpedienteDAO expedienteDAO = new ExpedienteDAOImpl();
         for (Expediente expediente : expedientes) {
-            expedienteDAO.insert(expediente);
+//            expedienteDAO.insert(expediente);
         }
 
         return expedientes;

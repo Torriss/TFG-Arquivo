@@ -26,7 +26,7 @@ public class Expurgo {
             FileInputStream fis = new FileInputStream(new File(filePath));
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-            // Leer la primera hoja del archivo Excel (puedes ajustar esto según tu estructura)
+            // Leer la primera hoja del archivo Excel (puedes ajustar esto segï¿½n tu estructura)
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = sheet.iterator();
@@ -41,14 +41,14 @@ public class Expurgo {
                 Iterator<Cell> cellIterator = row.cellIterator();
 
                 // Crear un objeto Expediente y asignar valores desde el archivo Excel
-                Expediente expediente = new Expediente();
-
-                expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
-                expediente.setTipo(cellIterator.next().getStringCellValue());
-                expediente.setAnio((int) cellIterator.next().getNumericCellValue());
-                // ... asignar otros atributos de expediente
-
-                expedientesAEliminar.add(expediente);
+//                Expediente expediente = new Expediente();
+//
+//                expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
+//                expediente.setTipo(cellIterator.next().getStringCellValue());
+//                expediente.setAnio((int) cellIterator.next().getNumericCellValue());
+//                // ... asignar otros atributos de expediente
+//
+//                expedientesAEliminar.add(expediente);
             }
 
             fis.close();
@@ -61,7 +61,7 @@ public class Expurgo {
         ExpedienteDAO expedienteDAO = new ExpedienteDAOImpl();
         for (Expediente expediente : expedientesAEliminar) {
             int numExpediente = expediente.getNumExpediente();
-            expedienteDAO.delete(numExpediente);
+//            expedienteDAO.delete(numExpediente);
         }
         
         return expedientesAEliminar;
