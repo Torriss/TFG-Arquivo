@@ -1,8 +1,7 @@
-package excel;
+package DAO;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,20 +12,21 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import DAO.*;
-import model.Caja;
+import DAO.ExpedienteDAO;
+import DAO.ExpedienteDAOImpl;
 import model.Expediente;
 
-public class Transferencia {
-
-    public static List<Expediente> transferirExpedientes(String filePath) {
-        List<Expediente> expedientes = new ArrayList<>();
+public class ExpurgoDAOImpl implements ExpurgoDAO{
+    
+    public List<Expediente> expurgo(String filePath) {
+        // Crear una lista para almacenar los expedientes desde el archivo Excel
+        List<Expediente> expedientesAEliminar = new ArrayList<>();
 
         try {
             FileInputStream fis = new FileInputStream(new File(filePath));
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-            // Leer la primera hoja del archivo Excel (ajusta esto seg�n tu estructura)
+            // Leer la primera hoja del archivo Excel (puedes ajustar esto seg�n tu estructura)
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = sheet.iterator();
@@ -47,14 +47,8 @@ public class Transferencia {
 //                expediente.setTipo(cellIterator.next().getStringCellValue());
 //                expediente.setAnio((int) cellIterator.next().getNumericCellValue());
 //                // ... asignar otros atributos de expediente
-//                
-//                CajaDAO cajas = new CajaDAOImpl();
-//                List<Caja> caja = cajas.buscarCajasParaExpedienteNuevo(expediente.getAnio(), expediente.getTipo(), expediente.getPaginas());
-//                //actualizar ubi de expediente
-//                //actualizar caja de expediente
-//                //restar paginas de caja
-//                
-//                expedientes.add(expediente);
+//
+//                expedientesAEliminar.add(expediente);
             }
 
             fis.close();
@@ -63,13 +57,14 @@ public class Transferencia {
             e.printStackTrace();
         }
 
-        // Llamar a la funci�n buscarNuevaCaja para actualizar la ubicaci�n de los expedientes
+        // Luego de importar los expedientes desde el archivo Excel, podemos eliminarlos de la base de datos
         ExpedienteDAO expedienteDAO = new ExpedienteDAOImpl();
-        for (Expediente expediente : expedientes) {
-//            expedienteDAO.insert(expediente);
+        for (Expediente expediente : expedientesAEliminar) {
+            int numExpediente = expediente.getNumExpediente();
+//            expedienteDAO.delete(numExpediente);
         }
-
-        return expedientes;
+        
+        return expedientesAEliminar;
     }
 }
 

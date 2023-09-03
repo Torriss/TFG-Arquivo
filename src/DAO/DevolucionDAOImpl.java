@@ -9,7 +9,7 @@ import model.Expediente;
 public class DevolucionDAOImpl implements DevolucionDAO {
 	
 	@Override
-	public List<Expediente> devolucion(int numExp, int anio, String tipo, String juzgado, String notas, int paginasNuevas) throws SQLException {
+	public List<Expediente> devolucion(int numExp, int anio, String tipo, String juzgado, String notas, int paginasNuevas, String fechaDevolucion) throws SQLException {
 		ExpedienteDAO exp = new ExpedienteDAOImpl();
 		CajaDAO caja = new CajaDAOImpl();
 		List<Expediente> expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
@@ -61,7 +61,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 		//buscar caja nuevo expediente
 		Caja nuevaCaja= caja.buscarCajasParaExpedienteNuevo(anio, tipo, paginas);
 		//asignar nueva caja al expediente
-		Expediente expediente = new Expediente(numExp, tipo, anio, nuevaCaja.getIdCaja(), nuevaCaja.getUbicacion(), null, null, juzgado, "archivo", paginas, null, null);
+		Expediente expediente = new Expediente(numExp, tipo, anio, nuevaCaja.getIdCaja(), nuevaCaja.getUbicacion(), null, null, juzgado, "archivo", paginas, null);
 		//restar paginas de caja
 		nuevaCaja.restarPaginas(paginas);
 		//actualizar bd

@@ -25,7 +25,6 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	    	exp.update(expediente);
 	    }
 	    
-	    
 	    return expList;
 	}
 

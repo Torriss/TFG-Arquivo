@@ -11,12 +11,11 @@ public class Expediente {
     private String tomos;
     private String juzgado;
     private String lugar;
-    private String solicitante;
-    private String fechaPrestamo;
+    private String estado;
     private int paginas;
 
     public Expediente(int numExpediente, String tipo, int anio, int caja, String ubicacion, String notas, 
-    					String tomos, String juzgado, String lugar, int paginas, String solicitante, String fechaPrestamo) {
+    					String tomos, String juzgado, String lugar, int paginas, String estado) {
         this.numExpediente = numExpediente;
         this.tipo = tipo;
         this.anio = anio;
@@ -27,8 +26,7 @@ public class Expediente {
         this.juzgado = juzgado;
         this.lugar = lugar;
         this.paginas = paginas;
-        this.solicitante = solicitante;
-        this.fechaPrestamo = fechaPrestamo;
+        this.estado = estado;
     }
 
     public Expediente(String tipoExp, int numExp, int anioExp) {
@@ -121,20 +119,12 @@ public class Expediente {
     	this.paginas =+ paginas;
     }
     
-    public String getSolicitante() {
-        return solicitante;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setSolicitante(String solicitante) {
-        this.solicitante = solicitante;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
-    public String getFechaPrestamo() {
-        return fechaPrestamo;
-    }
-
-    public void setFechaPrestamo(String fechaActual) {
-        this.fechaPrestamo = fechaActual;
-    }
-
 }

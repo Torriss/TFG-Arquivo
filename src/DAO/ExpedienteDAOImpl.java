@@ -16,11 +16,11 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         // Posible comprobacion de no nulos y rangos
 
         // Construir la query
-        String query = "INSERT INTO Expedientes (numExpediente, tipo, caja, anio, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo) VALUES ('"
+        String query = "INSERT INTO Expedientes (numExpediente, tipo, caja, anio, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) VALUES ('"
                 + exp.getNumExpediente() + "','" + exp.getTipo() + "','" + exp.getCaja() + "','"
         		+ exp.getAnio() + "','" + exp.getUbicacion() + "','" + exp.getNotas() + "','"
                 + exp.getTomos() + "','" + exp.getJuzgado() + "','" + exp.getLugar() + "','"
-        		+ exp.getPaginas() + "','" + exp.getSolicitante() + "','" + exp.getFechaPrestamo() + "')";
+        		+ exp.getPaginas() + "','" + exp.getEstado() + "')";
 
         // Ejecutar la query en la BBDD
         return Conexion.execute(query);
@@ -31,7 +31,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         String query = "UPDATE Expedientes SET tipo = '" + exp.getTipo() + "', anio = " + exp.getAnio() + ", caja = " + exp.getCaja()
                 + ", ubicacion = '" + exp.getUbicacion() + "', notas = '" + exp.getNotas() + "', tomos = '" + exp.getTomos()
                 + "', juzgado = '" + exp.getJuzgado() + "', lugar = '" + exp.getLugar() + "', paginas = " + exp.getPaginas()
-                + "', solicitante = '" + exp.getSolicitante() + "', fechaPrestamo = '" + exp.getFechaPrestamo()
+                + "', estado = '" + exp.getEstado()
                 + " WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() 
                 + "' AND anio = " + exp.getAnio() + " AND tomos = " + exp.getTomos();
 
@@ -70,10 +70,9 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             String juzgado = rs.getString("juzgado");
             String lugar = rs.getString("lugar");
             int paginas = rs.getInt("paginas");
-            String solicitante = rs.getString("solicitante");
-            String fechaPrestamo = rs.getString("fechaPrestamo");
+            String estado = rs.getString("estado");
             
-            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo);
+            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado);
             expedientes.add(exp);
         }
         return expedientes;
@@ -114,10 +113,9 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             String juzgado = rs.getString("juzgado");
             String lugar = rs.getString("lugar");
             int paginas = rs.getInt("paginas");
-            String solicitante = rs.getString("solicitante");
-            String fechaPrestamo = rs.getString("fechaPrestamo");
+            String solicitante = rs.getString("estado");
             
-            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, solicitante, fechaPrestamo);
+            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado);
             expedientes.add(exp);
         }
         
@@ -167,64 +165,4 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         return res;
 	}
 	
-	/*
-	public Expediente buscaExpedientesTomos(int numExpe, String tipe, int year, String tomos) throws SQLException{
-    	Expediente exp = null;
-        String query = "SELECT * FROM Expedientes WHERE numExpediente = " + numExpe +
-        		" AND tipo = '" + tipe + "'" +
-                " AND anio = " + year + "" +
-                " AND tomos = '" + tomos + "'";
-
-        ResultSet rs = Conexion.executeSelect(query);
-        if (rs.next()) {
-        	int numExpediente = rs.getInt("numExpediente");
-            String tipo = rs.getString("tipo");
-            int anio = rs.getInt("anio");
-            int caja = rs.getInt("caja");
-            String ubicacion = rs.getString("ubicacion");
-            String notas = rs.getString("notas");
-            String tomo = rs.getString("tomos");
-            String juzgado = rs.getString("juzgado");
-            String lugar = rs.getString("lugar");
-            int paginas = rs.getInt("paginas");
-            
-            exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomo, juzgado, lugar, paginas);
-        }
-        return exp;
-    }
-	
-	public String getUbicacionExp(Expediente exp) throws SQLException {
-    	String res = "";
-    	String sql = "SELECT ubicacion FROM Expedientes WHERE numExpediente = " + exp.numExpediente;
-        ResultSet rs = Conexion.executeSelect(sql);
-        
-        if (rs.next()) {
-	        res = rs.getString("ubicacion");
-        }
-        return res;
-    }
-	
-	public Expediente getByID(int id) throws SQLException {
-        Expediente exp = null;
-
-        String sql = "SELECT * FROM Expedientes WHERE numExpediente = " + id;
-        ResultSet rs = Conexion.executeSelect(sql);
-
-        if (rs.next()) {
-            int numExpediente = rs.getInt("numExpediente");
-            String tipo = rs.getString("tipo");
-            int anio = rs.getInt("anio");
-            int caja = rs.getInt("caja");
-            String ubicacion = rs.getString("ubicacion");
-            String notas = rs.getString("notas");
-            String tomos = rs.getString("tomos");
-            String juzgado = rs.getString("juzgado");
-            String lugar = rs.getString("lugar");
-            int paginas = rs.getInt("paginas"); // Se obtiene el número de páginas desde la base de datos
-
-            exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
-        }
-
-        return exp;
-    }*/
 }
