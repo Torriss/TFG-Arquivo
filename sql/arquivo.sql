@@ -72,8 +72,73 @@ CREATE TABLE `cajas` (
   PRIMARY KEY (`idcaja`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO cajas (anio, tipo, paginas, ubicacion) 
-VALUES ('2009', 'oral', '70', 'A-1-2');
+VALUES ('2009', 'oral', '70', 'A-1-2-4');
 INSERT INTO cajas (anio, tipo, paginas, ubicacion) 
-VALUES ('2010', 'oral', '67', 'B-1-3');
+VALUES ('2010', 'oral', '67', 'B-1-3-4');
 INSERT INTO cajas (anio, tipo, paginas, ubicacion) 
-VALUES ('2011', 'oral', '78', 'C-2-2');
+VALUES ('2011', 'oral', '78', 'C-2-2-3');
+
+
+-- expedientes
+INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
+VALUES
+    (4, 'escrito', 2012, 103, 'D-3-1', 'Algunas notas', 'Tomos 1-3', 'civil', 'archivo general', 40, 'transferido'),
+    (5, 'escrito', 2013, 104, 'E-2-3', 'Notas importantes', 'Tomos 2-4', 'penal', 'archivo general', 35, 'transferido'),
+    (6, 'escrito', 2014, 105, 'F-1-1', 'Sin notas', NULL, 'instruccion', 'archivo general', 50, 'disponible'),
+    (7, 'oral', 2015, 106, 'G-2-2', NULL, NULL, 'guardia', 'archivo general', 28, 'disponible'),
+    (8, 'escrito', 2016, 107, 'H-1-3', 'Notas detalladas', 'Tomos 3-6', 'civil', 'archivo general', 60, 'disponible'),
+    (9, 'escrito', 2017, 108, 'I-3-1', 'Notas importantes', 'Tomos 2-5', 'penal', 'archivo general', 45, 'disponible'),
+    (10, 'oral', 2018, 109, 'J-2-3', 'Algunas notas', 'Tomos 1-2', 'instruccion', 'archivo general', 32, 'disponible'),
+    (11, 'escrito', 2019, 110, 'K-1-2', NULL, NULL, 'guardia', 'archivo general', 55, 'disponible'),
+    (12, 'escrito', 2020, 111, 'L-2-1', 'Sin notas', 'Tomos 1-4', 'civil', 'archivo general', 48, 'expurgado'),
+    (13, 'escrito', 2021, 112, 'M-3-2', 'Notas detalladas', 'Tomos 2-3', 'penal', 'archivo general', 36, 'expurgado');
+
+
+
+-- solicitantes
+INSERT INTO solicitantes (nombre, apellidos, edad, cargo) 
+VALUES
+    ('ana', 'rodriguez', 35, 'secretario de juez'),
+    ('carlos', 'lopez', 42, 'fiscal'),
+    ('luisa', 'martinez', 48, 'juez'),
+    ('raul', 'santos', 38, 'secretario de juez'),
+    ('carmen', 'perez', 41, 'fiscal'),
+    ('javier', 'gonzalez', 49, 'juez'),
+    ('patricia', 'ramirez', 33, 'secretario de juez'),
+    ('lucia', 'fernandez', 45, 'fiscal'),
+    ('roberto', 'sanchez', 51, 'juez'),
+    ('laura', 'gomez', 36, 'secretario de juez');
+
+
+-- prestamos
+INSERT INTO prestamos (idSolicitante, numExpediente, tipo, anio, juzgado, fechaPrestamo, fechaDevolucion) 
+VALUES
+    (4, 4, 'escrito', 2012, 'civil', '2023-07-25', '2023-08-10'),
+    (5, 5, 'escrito', 2013, 'penal', '2023-08-05', NULL),
+    (6, 6, 'escrito', 2014, 'instruccion', '2023-07-20', '2023-08-04'),
+    (7, 7, 'oral', 2015, 'guardia', '2023-08-01', NULL),
+    (8, 8, 'escrito', 2016, 'civil', '2023-07-30', '2023-08-15'),
+    (9, 9, 'escrito', 2017, 'penal', '2023-07-15', NULL),
+    (10, 10, 'oral', 2018, 'instruccion', '2023-08-02', '2023-08-17'),
+    (11, 11, 'escrito', 2019, 'guardia', '2023-08-10', NULL),
+    (12, 12, 'escrito', 2020, 'civil', '2023-07-22', '2023-08-07'),
+    (13, 13, 'escrito', 2021, 'penal', '2023-07-18', NULL);
+
+
+--historicaExpurgo
+
+INSERT INTO historicaExpurgo (numExpediente, tipo, anio, juzgado, fechaHito) 
+VALUES
+    (12, 'escrito', 2020, 'civil', '2014-04-30'),
+    (13, 'escrito', 2021, 'penal', '2013-03-31');
+
+
+
+--historicaTransferencia
+
+
+INSERT INTO historicaTransferencia (numExpediente, tipo, anio, juzgado, fechaHito) 
+VALUES
+    (4, 'escrito', 2012, 'civil', '2023-02-15'),
+    (5, 'escrito', 2013, 'penal', '2023-03-20');
+
