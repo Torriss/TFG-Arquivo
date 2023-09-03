@@ -82,16 +82,16 @@ VALUES ('2011', 'oral', '78', 'C-2-2-3');
 -- expedientes
 INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
 VALUES
-    (4, 'escrito', 2012, 103, 'D-3-1', 'Algunas notas', 'Tomos 1-3', 'civil', 'archivo general', 40, 'transferido'),
-    (5, 'escrito', 2013, 104, 'E-2-3', 'Notas importantes', 'Tomos 2-4', 'penal', 'archivo general', 35, 'transferido'),
-    (6, 'escrito', 2014, 105, 'F-1-1', 'Sin notas', NULL, 'instruccion', 'archivo general', 50, 'disponible'),
-    (7, 'oral', 2015, 106, 'G-2-2', NULL, NULL, 'guardia', 'archivo general', 28, 'disponible'),
-    (8, 'escrito', 2016, 107, 'H-1-3', 'Notas detalladas', 'Tomos 3-6', 'civil', 'archivo general', 60, 'disponible'),
-    (9, 'escrito', 2017, 108, 'I-3-1', 'Notas importantes', 'Tomos 2-5', 'penal', 'archivo general', 45, 'disponible'),
-    (10, 'oral', 2018, 109, 'J-2-3', 'Algunas notas', 'Tomos 1-2', 'instruccion', 'archivo general', 32, 'disponible'),
-    (11, 'escrito', 2019, 110, 'K-1-2', NULL, NULL, 'guardia', 'archivo general', 55, 'disponible'),
-    (12, 'escrito', 2020, 111, 'L-2-1', 'Sin notas', 'Tomos 1-4', 'civil', 'archivo general', 48, 'expurgado'),
-    (13, 'escrito', 2021, 112, 'M-3-2', 'Notas detalladas', 'Tomos 2-3', 'penal', 'archivo general', 36, 'expurgado');
+    (4, 'escrito', 2012, 2022, 'N-2-3-4', 'Algunas notas', 'Tomos 1-3', 'civil', 'archivo general', 10, 'transferido'),
+    (5, 'escrito', 2013, 2022, 'N-2-3-4', 'Notas importantes', 'Tomos 2-4', 'penal', 'archivo general', 10, 'transferido'),
+    (6, 'escrito', 2014, 2022, 'N-2-3-4', 'Sin notas', NULL, 'instruccion', 'archivo general', 10, 'disponible'),
+    (7, 'oral', 2015, 2023, 'O-1-4-3', NULL, NULL, 'guardia', 'archivo general', 10, 'disponible'),
+    (8, 'escrito', 2016, 2023, 'O-1-4-3', 'Notas detalladas', 'Tomos 3-6', 'civil', 'archivo general', 10, 'disponible'),
+    (9, 'escrito', 2017, 2023, 'O-1-4-3', 'Notas importantes', 'Tomos 2-5', 'penal', 'archivo general', 10, 'disponible'),
+    (10, 'oral', 2018, 2023, 'O-1-4-3', 'Algunas notas', 'Tomos 1-2', 'instruccion', 'archivo general', 10, 'disponible'),
+    (11, 'escrito', 2019, 2024, 'P-3-2-1', NULL, NULL, 'guardia', 'archivo general', 10, 'disponible'),
+    (12, 'escrito', 2020, 2024, 'P-3-2-1', 'Sin notas', 'Tomos 1-4', 'civil', 'archivo general', 10, 'expurgado'),
+    (13, 'escrito', 2021, 2024, 'P-3-2-1', 'Notas detalladas', 'Tomos 2-3', 'penal', 'archivo general', 10, 'expurgado');
 
 
 
@@ -101,7 +101,7 @@ VALUES
     ('ana', 'rodriguez', 35, 'secretario de juez'),
     ('carlos', 'lopez', 42, 'fiscal'),
     ('luisa', 'martinez', 48, 'juez'),
-    ('raul', 'santos', 38, 'secretario de juez'),
+    ('raul', '0santos', 38, 'secretario de juez'),
     ('carmen', 'perez', 41, 'fiscal'),
     ('javier', 'gonzalez', 49, 'juez'),
     ('patricia', 'ramirez', 33, 'secretario de juez'),
@@ -113,16 +113,16 @@ VALUES
 -- prestamos
 INSERT INTO prestamos (idSolicitante, numExpediente, tipo, anio, juzgado, fechaPrestamo, fechaDevolucion) 
 VALUES
-    (4, 4, 'escrito', 2012, 'civil', '2023-07-25', '2023-08-10'),
-    (5, 5, 'escrito', 2013, 'penal', '2023-08-05', NULL),
-    (6, 6, 'escrito', 2014, 'instruccion', '2023-07-20', '2023-08-04'),
-    (7, 7, 'oral', 2015, 'guardia', '2023-08-01', NULL),
-    (8, 8, 'escrito', 2016, 'civil', '2023-07-30', '2023-08-15'),
-    (9, 9, 'escrito', 2017, 'penal', '2023-07-15', NULL),
-    (10, 10, 'oral', 2018, 'instruccion', '2023-08-02', '2023-08-17'),
-    (11, 11, 'escrito', 2019, 'guardia', '2023-08-10', NULL),
-    (12, 12, 'escrito', 2020, 'civil', '2023-07-22', '2023-08-07'),
-    (13, 13, 'escrito', 2021, 'penal', '2023-07-18', NULL);
+    (42, 4, 'escrito', 2012, 'civil', '2023-07-25', '2023-08-10'),
+    (42, 5, 'escrito', 2013, 'penal', '2023-08-05', NULL),
+    (42, 6, 'escrito', 2014, 'instruccion', '2023-07-20', '2023-08-04'),
+    (42, 7, 'oral', 2015, 'guardia', '2023-08-01', NULL),
+    (48, 8, 'escrito', 2016, 'civil', '2023-07-30', '2023-08-15'),
+    (38, 9, 'escrito', 2017, 'penal', '2023-07-15', NULL),
+    (33, 10, 'oral', 2018, 'instruccion', '2023-08-02', '2023-08-17'),
+    (33, 11, 'escrito', 2019, 'guardia', '2023-08-10', NULL),
+    (51, 12, 'escrito', 2020, 'civil', '2023-07-22', '2023-08-07'),
+    (36, 13, 'escrito', 2021, 'penal', '2023-07-18', NULL);
 
 
 --historicaExpurgo
@@ -141,4 +141,12 @@ INSERT INTO historicaTransferencia (numExpediente, tipo, anio, juzgado, fechaHit
 VALUES
     (4, 'escrito', 2012, 'civil', '2023-02-15'),
     (5, 'escrito', 2013, 'penal', '2023-03-20');
+
+--cajas
+
+INSERT INTO cajas (idCaja, anio, tipo, paginas, ubicacion) 
+VALUES
+    (2022, 2022, 'escrito', 30, 'N-2-3-4'),
+    (2023, 2023, 'escrito', 40, 'O-1-4-3'),
+    (2024, 2024, 'escrito', 30, 'P-3-2-1');
 
