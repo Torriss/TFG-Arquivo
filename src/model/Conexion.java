@@ -31,46 +31,50 @@ public class Conexion {
 			
 		}
 		catch(SQLException ex){
-			System.out.println("Hubo un problema al intentar conecarse a la base de datos"+ url);
-			ex.printStackTrace();
+			//System.out.println("Hubo un problema al intentar conecarse a la base de datos"+ url);
+			//ex.printStackTrace();
+			throw ex;
 		}
 	}
 	
 	public static void closeConnection() throws SQLException {
 		if (instance != null || instance.isClosed()){
-			System.out.println("Conexion CERRADA!");
+			//System.out.println("Conexion CERRADA!");
 			instance.close();
-			
 		}
 	}
 	
-	public static boolean execute(String query) {
+	public static boolean execute(String query) throws ClassNotFoundException, SQLException{
 		int r = 0;
 		try {
 			if (instance == null || instance.isClosed()) initConnection();
 			Statement statement = instance.createStatement();
 			r = statement.executeUpdate(query);
 		} catch (SQLException e) {
-			System.out.println("No se ha podido ejecutar la query: '" + query + "'");
-			e.printStackTrace();
+			//System.out.println("No se ha podido ejecutar la query: '" + query + "'");
+			//e.printStackTrace();
+			throw e;
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw e;
 		}
 
 		return r > 0;
 	}
 	
-	public static ResultSet executeSelect(String query) {
+	public static ResultSet executeSelect(String query) throws ClassNotFoundException, SQLException{
 		ResultSet rs = null;
 		try {
 			if (instance == null || instance.isClosed()) initConnection();
 			Statement statement =  instance.createStatement();
 			rs = statement.executeQuery(query); 
 		} catch (SQLException e) {
-			System.out.println("No se ha podido ejecutar al query: '" + query + "'");
-			e.printStackTrace();
+			//System.out.println("No se ha podido ejecutar al query: '" + query + "'");
+			//e.printStackTrace();
+			throw e;
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw e;
 		}
 		return rs;
 	}

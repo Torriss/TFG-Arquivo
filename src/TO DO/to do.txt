@@ -12,3 +12,4 @@
 -Explicar memoria cosas que se han dado por hecho (tamaño de cajas y estanterias)
 -Explicar algoritmo utilizado para gestionar cajas
 -meter notas en devoluciones
+-hacer limpieza codigo

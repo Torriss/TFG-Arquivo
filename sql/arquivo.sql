@@ -13,6 +13,7 @@ CREATE TABLE `expedientes` (
   `paginas` int NOT NULL,
   `estado` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE INDEX PK_exp ON expedientes (numExpediente, tipo, anio, juzgado);
 INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
 VALUES ('1', 'oral','2009', '100', 'A-1-2', null, null, 'instruccion', 'archivo general', '30', 'disponible');
 INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
@@ -41,23 +42,25 @@ CREATE TABLE `prestamos` (
   `fechaPrestamo` varchar(45) NOT NULL,
   `fechaDevolucion` varchar(45) DEFAULT NULL,
    FOREIGN KEY (idSolicitante) REFERENCES solicitantes(idEmpleado),
-   FOREIGN KEY (numExpediente) REFERENCES expedientes(numExpediente),
-   FOREIGN KEY (tipo) REFERENCES expedientes(tipo),
-   FOREIGN KEY (anio) REFERENCES expedientes(anio),
-   FOREIGN KEY (juzgado) REFERENCES expedientes(juzgado)
+   FOREIGN KEY (numExpediente, tipo, anio, juzgado) REFERENCES expedientes(numExpediente, tipo, anio, juzgado)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `historica` (
+CREATE TABLE `historicaExpurgo` (
   `numExpediente` int NOT NULL,
   `tipo` varchar(45) NOT NULL,
   `anio` int NOT NULL,
   `juzgado` varchar(45) NOT NULL,
-  `estado` varchar(45) NOT NULL,
   `fechaHito` varchar(45) NOT NULL,
-   FOREIGN KEY (numExpediente) REFERENCES expedientes(numExpediente),
-   FOREIGN KEY (tipo) REFERENCES expedientes(tipo),
-   FOREIGN KEY (anio) REFERENCES expedientes(anio),
-   FOREIGN KEY (juzgado) REFERENCES expedientes(juzgado)
+   FOREIGN KEY (numExpediente, tipo, anio, juzgado) REFERENCES expedientes(numExpediente, tipo, anio, juzgado)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `historicaTransferencia` (
+  `numExpediente` int NOT NULL,
+  `tipo` varchar(45) NOT NULL,
+  `anio` int NOT NULL,
+  `juzgado` varchar(45) NOT NULL,
+  `fechaHito` varchar(45) NOT NULL,
+  FOREIGN KEY (numExpediente, tipo, anio, juzgado) REFERENCES expedientes(numExpediente, tipo, anio, juzgado)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `cajas` (

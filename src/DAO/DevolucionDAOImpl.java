@@ -9,7 +9,7 @@ import model.Expediente;
 public class DevolucionDAOImpl implements DevolucionDAO {
 	
 	@Override
-	public List<Expediente> devolucion(int numExp, int anio, String tipo, String juzgado, String notas, int paginasNuevas, String fechaDevolucion) throws SQLException {
+	public List<Expediente> devolucion(int numExp, int anio, String tipo, String juzgado, String notas, int paginasNuevas, String fechaDevolucion) throws SQLException, ClassNotFoundException {
 		ExpedienteDAO exp = new ExpedienteDAOImpl();
 		CajaDAO caja = new CajaDAOImpl();
 		List<Expediente> expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
@@ -54,7 +54,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 	}
 	
 	@Override
-	public Expediente nuevo(int numExp, int anio, String tipo, String juzgado, int paginas) throws SQLException {
+	public Expediente nuevo(int numExp, int anio, String tipo, String juzgado, int paginas) throws SQLException, ClassNotFoundException {
 		ExpedienteDAO exp = new ExpedienteDAOImpl();
 		CajaDAO caja = new CajaDAOImpl();
 		

@@ -8,12 +8,12 @@ import model.Expediente;
 
 public interface CajaDAO {
 	
-	boolean insert(Caja caja) throws SQLException;
-	List<Caja> obtenerTodasCajas() throws SQLException;
-	boolean update(Caja caja) throws SQLException;
-    boolean delete(int idCaja) throws SQLException;
-    Caja getById(int idCaja) throws SQLException;
-    Caja buscarCajasParaExpedienteNuevo(int anio, String tipo, int paginasExpediente) throws SQLException;
+	boolean insert(Caja caja) throws SQLException, ClassNotFoundException;
+	List<Caja> obtenerTodasCajas() throws SQLException, ClassNotFoundException;
+	boolean update(Caja caja) throws SQLException, ClassNotFoundException;
+    boolean delete(int idCaja) throws SQLException, ClassNotFoundException;
+    Caja getById(int idCaja) throws SQLException, ClassNotFoundException;
+    Caja buscarCajasParaExpedienteNuevo(int anio, String tipo, int paginasExpediente) throws SQLException, ClassNotFoundException;
     //String buscarNuevaUbicacionContigua(String ultimaUbicacion);
     //boolean insertarExpedienteEnCaja(Expediente expediente) throws SQLException;
     //List<Caja> obtenerCajasPorTipo(String tipo) throws SQLException;

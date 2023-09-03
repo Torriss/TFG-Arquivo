@@ -13,7 +13,7 @@ import model.Expediente;
 public class CajaDAOImpl implements CajaDAO {
 
 	@Override
-	public boolean insert(Caja caja) throws SQLException{
+	public boolean insert(Caja caja) throws SQLException, ClassNotFoundException{
         String query = "INSERT INTO cajas (paginas, ubicacion, tipo, anio) VALUES (" +
                 caja.getPaginas() + ", '" +
                 caja.getUbicacion() + "', '" +
@@ -23,7 +23,7 @@ public class CajaDAOImpl implements CajaDAO {
     }
 
 	@Override
-    public List<Caja> obtenerTodasCajas() throws SQLException{
+    public List<Caja> obtenerTodasCajas() throws SQLException, ClassNotFoundException{
         List<Caja> cajas = new ArrayList<>();
         String query = "SELECT * FROM cajas";
         ResultSet rs = Conexion.executeSelect(query);
@@ -42,7 +42,7 @@ public class CajaDAOImpl implements CajaDAO {
     }
 
 	@Override
-    public boolean update(Caja caja) throws SQLException{
+    public boolean update(Caja caja) throws SQLException, ClassNotFoundException{
         String query = "UPDATE cajas SET paginas = " + caja.getPaginas() +
                 ", ubicacion = '" + caja.getUbicacion() +
                 "', tipo = '" + caja.getTipo() +
@@ -52,13 +52,13 @@ public class CajaDAOImpl implements CajaDAO {
     }
 
 	@Override
-    public boolean delete(int idCaja) throws SQLException{
+    public boolean delete(int idCaja) throws SQLException, ClassNotFoundException{
         String query = "DELETE FROM cajas WHERE idCaja = " + idCaja;
         return Conexion.execute(query);
     }
     
 	@Override
-    public Caja getById(int idCaja) throws SQLException {
+    public Caja getById(int idCaja) throws SQLException, ClassNotFoundException {
         String query = "SELECT * FROM cajas WHERE idCaja = " + idCaja;
         ResultSet rs = Conexion.executeSelect(query);
 
@@ -78,7 +78,7 @@ public class CajaDAOImpl implements CajaDAO {
 	}
 
     
-    public Caja buscarCajasParaExpedienteNuevo(int anio, String tipo, int paginasExpediente) throws SQLException{
+    public Caja buscarCajasParaExpedienteNuevo(int anio, String tipo, int paginasExpediente) throws SQLException, ClassNotFoundException{
         List<Caja> cajasMismoTipoYAnio = obtenerCajasPorTipoYAnio(tipo, anio);
         //List<Caja> cajasDisponibles = new ArrayList<>();
 
@@ -94,7 +94,7 @@ public class CajaDAOImpl implements CajaDAO {
         return nuevaCaja;
     }
 
-    private List<Caja> obtenerCajasPorTipoYAnio(String tipo, int anio) throws SQLException{
+    private List<Caja> obtenerCajasPorTipoYAnio(String tipo, int anio) throws SQLException, ClassNotFoundException{
         List<Caja> cajasMismoTipoYAnio = new ArrayList<>();
         String query = "SELECT * FROM cajas WHERE tipo = " + tipo + "AND anio = " + anio;
         ResultSet rs = Conexion.executeSelect(query);

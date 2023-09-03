@@ -12,7 +12,7 @@ import model.Expediente;
 public class ExpedienteDAOImpl implements ExpedienteDAO {
 	
 	@Override
-	public boolean insert(Expediente exp) throws SQLException{
+	public boolean insert(Expediente exp) throws SQLException, ClassNotFoundException{
         // Posible comprobacion de no nulos y rangos
 
         // Construir la query
@@ -27,7 +27,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
     }
 
 	@Override
-    public boolean update(Expediente exp) throws SQLException{
+    public boolean update(Expediente exp) throws SQLException, ClassNotFoundException{
         String query = "UPDATE Expedientes SET tipo = '" + exp.getTipo() + "', anio = " + exp.getAnio() + ", caja = " + exp.getCaja()
                 + ", ubicacion = '" + exp.getUbicacion() + "', notas = '" + exp.getNotas() + "', tomos = '" + exp.getTomos()
                 + "', juzgado = '" + exp.getJuzgado() + "', lugar = '" + exp.getLugar() + "', paginas = " + exp.getPaginas()
@@ -39,7 +39,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
     }
 
 	@Override
-    public boolean delete(int numExpediente) {
+    public boolean delete(int numExpediente) throws ClassNotFoundException, SQLException {
         // Posible comprobacion de no nulos y rangos
 
         // Construir la query
@@ -50,7 +50,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
     }
 
 	@Override
-    public List<Expediente> buscaExpediente(int numExpe, String type, int year, String judge) throws SQLException{
+    public List<Expediente> buscaExpediente(int numExpe, String type, int year, String judge) throws SQLException, ClassNotFoundException{
     	List<Expediente> expedientes = new ArrayList<>();
 
         String query = "SELECT * FROM Expedientes WHERE numExpediente = " + numExpe +
@@ -79,7 +79,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
     }
     
 	@Override
-    public boolean existeExpediente(int numExpediente, String tipo, int anio, String juzgado) throws SQLException{
+    public boolean existeExpediente(int numExpediente, String tipo, int anio, String juzgado) throws SQLException, ClassNotFoundException{
         boolean existe = false;
 
         String query = "SELECT COUNT(*) AS count FROM Expedientes WHERE numExpediente = " + numExpediente +
@@ -123,7 +123,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
     }
     
 	@Override
-    public ArrayList<String> getAllTiposExp() throws SQLException {
+    public ArrayList<String> getAllTiposExp() throws SQLException, ClassNotFoundException {
 		ArrayList<String> tiposExp = new ArrayList<>();
 
 		String sql = "SELECT DISTINCT tipo FROM Expedientes";
@@ -137,7 +137,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	}
 
 	@Override
-    public ArrayList<String> getAllJuzgados() throws SQLException {
+    public ArrayList<String> getAllJuzgados() throws SQLException, ClassNotFoundException {
 		ArrayList<String> juzgados = new ArrayList<>();
 
 		String sql = "SELECT DISTINCT juzgado FROM Expedientes";
@@ -151,7 +151,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	}
     
 	@Override
-	public String getUbicacionExp(String tipoExp, int numExp, int anioExp, String juzgado) throws SQLException {
+	public String getUbicacionExp(String tipoExp, int numExp, int anioExp, String juzgado) throws SQLException, ClassNotFoundException {
 		String res = "";
     	String sql = "SELECT ubicacion FROM Expedientes WHERE numExpediente = " + numExp + 
     			" AND tipo = '" + tipoExp + "'" +
