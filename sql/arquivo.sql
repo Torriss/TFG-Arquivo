@@ -1,3 +1,4 @@
+CREATE DATABASE arquivo;
 use arquivo;
 
 CREATE TABLE `expedientes` (
@@ -113,19 +114,19 @@ VALUES
 -- prestamos
 INSERT INTO prestamos (idSolicitante, numExpediente, tipo, anio, juzgado, fechaPrestamo, fechaDevolucion) 
 VALUES
-    (42, 4, 'escrito', 2012, 'civil', '2023-07-25', '2023-08-10'),
-    (42, 5, 'escrito', 2013, 'penal', '2023-08-05', NULL),
-    (42, 6, 'escrito', 2014, 'instruccion', '2023-07-20', '2023-08-04'),
-    (42, 7, 'oral', 2015, 'guardia', '2023-08-01', NULL),
-    (48, 8, 'escrito', 2016, 'civil', '2023-07-30', '2023-08-15'),
-    (38, 9, 'escrito', 2017, 'penal', '2023-07-15', NULL),
-    (33, 10, 'oral', 2018, 'instruccion', '2023-08-02', '2023-08-17'),
-    (33, 11, 'escrito', 2019, 'guardia', '2023-08-10', NULL),
-    (51, 12, 'escrito', 2020, 'civil', '2023-07-22', '2023-08-07'),
-    (36, 13, 'escrito', 2021, 'penal', '2023-07-18', NULL);
+    (1, 4, 'escrito', 2012, 'civil', '2023-07-25', '2023-08-10'),
+    (1, 5, 'escrito', 2013, 'penal', '2023-08-05', NULL),
+    (1, 6, 'escrito', 2014, 'instruccion', '2023-07-20', '2023-08-04'),
+    (1, 7, 'oral', 2015, 'guardia', '2023-08-01', NULL),
+    (3, 8, 'escrito', 2016, 'civil', '2023-07-30', '2023-08-15'),
+    (4, 9, 'escrito', 2017, 'penal', '2023-07-15', NULL),
+    (5, 10, 'oral', 2018, 'instruccion', '2023-08-02', '2023-08-17'),
+    (5, 11, 'escrito', 2019, 'guardia', '2023-08-10', NULL),
+    (2, 12, 'escrito', 2020, 'civil', '2023-07-22', '2023-08-07'),
+    (6, 13, 'escrito', 2021, 'penal', '2023-07-18', NULL);
 
 
---historicaExpurgo
+-- historicaExpurgo
 
 INSERT INTO historicaExpurgo (numExpediente, tipo, anio, juzgado, fechaHito) 
 VALUES
@@ -134,7 +135,7 @@ VALUES
 
 
 
---historicaTransferencia
+-- historicaTransferencia
 
 
 INSERT INTO historicaTransferencia (numExpediente, tipo, anio, juzgado, fechaHito) 
@@ -142,7 +143,7 @@ VALUES
     (4, 'escrito', 2012, 'civil', '2023-02-15'),
     (5, 'escrito', 2013, 'penal', '2023-03-20');
 
---cajas
+-- cajas
 
 INSERT INTO cajas (idCaja, anio, tipo, paginas, ubicacion) 
 VALUES
