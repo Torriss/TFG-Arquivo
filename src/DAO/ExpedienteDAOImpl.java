@@ -1,6 +1,5 @@
 package DAO;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -96,7 +95,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
     }
     
 	@Override
-    public List<Expediente> getAllExpedientes() throws SQLException {
+    public List<Expediente> getAllExpedientes() throws SQLException, ClassNotFoundException {
         List<Expediente> expedientes = new ArrayList<>();
         
         String sql = "SELECT * FROM Expedientes";
@@ -113,7 +112,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             String juzgado = rs.getString("juzgado");
             String lugar = rs.getString("lugar");
             int paginas = rs.getInt("paginas");
-            String solicitante = rs.getString("estado");
+            String estado = rs.getString("estado");
             
             Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado);
             expedientes.add(exp);

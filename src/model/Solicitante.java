@@ -51,11 +51,3 @@ public class Solicitante {
         this.cargo = cargo;
     }
 }
-
-
-
-
-
-
-
-}

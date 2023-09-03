@@ -35,6 +35,7 @@ public class ControlPrestamos{
 			prestamos.setComboBoxJuzgado(comboBoxJuzgado);
 			JComboBox<String> comboBoxTipoExp = func.iniciarListaTipoExp(prestamos.getComboBoxTipoExp());
 			prestamos.setComboBoxTipoExp(comboBoxTipoExp);
+			clearControl();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,8 +53,9 @@ public class ControlPrestamos{
 		prestamos.getTextFieldSolicitante().setText("");
 		prestamos.getDatePicker().setText("");
 		prestamos.getTextFieldLugar().setText("");
-		
 		prestamos.getBtnImprimir().setEnabled(false);
+		
+		expedientes.clear();
 	}
 	
 	private void buscarUbicacion() {
@@ -71,16 +73,15 @@ public class ControlPrestamos{
 			}
 			else
 			{
-				// TODO: pensar como mostar la lista en el dialogo
-				prestamos.getBtnImprimir().setEnabled(true);
-				JOptionPane.showMessageDialog(null,
-						"El expediente se encuentra en: ", "Ubicación",
-						JOptionPane.INFORMATION_MESSAGE);
+				prestamos.getBtnImprimir().setEnabled(true);	
 			}
 			
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -90,7 +91,7 @@ public class ControlPrestamos{
 			int anioExp = expedientes.get(0).getAnio();
 			String tipoExp = expedientes.get(0).getTipo();
 			String juzgado = expedientes.get(0).getJuzgado();
-			String solicitante = prestamos.getTextFieldSolicitante().getText();
+			int solicitante = Integer.parseInt(prestamos.getTextFieldSolicitante().getText());
 			String fecha = prestamos.getDatePicker().getDateStringOrEmptyString();
 
 			expedientes = prestamo.realizarPrestamo(numExp, tipoExp, anioExp, solicitante, juzgado, fecha);
@@ -102,19 +103,21 @@ public class ControlPrestamos{
 			}
 			else
 			{
-				//TODO: crear funcion imprimirPapeleta con toda la info del form menos el estado
-				//TODO: crear funcion imprimirTestigo con toda la info del form menos el estado
+				//TODO: crear funcion imprimirPapeleta con toda la info del form
+				//TODO: crear funcion imprimirTestigo con toda la info del form
 				//y añadiendo caja, ubicación, notas, tomos, lugar
 				JOptionPane.showMessageDialog(null,
 						"El expediente se encuentra en: ", "Ubicación",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			
-			expedientes.clear();
 			clearControl();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}  catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

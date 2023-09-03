@@ -112,7 +112,7 @@ public class Prestamos extends JFrame {
 
 	public Prestamos() throws SQLException {
 		setTitle("Préstamos");
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		JPanel contentPanePrestamos = new JPanel();
 		contentPanePrestamos.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -138,7 +138,7 @@ public class Prestamos extends JFrame {
 		panel_1.add(panel_4);
 		panel_4.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblSolicitante = new JLabel("Solicitante:");
+		JLabel lblSolicitante = new JLabel("Número de empleado:");
 		panel_4.add(lblSolicitante);
 		
 		textFieldSolicitante = new JTextField();

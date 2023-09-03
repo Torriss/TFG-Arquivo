@@ -12,9 +12,9 @@ public class ControlMenu {
 	private Devoluciones devoluciones; //Vista
 	private Prestamos prestamos; //Vista
 	
-	public ControlMenu () {
+	public ControlMenu (Menu men) {
 		try {
-			menu = new Menu();
+			menu = men;
 			devoluciones = new Devoluciones();
 			prestamos = new Prestamos();
 			initView();

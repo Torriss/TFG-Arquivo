@@ -14,7 +14,7 @@ public interface ExpedienteDAO {
     List<Expediente> buscaExpediente(int numExpe, String type, int year, String judge) throws SQLException, ClassNotFoundException;
     //Expediente buscaExpedientesTomos(int numExpe, String tipe, int year, String tomos);
     boolean existeExpediente(int numExpediente, String tipo, int anio, String juzgado) throws SQLException, ClassNotFoundException;
-    List<Expediente> getAllExpedientes() throws SQLException;
+    List<Expediente> getAllExpedientes() throws SQLException, ClassNotFoundException;
     ArrayList<String> getAllTiposExp() throws SQLException, ClassNotFoundException;
     ArrayList<String> getAllJuzgados() throws SQLException, ClassNotFoundException;
     //String getUbicacionExp(Expediente exp);
