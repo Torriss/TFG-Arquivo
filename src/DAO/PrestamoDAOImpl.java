@@ -3,8 +3,6 @@ package DAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import model.Conexion;
 import model.Expediente;
 import model.Prestamo;
@@ -12,10 +10,10 @@ import model.Prestamo;
 public class PrestamoDAOImpl implements PrestamoDAO{
 	
 	@Override
-	public List<Expediente> realizarPrestamo(int numExp, String tipo, int anio, int solicitante, String juzgado, String fechaPrestamo) throws SQLException, IllegalArgumentException, ClassNotFoundException{
+	public ArrayList<Expediente> realizarPrestamo(int numExp, String tipo, int anio, int solicitante, String juzgado, String fechaPrestamo) throws SQLException, IllegalArgumentException, ClassNotFoundException{
 		ExpedienteDAO exp = new ExpedienteDAOImpl();
 		SolicitanteDAO sol = new SolicitanteDAOImpl();
-		List<Expediente> expList = new ArrayList<>();
+		ArrayList<Expediente> expList = new ArrayList<>();
 		
 		//Comprobamos que el solicitante tiene permiso
 		if(!sol.existeEmpleado(solicitante)) throw new IllegalArgumentException("Dicho empleado no puede solicitar el expediente");

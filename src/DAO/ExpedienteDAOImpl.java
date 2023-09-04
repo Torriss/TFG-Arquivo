@@ -3,8 +3,6 @@ package DAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import model.Conexion;
 import model.Expediente;
 
@@ -51,8 +49,8 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
     }
 
 	@Override
-    public List<Expediente> buscaExpediente(int numExpe, String type, int year, String judge) throws SQLException, ClassNotFoundException{
-    	List<Expediente> expedientes = new ArrayList<>();
+    public ArrayList<Expediente> buscaExpediente(int numExpe, String type, int year, String judge) throws SQLException, ClassNotFoundException{
+		ArrayList<Expediente> expedientes = new ArrayList<>();
 
         String query = "SELECT * FROM Expedientes WHERE numExpediente = " + numExpe +
         		" AND tipo = '" + type + "'" +
@@ -97,8 +95,8 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
     }
     
 	@Override
-    public List<Expediente> getAllExpedientes() throws SQLException, ClassNotFoundException {
-        List<Expediente> expedientes = new ArrayList<>();
+    public ArrayList<Expediente> getAllExpedientes() throws SQLException, ClassNotFoundException {
+		ArrayList<Expediente> expedientes = new ArrayList<>();
         
         String sql = "SELECT * FROM Expedientes";
         ResultSet rs = Conexion.executeSelect(sql);

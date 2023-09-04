@@ -1,8 +1,7 @@
 package DAO;
 
 import java.sql.SQLException;
-import java.util.List;
-
+import java.util.ArrayList;
 import model.Caja;
 import model.Expediente;
 import model.Prestamo;
@@ -10,11 +9,11 @@ import model.Prestamo;
 public class DevolucionDAOImpl implements DevolucionDAO {
 	
 	@Override
-	public List<Expediente> devolucion(int numExp, int anio, String tipo, String juzgado, String notas, int paginasNuevas, String fechaDevolucion) throws SQLException, ClassNotFoundException {
+	public ArrayList<Expediente> devolucion(int numExp, int anio, String tipo, String juzgado, String notas, int paginasNuevas, String fechaDevolucion) throws SQLException, ClassNotFoundException {
 		ExpedienteDAO exp = new ExpedienteDAOImpl();
 		PrestamoDAO prest = new PrestamoDAOImpl();
 		CajaDAO caja = new CajaDAOImpl();
-		List<Expediente> expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
+		ArrayList<Expediente> expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
 		
 		int paginasTotales = 0; //Sumamos paginas del expediente para saber si ha aumentado de tamanio y de paso actualizamos estado
 		for(Expediente expediente : expList) {

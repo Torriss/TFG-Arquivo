@@ -43,6 +43,34 @@ public class ExportarExpedientesExcel {
         }
     }
     
+    public static void imprimirExpedientes(List<Expediente> expedientes) throws IOException {
+        // Crear un nuevo libro de Excel
+        Workbook workbook = new XSSFWorkbook();
+        
+        // Crear una hoja en el libro
+        Sheet sheet = workbook.createSheet("Expedientes");
+        
+        // Crear el encabezado de la tabla
+        createHeaderRow(sheet);
+        
+        // Llenar los datos de los expedientes
+        fillDataRows(sheet, expedientes);
+        
+        // Guardar el libro como archivo Excel
+        try (FileOutputStream outputStream = new FileOutputStream("C:\\01-ArchivoComunJuzgados")) {
+            workbook.write(outputStream);
+        } catch (IOException e) {
+            throw e;
+        }
+        
+        // Cerrar el libro
+        try {
+            workbook.close();
+        } catch (IOException e) {
+            throw e;
+        }
+    }
+    
     private static void createHeaderRow(Sheet sheet) {
         Row headerRow = sheet.createRow(0);
         

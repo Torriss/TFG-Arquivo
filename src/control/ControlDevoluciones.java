@@ -2,8 +2,6 @@ package control;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -12,6 +10,7 @@ import DAO.ExpedienteDAOImpl;
 import model.Expediente;
 import utils.FuncComunes;
 import view.Devoluciones;
+import view.TablaResultados;
 
 public class ControlDevoluciones {
 	
@@ -19,7 +18,7 @@ public class ControlDevoluciones {
 	private DevolucionDAOImpl devolucion = new DevolucionDAOImpl(); //Modelo
 	private Devoluciones devoluciones; //Vista
 	private FuncComunes func;
-	private List<Expediente> expedientes;
+	private ArrayList<Expediente> expedientes;
 	
 	public ControlDevoluciones (Devoluciones dev) {
 		devoluciones = dev;
@@ -135,6 +134,10 @@ public class ControlDevoluciones {
 			else
 			{
 				// TODO: llamar a funcion imprimirDevolucion con los datos del expediente
+				TablaResultados tabla = new TablaResultados();
+				ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
+				tablaContr.initControl();
+				tabla.setVisible(true);
 			}
 			clearControl();
 		} catch (SQLException e) {

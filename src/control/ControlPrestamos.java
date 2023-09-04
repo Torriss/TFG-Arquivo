@@ -2,8 +2,6 @@ package control;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -12,6 +10,7 @@ import DAO.PrestamoDAOImpl;
 import model.Expediente;
 import utils.FuncComunes;
 import view.Prestamos;
+import view.TablaResultados;
 
 public class ControlPrestamos{
 
@@ -19,7 +18,7 @@ public class ControlPrestamos{
 	private ExpedienteDAOImpl expediente = new ExpedienteDAOImpl(); //Modelo
 	private Prestamos prestamos; //Vista
 	private FuncComunes func;
-	private List<Expediente> expedientes;
+	private ArrayList<Expediente> expedientes;
 	
 	public ControlPrestamos (Prestamos pr) {
 		prestamos = pr;
@@ -103,12 +102,13 @@ public class ControlPrestamos{
 			}
 			else
 			{
+				TablaResultados tabla = new TablaResultados();
+				ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
+				tablaContr.initControl();
+				tabla.setVisible(true);
 				//TODO: crear funcion imprimirPapeleta con toda la info del form
 				//TODO: crear funcion imprimirTestigo con toda la info del form
 				//y añadiendo caja, ubicación, notas, tomos, lugar
-				JOptionPane.showMessageDialog(null,
-						"El expediente se encuentra en: ", "Ubicación",
-						JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 			clearControl();
