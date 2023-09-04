@@ -2,8 +2,11 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.GridLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 
 public class Menu extends JFrame {
 
@@ -13,6 +16,15 @@ public class Menu extends JFrame {
 	private JButton btnDevoluciones;
 	private JButton btnExpurgo;
 	private JButton btnTransferencia;
+	private JFileChooser fc;
+
+	public JFileChooser getFc() {
+		return fc;
+	}
+
+	public void setFc(JFileChooser fc) {
+		this.fc = fc;
+	}
 
 	public JButton getBtnPrestamos() {
 		return btnPrestamos;
@@ -81,6 +93,15 @@ public class Menu extends JFrame {
 		
 		btnTransferencia = new JButton("Transferencia");
 		panel.add(btnTransferencia);
+		
+		fc = new JFileChooser("C:\\01-ArchivoComunJuzgados");
+		fc.setApproveButtonText("Seleccionar");
+		fc.setApproveButtonToolTipText("Seleccionar archivo");
+
+		fc.setAcceptAllFileFilterUsed(false);
+		fc.setDialogTitle("Seleccione un archivo Excel");
+		FileNameExtensionFilter restrict = new FileNameExtensionFilter("Solo archivos .xls o .xlsx", "xls", "xlsx");
+		fc.addChoosableFileFilter(restrict);
 	}
 
 }

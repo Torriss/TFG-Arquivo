@@ -71,7 +71,7 @@ public class ExcelExporter {
             row.createCell(8).setCellValue(expediente.getLugar());
             row.createCell(9).setCellValue(expediente.getCaja());
             row.createCell(10).setCellValue(expediente.getPaginas());
-            row.createCell(11).setCellValue(expediente.getEstado());)
+            row.createCell(11).setCellValue(expediente.getEstado());
         }
     }
 }

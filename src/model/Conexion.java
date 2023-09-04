@@ -65,7 +65,7 @@ public class Conexion {
 			Statement statement =  instance.createStatement();
 			rs = statement.executeQuery(query); 
 		} catch (SQLException e) {
-			//System.out.println("No se ha podido ejecutar al query: '" + query + "'");
+			System.out.println("No se ha podido ejecutar al query: '" + query + "'");
 			//e.printStackTrace();
 			throw e;
 		} catch (ClassNotFoundException e) {
