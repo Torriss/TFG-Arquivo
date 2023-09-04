@@ -22,7 +22,8 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 		//Comprobamos que existe expediente
 		if (!exp.existeExpediente(numExp, tipo, anio, juzgado)) throw new IllegalArgumentException("No existe ese expediente en la BBDD");
 	    //Comprobamos que expediente se puede prestar(su estado no es ni expurgado ni prestado)
-		if(!expedienteDisponible(numExp, tipo, anio, juzgado)) throw new IllegalArgumentException("Este expediente se encuentra prestado o expurgado");
+		if(!expedienteDisponible(numExp, tipo, anio, juzgado)) System.out.println("Esta prestado");
+			//throw new IllegalArgumentException("Este expediente se encuentra prestado o expurgado");
 		else {
 			//Insertamos prestamo en la bbdd
 			Prestamo prestamo = new Prestamo(numExp, tipo, anio, juzgado, fechaPrestamo, null, solicitante);
@@ -80,7 +81,7 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	@Override
 	public Prestamo existePrestamoSinDevolver(int numExpediente, String tipo, int anio, String juzgado) throws ClassNotFoundException, SQLException {
 		String query = "SELECT * FROM prestamos WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
-				+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'" + " AND fechaDevolucion = " + null + "";
+				+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'" + " AND fechaDevolucion IS NULL)";
 		ResultSet rs = Conexion.executeSelect(query);
 		Prestamo prestamo = null;
 
