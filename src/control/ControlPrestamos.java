@@ -112,6 +112,12 @@ public class ControlPrestamos{
 			}
 			
 			clearControl();
+		} catch (IllegalArgumentException e2) {
+			JOptionPane.showMessageDialog(null,
+					e2.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+			
+			System.out.println(e2.getMessage());
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
