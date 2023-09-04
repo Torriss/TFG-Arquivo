@@ -72,6 +72,7 @@ public class ControlMenu {
             try {
 				expurgo.expurgo(file);
 			} catch (ClassNotFoundException e) {
+				
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {

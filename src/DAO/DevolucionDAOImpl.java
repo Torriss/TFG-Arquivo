@@ -65,18 +65,18 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 	}
 	
 	@Override
-	public Expediente nuevo(int numExp, int anio, String tipo, String juzgado, int paginas) throws SQLException, ClassNotFoundException {
+	public Expediente nuevo(int numExp, int anio, String tipo, String juzgado, int paginas, String tomos, String lugar, String notas) throws SQLException, ClassNotFoundException {
 		ExpedienteDAO exp = new ExpedienteDAOImpl();
 		CajaDAO caja = new CajaDAOImpl();
 		
 		//buscar caja nuevo expediente
 		Caja nuevaCaja= caja.buscarCajasParaExpedienteNuevo(anio, tipo, paginas);
 		//asignar nueva caja al expediente
-		Expediente expediente = new Expediente(numExp, tipo, anio, nuevaCaja.getIdCaja(), nuevaCaja.getUbicacion(), null, null, juzgado, "archivo", paginas, null);
+		Expediente expediente = new Expediente(numExp, tipo, anio, nuevaCaja.getIdCaja(), nuevaCaja.getUbicacion(), notas, tomos, juzgado, lugar, paginas, null);
 		//restar paginas de caja
 		nuevaCaja.restarPaginas(paginas);
 		//actualizar bd
-		exp.update(expediente);
+		exp.insert(expediente);
 		caja.update(nuevaCaja);
 		
 		return expediente;
