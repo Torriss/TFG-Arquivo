@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import DAO.ExpurgoDAOImpl;
 import DAO.TransferenciaDAOImpl;
 import view.Devoluciones;
+import view.Exportar;
 import view.Menu;
 import view.Prestamos;
 
@@ -17,6 +18,7 @@ public class ControlMenu {
 	private Menu menu; //Vista
 	private Devoluciones devoluciones; //Vista
 	private Prestamos prestamos; //Vista
+	private Exportar exportar; //Vista
 	private ExpurgoDAOImpl expurgo;
 	private TransferenciaDAOImpl transferencia;
 	
@@ -25,6 +27,7 @@ public class ControlMenu {
 			menu = men;
 			devoluciones = new Devoluciones();
 			prestamos = new Prestamos();
+			exportar = new Exportar();
 			expurgo = new ExpurgoDAOImpl();
 			transferencia = new TransferenciaDAOImpl();
 			initView();
@@ -37,6 +40,7 @@ public class ControlMenu {
 	private void initView() {
 		devoluciones.setVisible(false);
 		prestamos.setVisible(false);
+		exportar.setVisible(false);
 	}
 	
 	public void initControl() {
@@ -44,8 +48,8 @@ public class ControlMenu {
 		menu.getBtnPrestamos().addActionListener(e -> mostrarPrestamos());
 		menu.getBtnExpurgo().addActionListener(e -> expurgar());
 		menu.getBtnTransferencia().addActionListener(e -> transferir());
-		menu.getBtnExportar().addActionListener(e -> exportar());
-		menu.getBtnAyuda().addActionListener(e -> ayuda());
+		menu.getBtnExportar().addActionListener(e -> mostrarExportar());
+		menu.getBtnAyuda().addActionListener(e -> mostrarAyuda());
 	}
 	
 	private void mostrarDevoluciones() {
@@ -100,11 +104,13 @@ public class ControlMenu {
         }
 	}
 	
-	private void exportar() {
-		
+	private void mostrarExportar() {
+		exportar.setVisible(true);
+		ControlExportar expControl = new ControlExportar(exportar);
+		expControl.initControl();
 	}
 	
-	private void ayuda() {
+	private void mostrarAyuda() {
 		String msg = "<html>Préstamos: permite buscar expedientes disponibles en el Archivo para solicitar un préstamo.<br><br>"
 				+ "Devoluciones: permite realizar la devolución de un préstamo o la inserción de un nuevo expediente en el Archivo.<br><br>"
 				+ "Modificaciones: permite modificar la información de uno o varios expedientes mediante un documento Excel.<br><br>"

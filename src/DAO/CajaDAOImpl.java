@@ -3,12 +3,10 @@ package DAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import model.Caja;
 import model.Conexion;
-import model.Expediente;
 
 public class CajaDAOImpl implements CajaDAO {
 

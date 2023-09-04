@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Conexion;
-import model.Expediente;
 import model.Historico;
 
 public class HistoricoDAOImpl implements HistoricoDAO {

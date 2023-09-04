@@ -17,21 +17,21 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 		SolicitanteDAO sol = new SolicitanteDAOImpl();
 		List<Expediente> expList = new ArrayList<>();
 		
+		//Comprobamos que el solicitante tiene permiso
+		if(!sol.existeEmpleado(solicitante)) throw new IllegalArgumentException("Dicho empleado no puede solicitar el expediente");
 		//Comprobamos que existe expediente
 		if (!exp.existeExpediente(numExp, tipo, anio, juzgado)) throw new IllegalArgumentException("No existe ese expediente en la BBDD");
-	    //comprobar que expediente se puede prestar(su estado no es ni expurgado ni prestado)
+	    //Comprobamos que expediente se puede prestar(su estado no es ni expurgado ni prestado)
 		if(!expedienteDisponible(numExp, tipo, anio, juzgado)) throw new IllegalArgumentException("Este expediente se encuentra prestado o expurgado");
-		//comprobamos que solicitante tiene permiso
-		if(!sol.existeEmpleado(solicitante)) throw new IllegalArgumentException("Dicho empleado no puede solicitar el expediente");
 		//Insertamos prestamo en la bbdd
 		Prestamo prestamo = new Prestamo(numExp, tipo, anio, juzgado, fechaPrestamo, null, solicitante);
 		this.insert(prestamo);
 		//Actualizamos expedientes en bbdd
 	    expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
 	    for (Expediente expediente : expList) {
-	    	//actualizamos estado
+	    	//Actualizamos estado
 	    	expediente.setEstado("prestado");
-	    	//actualizamos en bbdd
+	    	//Actualizamos en bbdd
 	    	exp.update(expediente);
 	    }
 	    
