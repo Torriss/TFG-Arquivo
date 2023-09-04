@@ -28,6 +28,8 @@ public class Expediente {
         this.paginas = paginas;
         this.estado = estado;
     }
+    
+    public Expediente() {}
 
     public Expediente(String tipoExp, int numExp, int anioExp) {
         this.tipo = tipoExp;
