@@ -13,9 +13,9 @@ public class HistoricoDAOImpl implements HistoricoDAO {
 	@Override
 	public boolean insert(Historico fila, String tabla) throws SQLException, ClassNotFoundException{
         // Construir la query
-        String query = "INSERT INTO " + tabla + "(numExpediente, tipo, anio, juzgado, fechaHito) VALUES ('"
-                + fila.getNumExpediente() + "','" + fila.getTipo() + 
-        		+ fila.getAnio() + "','" + fila.getJuzgado() + "','" + fila.getFechaHito() + "')";
+        String query = "INSERT INTO " + tabla + "(numExpediente, tipo, anio, juzgado, fechaHito) VALUES ("
+                + fila.getNumExpediente() + ",'" + fila.getTipo() + "'," 
+        		+ fila.getAnio() + ",'" + fila.getJuzgado() + "','" + fila.getFechaHito() + "')";
 
         // Ejecutar la query en la BBDD
         return Conexion.execute(query);
@@ -48,7 +48,7 @@ public class HistoricoDAOImpl implements HistoricoDAO {
 
         String query = "SELECT COUNT(*) AS count FROM " + tabla + " WHERE numExpediente = " + fila.getNumExpediente() +
         		" AND tipo = '" + fila.getTipo() + "'" + " AND anio = " + fila.getAnio() + "" +
-                " AND fechaHito = '" + fila.getFechaHito() +" AND juzgado = '" + fila.getJuzgado() + "'";
+                " AND fechaHito = '" + fila.getFechaHito() + "' AND juzgado = '" + fila.getJuzgado() + "'";
 
         ResultSet rs = Conexion.executeSelect(query);
         if (rs.next()) {

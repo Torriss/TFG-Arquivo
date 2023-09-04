@@ -23,16 +23,18 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 		if (!exp.existeExpediente(numExp, tipo, anio, juzgado)) throw new IllegalArgumentException("No existe ese expediente en la BBDD");
 	    //Comprobamos que expediente se puede prestar(su estado no es ni expurgado ni prestado)
 		if(!expedienteDisponible(numExp, tipo, anio, juzgado)) throw new IllegalArgumentException("Este expediente se encuentra prestado o expurgado");
-		//Insertamos prestamo en la bbdd
-		Prestamo prestamo = new Prestamo(numExp, tipo, anio, juzgado, fechaPrestamo, null, solicitante);
-		this.insert(prestamo);
-		//Actualizamos expedientes en bbdd
-	    expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
-	    for (Expediente expediente : expList) {
-	    	//Actualizamos estado
-	    	expediente.setEstado("prestado");
-	    	//Actualizamos en bbdd
-	    	exp.update(expediente);
+		else {
+			//Insertamos prestamo en la bbdd
+			Prestamo prestamo = new Prestamo(numExp, tipo, anio, juzgado, fechaPrestamo, null, solicitante);
+			this.insert(prestamo);
+			//Actualizamos expedientes en bbdd
+		    expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
+		    for (Expediente expediente : expList) {
+		    	//Actualizamos estado
+		    	expediente.setEstado("prestado");
+		    	//Actualizamos en bbdd
+		    	exp.update(expediente);
+		    }
 	    }
 	    
 	    //Devolvemos lista expedientes a prestar (solo tendra una posicion en caso de no estar dividido entre varias cajas)
@@ -63,12 +65,13 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	@Override
 	public boolean expedienteDisponible(int numExpediente, String tipo, int anio, String juzgado) throws SQLException, ClassNotFoundException{
 	    String query = "SELECT DISTINCT * FROM expedientes WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
-	    				+ " AND anio = " + anio + "" + " AND juzgado = " + juzgado + "";
+	    				+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'";
 	    ResultSet rs = Conexion.executeSelect(query);
 	    
 	    String estado = null;
 	    if (rs.next()) {
 	    	estado = rs.getString("estado");
+	    	 System.out.println(estado);
 	    }
 	    if(estado == "expurgado" || estado == "prestado") return false;
 	    else return true;
@@ -77,7 +80,7 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	@Override
 	public Prestamo existePrestamoSinDevolver(int numExpediente, String tipo, int anio, String juzgado) throws ClassNotFoundException, SQLException {
 		String query = "SELECT * FROM prestamos WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
-				+ " AND anio = " + anio + "" + " AND juzgado = " + juzgado + " AND fechaDevolucion = " + null + "";
+				+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'" + " AND fechaDevolucion = " + null + "";
 		ResultSet rs = Conexion.executeSelect(query);
 		Prestamo prestamo = null;
 

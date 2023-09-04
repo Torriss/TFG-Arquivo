@@ -94,7 +94,7 @@ public class CajaDAOImpl implements CajaDAO {
 
     private List<Caja> obtenerCajasPorTipoYAnio(String tipo, int anio) throws SQLException, ClassNotFoundException{
         List<Caja> cajasMismoTipoYAnio = new ArrayList<>();
-        String query = "SELECT * FROM cajas WHERE tipo = " + tipo + "AND anio = " + anio;
+        String query = "SELECT * FROM cajas WHERE tipo = '" + tipo + "' AND anio = " + anio;
         ResultSet rs = Conexion.executeSelect(query);
         
         

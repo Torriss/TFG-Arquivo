@@ -25,17 +25,19 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         return Conexion.execute(query);
     }
 
-	@Override
-    public boolean update(Expediente exp) throws SQLException, ClassNotFoundException{
-        String query = "UPDATE Expedientes SET tipo = '" + exp.getTipo() + "', anio = " + exp.getAnio() + ", caja = " + exp.getCaja()
-                + ", ubicacion = '" + exp.getUbicacion() + "', notas = '" + exp.getNotas() + "', tomos = '" + exp.getTomos()
-                + "', juzgado = '" + exp.getJuzgado() + "', lugar = '" + exp.getLugar() + "', paginas = " + exp.getPaginas()
-                + "', estado = '" + exp.getEstado()
-                + " WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() 
-                + "' AND anio = " + exp.getAnio() + " AND tomos = " + exp.getTomos();
+	public boolean update(Expediente exp) throws SQLException, ClassNotFoundException {
+	    String query = "UPDATE Expedientes SET tipo = '" + exp.getTipo() + "', anio = " + exp.getAnio() + ", caja = " + exp.getCaja()
+	                + ", ubicacion = '" + exp.getUbicacion() + "', notas = " 
+	                + (exp.getNotas() != null ? "'" + exp.getNotas() + "'" : "NULL") + ", tomos = " 
+	                + (exp.getTomos() != null ? "'" + exp.getTomos() + "'" : "NULL") + ", juzgado = '" + exp.getJuzgado() + "', lugar = '" 
+	                + exp.getLugar() + "', paginas = " + exp.getPaginas() + ", estado = '" + exp.getEstado() 
+	                + "' WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() 
+	                + "' AND anio = " + exp.getAnio() + " AND (tomos = '" + exp.getTomos() + "' OR tomos IS NULL)";
 
-        return Conexion.execute(query);
-    }
+	    return Conexion.execute(query);
+	}
+
+
 
 	@Override
     public boolean delete(int numExpediente) throws ClassNotFoundException, SQLException {
