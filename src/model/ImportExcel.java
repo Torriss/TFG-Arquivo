@@ -33,16 +33,16 @@ public class ImportExcel {
             String lugar = row.getCell(8).getStringCellValue();
             int paginas = (int) row.getCell(9).getNumericCellValue();
 
-//            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
-//
-//            //if (Expediente.existeExpediente(numExpediente, tipo, anio, caja, ubicacion)) {
-//            if (Expediente.existeExpediente(numExpediente, tipo)) {
-//                // Actualizar el expediente existente en la tabla
-//                Expediente.update(exp);
-//            } else {
-//                // Insertar el nuevo expediente en la tabla
-//                Expediente.insert(exp);
-//            }
+            Expediente exp = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas);
+
+            //if (Expediente.existeExpediente(numExpediente, tipo, anio, caja, ubicacion)) {
+            if (Expediente.existeExpediente(numExpediente, tipo)) {
+                // Actualizar el expediente existente en la tabla
+                Expediente.update(exp);
+            } else {
+                // Insertar el nuevo expediente en la tabla
+                Expediente.insert(exp);
+            }
         }
 
         workbook.close();
