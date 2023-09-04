@@ -26,7 +26,7 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
             FileInputStream fis = new FileInputStream(new File(filePath));
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-            // Leer la primera hoja del archivo Excel (ajusta esto seg�n tu estructura)
+            // Leer la primera hoja del archivo Excel
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = sheet.iterator();

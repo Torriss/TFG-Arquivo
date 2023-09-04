@@ -41,6 +41,7 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
                 Iterator<Cell> cellIterator = row.cellIterator();
 
                 // Crear un objeto Expediente y asignar valores desde el archivo Excel
+                //hacer comprobaciones de valores correctos?
 //                Expediente expediente = new Expediente();
 //
 //                expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
@@ -57,12 +58,14 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
             e.printStackTrace();
         }
 
-        // Luego de importar los expedientes desde el archivo Excel, podemos eliminarlos de la base de datos
+        //Recorremos la lista y cambiamos le estado de todos los expedientes a expurgado
+        //Aniadir todos los expedientes a tabla expurgos
         ExpedienteDAO expedienteDAO = new ExpedienteDAOImpl();
         for (Expediente expediente : expedientesAEliminar) {
             int numExpediente = expediente.getNumExpediente();
 //            expedienteDAO.delete(numExpediente);
         }
+        
         
         return expedientesAEliminar;
     }

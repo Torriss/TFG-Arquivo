@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelExporter {
-    public static void exportExpedientes(List<Expediente> expedientes, String filePath) {
+    public static void exportExpedientes(List<Expediente> expedientes, String filePath) throws IOException {
         // Crear un nuevo libro de Excel
         Workbook workbook = new XSSFWorkbook();
         
@@ -27,14 +27,14 @@ public class ExcelExporter {
         try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
             workbook.write(outputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw e;
         }
         
         // Cerrar el libro
         try {
             workbook.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
     
@@ -46,7 +46,7 @@ public class ExcelExporter {
         headerFont.setBold(true);
         headerCellStyle.setFont(headerFont);
         
-        String[] headers = {"ID", "Tipo", "Numero de Expediente", "Anio", "Ubicacion", "Notas", "Tomos", "Juzgado", "Lugar"};
+        String[] headers = {"Tipo", "Numero Expediente", "Anio", "Ubicacion", "Notas", "Tomos", "Juzgado", "Lugar", "Caja", "Paginas", "Estado"};
         
         for (int i = 0; i < headers.length; i++) {
             Cell cell = headerRow.createCell(i);
@@ -61,8 +61,6 @@ public class ExcelExporter {
         for (Expediente expediente : expedientes) {
             Row row = sheet.createRow(rowNum++);
             
-            //TODO: crear metodo getId()
-            //row.createCell(0).setCellValue(expediente.getId());
             row.createCell(1).setCellValue(expediente.getTipo());
             row.createCell(2).setCellValue(expediente.getNumExpediente());
             row.createCell(3).setCellValue(expediente.getAnio());
@@ -71,6 +69,9 @@ public class ExcelExporter {
             row.createCell(6).setCellValue(expediente.getTomos());
             row.createCell(7).setCellValue(expediente.getJuzgado());
             row.createCell(8).setCellValue(expediente.getLugar());
+            row.createCell(9).setCellValue(expediente.getCaja());
+            row.createCell(10).setCellValue(expediente.getPaginas());
+            row.createCell(11).setCellValue(expediente.getEstado());)
         }
     }
 }
