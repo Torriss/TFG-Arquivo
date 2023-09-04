@@ -153,10 +153,12 @@ public class ControlDevoluciones {
 		int pags = Integer.parseInt(devoluciones.getTextFieldPaginas().getText());
 		String tipoExp = devoluciones.getComboBoxTipoExp().getSelectedItem().toString();
 		String juzgado = devoluciones.getComboBoxJuzgado().getSelectedItem().toString();
-
+		String lugar = devoluciones.getTextFieldLugar().getText();
+		String tomos = devoluciones.getTextFieldTomos().getText();
+		String notas = devoluciones.getTextFieldNotas().getText();
+		
 		try {
-			// TODO: falta leer campos introducidos por el usuario: lugar, tomos y notas
-			Expediente exp = devolucion.nuevo(numExp, anioExp, tipoExp, juzgado, pags);
+			Expediente exp = devolucion.nuevo(numExp, anioExp, tipoExp, juzgado, pags, tomos, lugar, notas);
 			
 			String caja = Integer.toString(exp.getCaja());
             String ubicacion = exp.getUbicacion();
