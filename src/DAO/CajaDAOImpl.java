@@ -21,8 +21,8 @@ public class CajaDAOImpl implements CajaDAO {
     }
 
 	@Override
-    public List<Caja> obtenerTodasCajas() throws SQLException, ClassNotFoundException{
-        List<Caja> cajas = new ArrayList<>();
+    public ArrayList<Caja> obtenerTodasCajas() throws SQLException, ClassNotFoundException{
+        ArrayList<Caja> cajas = new ArrayList<>();
         String query = "SELECT * FROM cajas";
         ResultSet rs = Conexion.executeSelect(query);
         
@@ -77,8 +77,7 @@ public class CajaDAOImpl implements CajaDAO {
 
     
     public Caja buscarCajasParaExpedienteNuevo(int anio, String tipo, int paginasExpediente) throws SQLException, ClassNotFoundException{
-        List<Caja> cajasMismoTipoYAnio = obtenerCajasPorTipoYAnio(tipo, anio);
-        //List<Caja> cajasDisponibles = new ArrayList<>();
+        ArrayList<Caja> cajasMismoTipoYAnio = obtenerCajasPorTipoYAnio(tipo, anio);
 
         for (Caja caja : cajasMismoTipoYAnio) {
             if (caja.getPaginas() >= paginasExpediente) return caja;
@@ -92,8 +91,8 @@ public class CajaDAOImpl implements CajaDAO {
         return nuevaCaja;
     }
 
-    private List<Caja> obtenerCajasPorTipoYAnio(String tipo, int anio) throws SQLException, ClassNotFoundException{
-        List<Caja> cajasMismoTipoYAnio = new ArrayList<>();
+    private ArrayList<Caja> obtenerCajasPorTipoYAnio(String tipo, int anio) throws SQLException, ClassNotFoundException{
+        ArrayList<Caja> cajasMismoTipoYAnio = new ArrayList<>();
         String query = "SELECT * FROM cajas WHERE tipo = '" + tipo + "' AND anio = " + anio;
         ResultSet rs = Conexion.executeSelect(query);
         
