@@ -16,11 +16,11 @@ CREATE TABLE `expedientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE INDEX PK_exp ON expedientes (numExpediente, tipo, anio, juzgado);
 INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
-VALUES ('1', 'oral','2009', '100', 'A-1-2', '', '', 'instruccion', 'archivo general', '30', 'disponible');
+VALUES ('1', 'Oral','2009', '100', 'A-1-2', '', '', 'Instrucción', 'Archivo general', '30', 'Disponible');
 INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
-VALUES ('2', 'oral','2010', '101', 'B-1-3', '', '', 'guardia', 'archivo general', '33', 'expurgado');
+VALUES ('2', 'Oral','2010', '101', 'B-1-3', '', '', 'Guardia', 'Archivo general', '33', 'Expurgado');
 INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado)
-VALUES ('3', 'oral','2011', '102', 'C-2-2', '', '', 'penal', 'archivo general', '22', 'transferido');
+VALUES ('3', 'Oral','2011', '102', 'C-2-2', '', '', 'Penal', 'Archivo general', '22', 'Transferido');
 
 CREATE TABLE `solicitantes` (
   `idEmpleado`int NOT NULL AUTO_INCREMENT,
@@ -29,8 +29,8 @@ CREATE TABLE `solicitantes` (
   `cargo` varchar(45) NOT NULL,
   PRIMARY KEY (`idEmpleado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO solicitantes (nombre, apellidos, cargo) VALUES ('diego', 'perez', 'secretario de juez');
-INSERT INTO solicitantes (nombre, apellidos, cargo) VALUES ('marta', 'garcia', 'fiscal');
+INSERT INTO solicitantes (nombre, apellidos, cargo) VALUES ('diego', 'perez', 'Secretario de juez');
+INSERT INTO solicitantes (nombre, apellidos, cargo) VALUES ('marta', 'garcia', 'Fiscal');
 INSERT INTO solicitantes (nombre, apellidos, cargo) VALUES ('ignacio', 'sanchez', 'juez');
 
 CREATE TABLE `prestamos` (
@@ -72,65 +72,65 @@ CREATE TABLE `cajas` (
   PRIMARY KEY (`idcaja`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO cajas (anio, tipo, paginas, ubicacion) 
-VALUES ('2009', 'oral', '70', 'A-1-2-4');
+VALUES ('2009', 'Oral', '70', 'A-1-2-4');
 INSERT INTO cajas (anio, tipo, paginas, ubicacion) 
-VALUES ('2010', 'oral', '67', 'B-1-3-4');
+VALUES ('2010', 'Oral', '67', 'B-1-3-4');
 INSERT INTO cajas (anio, tipo, paginas, ubicacion) 
-VALUES ('2011', 'oral', '78', 'C-2-2-3');
+VALUES ('2011', 'Oral', '78', 'C-2-2-3');
 
 
 -- expedientes
 INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
 VALUES
-    (4, 'escrito', 2012, 2022, 'N-2-3-4', 'Algunas notas', 'Tomos 1-3', 'civil', 'archivo general', 10, 'transferido'),
-    (5, 'escrito', 2013, 2022, 'N-2-3-4', 'Notas importantes', 'Tomos 2-4', 'penal', 'archivo general', 10, 'transferido'),
-    (6, 'escrito', 2014, 2022, 'N-2-3-4', 'Sin notas', '', 'instruccion', 'archivo general', 10, 'disponible'),
-    (7, 'oral', 2015, 2023, 'O-1-4-3', '', '', 'guardia', 'archivo general', 10, 'disponible'),
-    (8, 'escrito', 2016, 2023, 'O-1-4-3', 'Notas detalladas', 'Tomos 3-6', 'civil', 'archivo general', 10, 'disponible'),
-    (9, 'escrito', 2017, 2023, 'O-1-4-3', 'Notas importantes', 'Tomos 2-5', 'penal', 'archivo general', 10, 'disponible'),
-    (10, 'oral', 2018, 2023, 'O-1-4-3', 'Algunas notas', 'Tomos 1-2', 'instruccion', 'archivo general', 10, 'disponible'),
-    (11, 'escrito', 2019, 2024, 'P-3-2-1', '', '', 'guardia', 'archivo general', 10, 'disponible'),
-    (12, 'escrito', 2020, 2024, 'P-3-2-1', 'Sin notas', 'Tomos 1-4', 'civil', 'archivo general', 10, 'expurgado'),
-    (13, 'escrito', 2021, 2024, 'P-3-2-1', 'Notas detalladas', 'Tomos 2-3', 'penal', 'archivo general', 10, 'expurgado');
+    (4, 'Escrito', 2012, 2022, 'N-2-3-4', 'Algunas notas', 'Tomos 1-3', 'Civil', 'Archivo general', 10, 'Transferido'),
+    (5, 'Escrito', 2013, 2022, 'N-2-3-4', 'Notas importantes', 'Tomos 2-4', 'Penal', 'Archivo general', 10, 'Transferido'),
+    (6, 'Escrito', 2014, 2022, 'N-2-3-4', 'Sin notas', '', 'Instrucción', 'Archivo general', 10, 'Disponible'),
+    (7, 'Oral', 2015, 2023, 'O-1-4-3', '', '', 'Guardia', 'Archivo general', 10, 'Disponible'),
+    (8, 'Escrito', 2016, 2023, 'O-1-4-3', 'Notas detalladas', 'Tomos 3-6', 'Civil', 'Archivo general', 10, 'Disponible'),
+    (9, 'Escrito', 2017, 2023, 'O-1-4-3', 'Notas importantes', 'Tomos 2-5', 'Penal', 'Archivo general', 10, 'Disponible'),
+    (10, 'Oral', 2018, 2023, 'O-1-4-3', 'Algunas notas', 'Tomos 1-2', 'Instrucción', 'Archivo general', 10, 'Disponible'),
+    (11, 'Escrito', 2019, 2024, 'P-3-2-1', '', '', 'Guardia', 'Archivo general', 10, 'Disponible'),
+    (12, 'Escrito', 2020, 2024, 'P-3-2-1', 'Sin notas', 'Tomos 1-4', 'Civil', 'Archivo general', 10, 'Expurgado'),
+    (13, 'Escrito', 2021, 2024, 'P-3-2-1', 'Notas detalladas', 'Tomos 2-3', 'Penal', 'Archivo general', 10, 'Expurgado');
 
 
 
 -- solicitantes
 INSERT INTO solicitantes (nombre, apellidos, cargo) 
 VALUES
-    ('ana', 'rodriguez', 'secretario de juez'),
-    ('carlos', 'lopez', 'fiscal'),
-    ('luisa', 'martinez', 'juez'),
-    ('raul', '0santos', 'secretario de juez'),
-    ('carmen', 'perez', 'fiscal'),
-    ('javier', 'gonzalez', 'juez'),
-    ('patricia', 'ramirez', 'secretario de juez'),
-    ('lucia', 'fernandez', 'fiscal'),
-    ('roberto', 'sanchez', 'juez'),
-    ('laura', 'gomez', 'secretario de juez');
+    ('Ana', 'Rodríguez', 'Secretario de juez'),
+    ('Carlos', 'López', 'Fiscal'),
+    ('Luisa', 'Martínez', 'Juez'),
+    ('Raúl', 'Santos', 'Secretario de juez'),
+    ('Carmen', 'Pérez', 'Fiscal'),
+    ('Javier', 'González', 'Juez'),
+    ('Patricia', 'Ramírez', 'Secretario de juez'),
+    ('Lucía', 'Fernandez', 'Fiscal'),
+    ('Roberto', 'Sánchez', 'Juez'),
+    ('Laura', 'Gómez', 'Secretario de juez');
 
 
 -- prestamos
 INSERT INTO prestamos (idSolicitante, numExpediente, tipo, anio, juzgado, fechaPrestamo, fechaDevolucion) 
 VALUES
-    (1, 4, 'escrito', 2012, 'civil', '2023-07-25', '2023-08-10'),
-    (1, 5, 'escrito', 2013, 'penal', '2023-08-05', ''),
-    (1, 6, 'escrito', 2014, 'instruccion', '2023-07-20', '2023-08-04'),
-    (1, 7, 'oral', 2015, 'guardia', '2023-08-01', ''),
-    (3, 8, 'escrito', 2016, 'civil', '2023-07-30', '2023-08-15'),
-    (4, 9, 'escrito', 2017, 'penal', '2023-07-15', ''),
-    (5, 10, 'oral', 2018, 'instruccion', '2023-08-02', '2023-08-17'),
-    (5, 11, 'escrito', 2019, 'guardia', '2023-08-10', ''),
-    (2, 12, 'escrito', 2020, 'civil', '2023-07-22', '2023-08-07'),
-    (6, 13, 'escrito', 2021, 'penal', '2023-07-18', '');
+    (1, 4, 'Escrito', 2012, 'Civil', '2023-07-25', '2023-08-10'),
+    (1, 5, 'Escrito', 2013, 'Penal', '2023-08-05', ''),
+    (1, 6, 'Escrito', 2014, 'Instrucción', '2023-07-20', '2023-08-04'),
+    (1, 7, 'Oral', 2015, 'Guardia', '2023-08-01', ''),
+    (3, 8, 'Escrito', 2016, 'Civil', '2023-07-30', '2023-08-15'),
+    (4, 9, 'Escrito', 2017, 'Penal', '2023-07-15', ''),
+    (5, 10, 'Oral', 2018, 'Instrucción', '2023-08-02', '2023-08-17'),
+    (5, 11, 'Escrito', 2019, 'Guardia', '2023-08-10', ''),
+    (2, 12, 'Escrito', 2020, 'Civil', '2023-07-22', '2023-08-07'),
+    (6, 13, 'Escrito', 2021, 'Penal', '2023-07-18', '');
 
 
 -- historicaExpurgo
 
 INSERT INTO historicaExpurgo (numExpediente, tipo, anio, juzgado, fechaHito) 
 VALUES
-    (12, 'escrito', 2020, 'civil', '2014-04-30'),
-    (13, 'escrito', 2021, 'penal', '2013-03-31');
+    (12, 'Escrito', 2020, 'Civil', '2014-04-30'),
+    (13, 'Escrito', 2021, 'Penal', '2013-03-31');
 
 
 
@@ -139,14 +139,14 @@ VALUES
 
 INSERT INTO historicaTransferencia (numExpediente, tipo, anio, juzgado, fechaHito) 
 VALUES
-    (4, 'escrito', 2012, 'civil', '2023-02-15'),
-    (5, 'escrito', 2013, 'penal', '2023-03-20');
+    (4, 'Escrito', 2012, 'Civil', '2023-02-15'),
+    (5, 'Escrito', 2013, 'Penal', '2023-03-20');
 
 -- cajas
 
 INSERT INTO cajas (anio, tipo, paginas, ubicacion) 
 VALUES
-    (2022, 'escrito', 30, 'N-2-3-4'),
-    (2023, 'escrito', 40, 'O-1-4-3'),
-    (2024, 'escrito', 30, 'P-3-2-1');
+    (2022, 'Escrito', 30, 'N-2-3-4'),
+    (2023, 'Escrito', 40, 'O-1-4-3'),
+    (2024, 'Escrito', 30, 'P-3-2-1');
 
