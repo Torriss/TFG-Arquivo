@@ -76,7 +76,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 		//buscar caja nuevo expediente
 		Caja nuevaCaja= caja.buscarCajasParaExpedienteNuevo(anio, tipo, paginas);
 		//asignar nueva caja al expediente
-		Expediente expediente = new Expediente(numExp, tipo, anio, nuevaCaja.getIdCaja(), nuevaCaja.getUbicacion(), notas, tomos, juzgado, lugar, paginas, "");
+		Expediente expediente = new Expediente(numExp, tipo, anio, nuevaCaja.getIdCaja(), nuevaCaja.getUbicacion(), notas, tomos, juzgado, lugar, paginas, "disponible");
 		//restar paginas de caja
 		nuevaCaja.restarPaginas(paginas);
 		//actualizar bd

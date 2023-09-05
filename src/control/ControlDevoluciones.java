@@ -167,8 +167,7 @@ public class ControlDevoluciones {
 			
 			devoluciones.getTextFieldCaja().setText(caja);
             devoluciones.getTextFieldUbicacion().setText(ubicacion);
-            
-            // TODO: llamar a funcion imprimirDevolucion con los datos del expediente
+
             expedientes.add(exp);
             TablaResultados tabla = new TablaResultados();
 			ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);

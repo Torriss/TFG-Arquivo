@@ -77,15 +77,15 @@ public class CajaDAOImpl implements CajaDAO {
     
     public Caja buscarCajasParaExpedienteNuevo(int anio, String tipo, int paginasExpediente) throws SQLException, ClassNotFoundException{
         ArrayList<Caja> cajasMismoTipoYAnio = obtenerCajasPorTipoYAnio(tipo, anio);
+        Caja nuevaCaja;
         if(!cajasMismoTipoYAnio.isEmpty()) {
         	for (Caja caja : cajasMismoTipoYAnio) {
                 if (caja.getPaginas() >= paginasExpediente) return caja;
             }
         	String ultimaUbicacion = cajasMismoTipoYAnio.get(cajasMismoTipoYAnio.size() - 1).getUbicacion();
             String nuevaUbicacion = buscarNuevaUbicacionContigua(ultimaUbicacion);
-            Caja nuevaCaja = new Caja(nuevaUbicacion, tipo, anio);
+            nuevaCaja = new Caja(nuevaUbicacion, tipo, anio);
             this.insert(nuevaCaja);
-            return nuevaCaja;
         }
         else {
         	ArrayList<Caja> cajasMismoTipo = obtenerCajasPorTipo(tipo);
@@ -95,9 +95,8 @@ public class CajaDAOImpl implements CajaDAO {
                 }
             	String ultimaUbicacion = cajasMismoTipo.get(cajasMismoTipo.size() - 1).getUbicacion();
                 String nuevaUbicacion = buscarNuevaUbicacionContigua(ultimaUbicacion);
-                Caja nuevaCaja = new Caja(nuevaUbicacion, tipo, anio);
+                nuevaCaja = new Caja(nuevaUbicacion, tipo, anio);
                 this.insert(nuevaCaja);
-                return nuevaCaja;
             }
             else {
             	ArrayList<Caja> cajasMismoAnio = obtenerCajasPorAnio(anio);
@@ -107,15 +106,13 @@ public class CajaDAOImpl implements CajaDAO {
                     }
                 	String ultimaUbicacion = cajasMismoAnio.get(cajasMismoAnio.size() - 1).getUbicacion();
                     String nuevaUbicacion = buscarNuevaUbicacionContigua(ultimaUbicacion);
-                    Caja nuevaCaja = new Caja(nuevaUbicacion, tipo, anio);
+                    nuevaCaja = new Caja(nuevaUbicacion, tipo, anio);
                     this.insert(nuevaCaja);
-                    return nuevaCaja;
                 }
             }
         }
-        
         String ultimaUbi = ultimaUbicacion();
-        Caja nuevaCaja = new Caja(buscarNuevaUbicacionContigua(ultimaUbi), tipo, anio);
+        nuevaCaja = new Caja(buscarNuevaUbicacionContigua(ultimaUbi), tipo, anio);
         
         return nuevaCaja;
     }
@@ -185,7 +182,7 @@ public class CajaDAOImpl implements CajaDAO {
     
     private String buscarNuevaUbicacionContigua(String ultimaUbicacion) {
         char seccion = ultimaUbicacion.charAt(0);
-        int estanteria = Integer.parseInt(ultimaUbicacion.substring(2, 4));
+        int estanteria = Integer.parseInt(ultimaUbicacion.substring(2, 3));
         int balda = Integer.parseInt(ultimaUbicacion.substring(5, 6));
         int posicion = Integer.parseInt(ultimaUbicacion.substring(8, 9));
 

@@ -24,7 +24,6 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
     }
 
 	public boolean update(Expediente exp) throws SQLException, ClassNotFoundException {
-		//TODO: cambiar string nulos a ""
 	    String query = "UPDATE Expedientes SET tipo = '" + exp.getTipo() + "', anio = " + exp.getAnio() + ", caja = " + exp.getCaja()
 	                + ", ubicacion = '" + exp.getUbicacion() + "', notas = " 
 	                + (exp.getNotas() != null ? "'" + exp.getNotas() + "'" : "''") + ", tomos = " 

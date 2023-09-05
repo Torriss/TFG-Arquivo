@@ -14,7 +14,11 @@ import DAO.ExpedienteDAOImpl;
 
 public class ExportarExpedientesExcel {
     public static void exportarExpedientes() throws IOException, ClassNotFoundException, SQLException {
-    	String filePath = "expedientes.xlsx";
+    	String fecha = LocalDateTime.now().toString();
+    	fecha = fecha.replace(":", "");
+    	fecha = fecha.replace("-", "");
+    	fecha = fecha.replace("T", "");
+    	String filePath = "C:\\01-ArchivoComunJuzgados\\exportarExpedientes_" + fecha +".xlsx";
     	ExpedienteDAO exp = new ExpedienteDAOImpl();
     	List<Expediente> expedientes = exp.getAllExpedientes();
         // Crear un nuevo libro de Excel
