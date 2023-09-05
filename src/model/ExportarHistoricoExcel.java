@@ -16,7 +16,7 @@ public class ExportarHistoricoExcel {
     public static String exportarHistorico(String tabla) throws IOException, ClassNotFoundException, SQLException {
     	String fecha = FuncComunes.getFechaHora();
     	
-    	String filePath = "C:\\01-ArchivoComunJuzgados\\exportar_"+ tabla + "_" + fecha +".xlsx";
+    	String filePath = "exportar_"+ tabla + "_" + fecha +".xlsx";
     	HistoricoDAO hist = new HistoricoDAOImpl();
     	ArrayList<Historico> historico = hist.getAllRows(tabla);
         // Crear un nuevo libro de Excel

@@ -2,6 +2,7 @@ package utils;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -47,7 +48,7 @@ public class FuncComunes {
 	}
 
 	public static String getFechaHora() {
-		LocalDate fechaActual = LocalDate.now();
+		LocalDateTime fechaActual = LocalDateTime.now();
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         String fecha = fechaActual.format(formatoFecha);
         
