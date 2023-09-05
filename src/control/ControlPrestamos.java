@@ -110,8 +110,6 @@ public class ControlPrestamos{
 				//TODO: crear funcion imprimirTestigo con toda la info del form
 				//y añadiendo caja, ubicación, notas, tomos, lugar
 			}
-			
-			clearControl();
 		} catch (IllegalArgumentException e2) {
 			JOptionPane.showMessageDialog(null,
 					e2.getMessage(), "Error",

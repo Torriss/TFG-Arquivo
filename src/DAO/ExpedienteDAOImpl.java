@@ -27,11 +27,11 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 		//TODO: cambiar string nulos a ""
 	    String query = "UPDATE Expedientes SET tipo = '" + exp.getTipo() + "', anio = " + exp.getAnio() + ", caja = " + exp.getCaja()
 	                + ", ubicacion = '" + exp.getUbicacion() + "', notas = " 
-	                + (exp.getNotas() != null ? "'" + exp.getNotas() + "'" : "NULL") + ", tomos = " 
-	                + (exp.getTomos() != null ? "'" + exp.getTomos() + "'" : "NULL") + ", juzgado = '" + exp.getJuzgado() + "', lugar = '" 
+	                + (exp.getNotas() != null ? "'" + exp.getNotas() + "'" : "''") + ", tomos = " 
+	                + (exp.getTomos() != null ? "'" + exp.getTomos() + "'" : "''") + ", juzgado = '" + exp.getJuzgado() + "', lugar = '" 
 	                + exp.getLugar() + "', paginas = " + exp.getPaginas() + ", estado = '" + exp.getEstado() 
 	                + "' WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() 
-	                + "' AND anio = " + exp.getAnio() + " AND (tomos = '" + exp.getTomos() + "' OR tomos IS NULL)";
+	                + "' AND anio = " + exp.getAnio() + " AND (tomos = '" + exp.getTomos() + "' OR tomos = '')";
 
 	    return Conexion.execute(query);
 	}
