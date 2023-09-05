@@ -50,7 +50,7 @@ public class ExportarExpedientesExcel {
     public static void imprimirExpedientes(ArrayList<Expediente> expedientes) throws IOException {
     	String fecha = FuncComunes.getFechaHora();
 
-    	String filePath = "C:\\01-ArchivoComunJuzgados\\expedientes_" + fecha +".xlsx";
+    	String filePath = "expedientes_" + fecha +".xlsx";
     	
     	// Crear un nuevo libro de Excel
         Workbook workbook = new XSSFWorkbook();
