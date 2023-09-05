@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.BoxLayout;
 
 public class TablaResultados extends JFrame {
 
@@ -65,6 +66,7 @@ public class TablaResultados extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		
 		scrollPaneTabla = new JScrollPane();
 		contentPane.add(scrollPaneTabla);
@@ -76,6 +78,9 @@ public class TablaResultados extends JFrame {
 		//tablaSeguimiento.addKeyListener(this);
 		tabla.setOpaque(false);
 		scrollPaneTabla.setViewportView(tabla);
+		
+		btnImprimir = new JButton("Imprimir");
+		contentPane.add(btnImprimir);
 		
 	}
 

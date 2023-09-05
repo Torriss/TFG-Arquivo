@@ -24,7 +24,7 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 			//throw new IllegalArgumentException("Este expediente se encuentra prestado o expurgado");
 		else {
 			//Insertamos prestamo en la bbdd
-			Prestamo prestamo = new Prestamo(numExp, tipo, anio, juzgado, fechaPrestamo, null, solicitante);
+			Prestamo prestamo = new Prestamo(numExp, tipo, anio, juzgado, fechaPrestamo, "", solicitante);
 			this.insert(prestamo);
 			//Actualizamos expedientes en bbdd
 		    expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
@@ -54,9 +54,9 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	
 	@Override
     public boolean update(Prestamo prest) throws SQLException, ClassNotFoundException{
-        String query = "UPDATE prestamos SET fechaDevolucion = '" + prest.getFechaDevolucion() 
+        String query = "UPDATE prestamos SET fechaDevolucion = '" + prest.getFechaDevolucion()  + "'" 
                 + " WHERE numExpediente = " + prest.getNumExpediente() + " AND tipo = '" + prest.getTipo() 
-                + "' AND anio = " + prest.getAnio() + " AND fechaPrestamo = " + prest.getFechaPrestamo();
+                + "' AND anio = " + prest.getAnio() + " AND fechaPrestamo = '" + prest.getFechaPrestamo() + "'";
 
         return Conexion.execute(query);
     }
@@ -78,16 +78,31 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	
 	@Override
 	public Prestamo existePrestamoSinDevolver(int numExpediente, String tipo, int anio, String juzgado) throws ClassNotFoundException, SQLException {
+		//TODO: cambiar a esta select cuando insertemos los String como ""
+//		String query = "SELECT * FROM prestamos WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
+//				+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'" + " AND fechaDevolucion = \"\"";
 		String query = "SELECT * FROM prestamos WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
-				+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'" + " AND fechaDevolucion IS NULL)";
+				+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'" + " AND fechaDevolucion = 'null'";
 		ResultSet rs = Conexion.executeSelect(query);
 		Prestamo prestamo = null;
 
 		if (rs.next()) {
             String fechaPrestamo = rs.getString("fechaPrestamo");
             int idSolicitante = rs.getInt("idSolicitante");
-            prestamo = new Prestamo(numExpediente, tipo, anio, juzgado, fechaPrestamo, null, idSolicitante);
+            prestamo = new Prestamo(numExpediente, tipo, anio, juzgado, fechaPrestamo, "", idSolicitante);
 		}
+		else { //TODO: BORRAR!!! Arreglo temporal para que funcione mientras haya fechaDevolucion como null y como "" en la bd
+			query = "SELECT * FROM prestamos WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
+					+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'" + " AND fechaDevolucion = \"\"";
+			rs = Conexion.executeSelect(query);
+			prestamo = null;
+
+			if (rs.next()) {
+	            String fechaPrestamo = rs.getString("fechaPrestamo");
+	            int idSolicitante = rs.getInt("idSolicitante");
+	            prestamo = new Prestamo(numExpediente, tipo, anio, juzgado, fechaPrestamo, "", idSolicitante);
+			}
+		} // Borrar hasta aqui
 		return prestamo;
 	}
 }

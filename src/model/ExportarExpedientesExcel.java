@@ -3,6 +3,7 @@ package model;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.*;
@@ -44,7 +45,13 @@ public class ExportarExpedientesExcel {
     }
     
     public static void imprimirExpedientes(List<Expediente> expedientes) throws IOException {
-        // Crear un nuevo libro de Excel
+    	String fecha = LocalDateTime.now().toString();
+    	fecha = fecha.replace(":", "");
+    	fecha = fecha.replace("-", "");
+    	fecha = fecha.replace("T", "");
+    	String filePath = "C:\\01-ArchivoComunJuzgados\\expedientes_" + fecha +".xlsx";
+    	
+    	// Crear un nuevo libro de Excel
         Workbook workbook = new XSSFWorkbook();
         
         // Crear una hoja en el libro
@@ -57,7 +64,7 @@ public class ExportarExpedientesExcel {
         fillDataRows(sheet, expedientes);
         
         // Guardar el libro como archivo Excel
-        try (FileOutputStream outputStream = new FileOutputStream("C:\\01-ArchivoComunJuzgados")) {
+        try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
             workbook.write(outputStream);
         } catch (IOException e) {
             throw e;
@@ -79,7 +86,7 @@ public class ExportarExpedientesExcel {
         headerFont.setBold(true);
         headerCellStyle.setFont(headerFont);
         
-        String[] headers = {"Tipo", "Numero Expediente", "Anio", "Ubicacion", "Notas", "Tomos", "Juzgado", "Lugar", "Caja", "Paginas", "Estado"};
+        String[] headers = {"Tipo", "Número Expediente", "Año", "Ubicación", "Notas", "Tomos", "Juzgado", "Lugar", "Caja", "Páginas", "Estado"};
         
         for (int i = 0; i < headers.length; i++) {
             Cell cell = headerRow.createCell(i);

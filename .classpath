@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="Apache Poi/xmlbeans-5.0.3.jar"/>
 	<classpathentry kind="lib" path="Apache Poi/xmlgraphics-commons-2.6.jar"/>
 	<classpathentry kind="lib" path="Apache Poi/xmlsec-2.3.0.jar"/>
+	<classpathentry kind="lib" path="Apache Poi/log4j-core-2.17.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
