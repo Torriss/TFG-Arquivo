@@ -3,24 +3,22 @@ package model;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import DAO.HistoricoDAO;
 import DAO.HistoricoDAOImpl;
+import utils.FuncComunes;
 
 public class ExportarHistoricoExcel {
-    public static void exportarHistorico(String tabla) throws IOException, ClassNotFoundException, SQLException {
-    	String fecha = LocalDateTime.now().toString();
-    	fecha = fecha.replace(":", "");
-    	fecha = fecha.replace("-", "");
-    	fecha = fecha.replace("T", "");
+    public static String exportarHistorico(String tabla) throws IOException, ClassNotFoundException, SQLException {
+    	String fecha = FuncComunes.getFechaHora();
+    	
     	String filePath = "C:\\01-ArchivoComunJuzgados\\exportar_"+ tabla + "_" + fecha +".xlsx";
     	HistoricoDAO hist = new HistoricoDAOImpl();
-    	List<Historico> historico = hist.getAllRows(tabla);
+    	ArrayList<Historico> historico = hist.getAllRows(tabla);
         // Crear un nuevo libro de Excel
         Workbook workbook = new XSSFWorkbook();
         
@@ -46,6 +44,7 @@ public class ExportarHistoricoExcel {
         } catch (IOException e) {
             throw e;
         }
+        return filePath;
     }
     
     private static void createHeaderRow(Sheet sheet) {
@@ -65,7 +64,7 @@ public class ExportarHistoricoExcel {
         }
     }
     
-    private static void fillDataRows(Sheet sheet, List<Historico> filas) {
+    private static void fillDataRows(Sheet sheet, ArrayList<Historico> filas) {
         int rowNum = 1;
         
         for (Historico hist : filas) {

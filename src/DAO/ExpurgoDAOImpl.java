@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,9 +19,9 @@ import model.Historico;
 
 public class ExpurgoDAOImpl implements ExpurgoDAO{
     
-    public List<Expediente> expurgo(String filePath) throws IOException, ClassNotFoundException, SQLException {
+    public ArrayList<Expediente> expurgo(String filePath) throws IOException, ClassNotFoundException, SQLException {
         // Crear una lista para almacenar los expedientes desde el archivo Excel
-        List<Expediente> expedientesAEliminar = new ArrayList<>();
+        ArrayList<Expediente> expedientesAEliminar = new ArrayList<Expediente>();
 
         try {
             FileInputStream fis = new FileInputStream(new File(filePath));
@@ -55,7 +54,7 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
                 expediente.setLugar(cellIterator.next().getStringCellValue());
                 expediente.setCaja((int) cellIterator.next().getNumericCellValue());
                 expediente.setPaginas((int) cellIterator.next().getNumericCellValue());
-                expediente.setEstado("expurgado");
+                expediente.setEstado("Expurgado");
 
                 expedientesAEliminar.add(expediente);
             }
@@ -69,7 +68,7 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
         //Obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
         //Crear un formato de fecha
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         //Formatear la fecha actual como una cadena
         String fechaHito = fechaActual.format(formatoFecha);
         

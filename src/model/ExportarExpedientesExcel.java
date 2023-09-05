@@ -3,24 +3,22 @@ package model;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import DAO.ExpedienteDAO;
 import DAO.ExpedienteDAOImpl;
+import utils.FuncComunes;
 
 public class ExportarExpedientesExcel {
-    public static void exportarExpedientes() throws IOException, ClassNotFoundException, SQLException {
-    	String fecha = LocalDateTime.now().toString();
-    	fecha = fecha.replace(":", "");
-    	fecha = fecha.replace("-", "");
-    	fecha = fecha.replace("T", "");
+    public static String exportarExpedientes() throws IOException, ClassNotFoundException, SQLException {
+        String fecha = FuncComunes.getFechaHora();
+        
     	String filePath = "C:\\01-ArchivoComunJuzgados\\exportarExpedientes_" + fecha +".xlsx";
     	ExpedienteDAO exp = new ExpedienteDAOImpl();
-    	List<Expediente> expedientes = exp.getAllExpedientes();
+    	ArrayList<Expediente> expedientes = exp.getAllExpedientes();
         // Crear un nuevo libro de Excel
         Workbook workbook = new XSSFWorkbook();
         
@@ -46,13 +44,12 @@ public class ExportarExpedientesExcel {
         } catch (IOException e) {
             throw e;
         }
+        return filePath;
     }
     
-    public static void imprimirExpedientes(List<Expediente> expedientes) throws IOException {
-    	String fecha = LocalDateTime.now().toString();
-    	fecha = fecha.replace(":", "");
-    	fecha = fecha.replace("-", "");
-    	fecha = fecha.replace("T", "");
+    public static void imprimirExpedientes(ArrayList<Expediente> expedientes) throws IOException {
+    	String fecha = FuncComunes.getFechaHora();
+
     	String filePath = "C:\\01-ArchivoComunJuzgados\\expedientes_" + fecha +".xlsx";
     	
     	// Crear un nuevo libro de Excel
@@ -99,7 +96,7 @@ public class ExportarExpedientesExcel {
         }
     }
     
-    private static void fillDataRows(Sheet sheet, List<Expediente> expedientes) {
+    private static void fillDataRows(Sheet sheet, ArrayList<Expediente> expedientes) {
         int rowNum = 1;
         
         for (Expediente expediente : expedientes) {

@@ -21,7 +21,7 @@ public class CajaDAOImpl implements CajaDAO {
 
 	@Override
     public ArrayList<Caja> obtenerTodasCajas() throws SQLException, ClassNotFoundException{
-        ArrayList<Caja> cajas = new ArrayList<>();
+        ArrayList<Caja> cajas = new ArrayList<Caja>();
         String query = "SELECT * FROM cajas";
         ResultSet rs = Conexion.executeSelect(query);
         

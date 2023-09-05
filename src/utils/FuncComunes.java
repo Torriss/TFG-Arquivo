@@ -1,6 +1,8 @@
 package utils;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -10,24 +12,6 @@ import DAO.ExpedienteDAOImpl;
 public class FuncComunes {
 
 	private ExpedienteDAOImpl expediente = new ExpedienteDAOImpl();
-	
-//	public JComboBox<String> iniciarListaEstado(JComboBox<String> comboBoxEstado) {
-//		ArrayList<String> listaEstados = new ArrayList<String>();
-//		listaEstados.add("Consulta");
-//		listaEstados.add("No bajado al archivo");
-//		listaEstados.add("No encontrado");
-//		listaEstados.add("Se presta ahora");
-//		listaEstados.add("Ya prestado antes");
-//		
-//		comboBoxEstado.removeAllItems();
-//		
-//		for (int i = 0; i<listaEstados.size(); i++)
-//		{
-//			comboBoxEstado.addItem(listaEstados.get(i));
-//		}
-//		return comboBoxEstado;
-//		
-//	}
 	
 	public JComboBox<String> iniciarListaJuzgados(JComboBox<String> comboBoxJuzgado) throws SQLException {
 		ArrayList<String> listaJuzgados;
@@ -62,4 +46,11 @@ public class FuncComunes {
 		return comboBoxTipoExp;
 	}
 
+	public static String getFechaHora() {
+		LocalDate fechaActual = LocalDate.now();
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        String fecha = fechaActual.format(formatoFecha);
+        
+        return fecha;
+	}
 }

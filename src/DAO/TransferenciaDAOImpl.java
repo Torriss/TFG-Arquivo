@@ -18,9 +18,9 @@ import model.Expediente;
 
 public class TransferenciaDAOImpl implements TransferenciaDAO {
 
-    public List<Expediente> transferirExpedientes(String filePath) throws ClassNotFoundException, SQLException, IOException {
-        List<Expediente> expedientesNuevos = new ArrayList<>();
-        List<Expediente> expedientesActualizar = new ArrayList<>();
+    public ArrayList<Expediente> transferirExpedientes(String filePath) throws ClassNotFoundException, SQLException, IOException {
+    	ArrayList<Expediente> expedientesNuevos = new ArrayList<Expediente>();
+    	ArrayList<Expediente> expedientesActualizar = new ArrayList<Expediente>();
         CajaDAO cajas = new CajaDAOImpl();
         ExpedienteDAO exp = new ExpedienteDAOImpl();
 
@@ -55,6 +55,7 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
                 expediente.setLugar(cellIterator.next().getStringCellValue());
                 expediente.setCaja((int) cellIterator.next().getNumericCellValue());
                 expediente.setPaginas((int) cellIterator.next().getNumericCellValue());
+                // TODO: duda, aqui no deberia ser transferido??
                 expediente.setEstado(cellIterator.next().getStringCellValue());
                 
                 //Expediente existe en bbdd por lo que solo actualizamos

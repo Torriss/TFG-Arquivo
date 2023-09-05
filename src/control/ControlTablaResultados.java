@@ -84,6 +84,6 @@ public class ControlTablaResultados {
 	}
 	
 	private void borrarTabla() {
-		//TODO: completar
+		//TODO: completar si es necesario
 	}
 }

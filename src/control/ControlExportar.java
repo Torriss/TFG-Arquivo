@@ -3,6 +3,8 @@ package control;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import model.ExportarExpedientesExcel;
 import model.ExportarHistoricoExcel;
 import view.Exportar;
@@ -23,7 +25,10 @@ public class ControlExportar {
 	
 	private void exportarExpedientes() {
 		try {
-			ExportarExpedientesExcel.exportarExpedientes();
+			String filePath = ExportarExpedientesExcel.exportarExpedientes();
+			JOptionPane.showMessageDialog(null,
+					"<html>Exportación realizada con éxito.<br>Ruta del archivo: " + filePath, "Exportar",
+					JOptionPane.INFORMATION_MESSAGE);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -38,7 +43,10 @@ public class ControlExportar {
 	
 	private void exportarHistorico(String tabla) {
 		try {
-			ExportarHistoricoExcel.exportarHistorico(tabla);
+			String filePath = ExportarHistoricoExcel.exportarHistorico(tabla);
+			JOptionPane.showMessageDialog(null,
+					"<html>Exportación realizada con éxito.<br>Ruta del archivo: " + filePath, "Exportar",
+					JOptionPane.INFORMATION_MESSAGE);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -46,8 +46,9 @@ public class ControlMenu {
 	public void initControl() {
 		menu.getBtnDevoluciones().addActionListener(e -> mostrarDevoluciones());
 		menu.getBtnPrestamos().addActionListener(e -> mostrarPrestamos());
-		menu.getBtnExpurgo().addActionListener(e -> expurgar());
-		menu.getBtnTransferencia().addActionListener(e -> transferir());
+		menu.getBtnModificaciones().addActionListener(e -> elegirArchivo("modificar"));
+		menu.getBtnTransferencia().addActionListener(e -> elegirArchivo("transferir"));
+		menu.getBtnExpurgo().addActionListener(e -> elegirArchivo("expurgar"));
 		menu.getBtnExportar().addActionListener(e -> mostrarExportar());
 		menu.getBtnAyuda().addActionListener(e -> mostrarAyuda());
 	}
@@ -64,41 +65,26 @@ public class ControlMenu {
 		prControl.initControl();
 	}
 	
-	private void expurgar() {
+	private void elegirArchivo(String func) {
 		int retVal = menu.getFc().showOpenDialog(menu);
 		
 		if (retVal == JFileChooser.APPROVE_OPTION) {
             String file = menu.getFc().getSelectedFile().getAbsolutePath();
             try {
-				expurgo.expurgo(file);
+            	if (func == "expurgar") {
+            		expurgo.expurgo(file);
+            	}
+            	else {
+            		// Se utiliza la misma funcion para insertar o actualizar expedientes en la BBDD
+            		transferencia.transferirExpedientes(file);
+            	}
 			} catch (ClassNotFoundException e) {
-				
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }
-	}
-	
-	private void transferir() {
-		int retVal = menu.getFc().showOpenDialog(menu);
-		
-		if (retVal == JFileChooser.APPROVE_OPTION) {
-            String file = menu.getFc().getSelectedFile().getAbsolutePath();
-            try {
-				transferencia.transferirExpedientes(file);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
