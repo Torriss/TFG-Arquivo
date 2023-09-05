@@ -139,7 +139,6 @@ public class ControlDevoluciones {
 				tablaContr.initControl();
 				tabla.setVisible(true);
 			}
-			clearControl();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -170,8 +169,11 @@ public class ControlDevoluciones {
             devoluciones.getTextFieldUbicacion().setText(ubicacion);
             
             // TODO: llamar a funcion imprimirDevolucion con los datos del expediente
-            
-            //clearControl();
+            expedientes.add(exp);
+            TablaResultados tabla = new TablaResultados();
+			ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
+			tablaContr.initControl();
+			tabla.setVisible(true);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
