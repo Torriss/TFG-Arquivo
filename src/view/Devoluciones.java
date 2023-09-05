@@ -163,7 +163,7 @@ public class Devoluciones extends JFrame {
 	public Devoluciones() throws SQLException {
 		setTitle("Devoluciones");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 675, 450);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

@@ -3,6 +3,7 @@ package model;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.*;
@@ -13,7 +14,11 @@ import DAO.HistoricoDAOImpl;
 
 public class ExportarHistoricoExcel {
     public static void exportarHistorico(String tabla) throws IOException, ClassNotFoundException, SQLException {
-    	String filePath = tabla + ".xlsx";
+    	String fecha = LocalDateTime.now().toString();
+    	fecha = fecha.replace(":", "");
+    	fecha = fecha.replace("-", "");
+    	fecha = fecha.replace("T", "");
+    	String filePath = "C:\\01-ArchivoComunJuzgados\\exportar_"+ tabla + "_" + fecha +".xlsx";
     	HistoricoDAO hist = new HistoricoDAOImpl();
     	List<Historico> historico = hist.getAllRows(tabla);
         // Crear un nuevo libro de Excel
