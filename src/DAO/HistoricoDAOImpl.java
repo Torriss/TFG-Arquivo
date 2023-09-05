@@ -25,7 +25,7 @@ public class HistoricoDAOImpl implements HistoricoDAO {
 	public List<Historico> getAllRows(String tabla) throws ClassNotFoundException, SQLException {
 		List<Historico> filas = new ArrayList<>();
         
-        String sql = "SELECT * FROM" + tabla;
+        String sql = "SELECT * FROM " + tabla;
         ResultSet rs = Conexion.executeSelect(sql);
         
         while (rs.next()) {

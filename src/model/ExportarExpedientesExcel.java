@@ -101,17 +101,17 @@ public class ExportarExpedientesExcel {
         for (Expediente expediente : expedientes) {
             Row row = sheet.createRow(rowNum++);
             
-            row.createCell(1).setCellValue(expediente.getTipo());
-            row.createCell(2).setCellValue(expediente.getNumExpediente());
-            row.createCell(3).setCellValue(expediente.getAnio());
-            row.createCell(4).setCellValue(expediente.getUbicacion());
-            row.createCell(5).setCellValue(expediente.getNotas());
-            row.createCell(6).setCellValue(expediente.getTomos());
-            row.createCell(7).setCellValue(expediente.getJuzgado());
-            row.createCell(8).setCellValue(expediente.getLugar());
-            row.createCell(9).setCellValue(expediente.getCaja());
-            row.createCell(10).setCellValue(expediente.getPaginas());
-            row.createCell(11).setCellValue(expediente.getEstado());
+            row.createCell(0).setCellValue(expediente.getTipo());
+            row.createCell(1).setCellValue(expediente.getNumExpediente());
+            row.createCell(2).setCellValue(expediente.getAnio());
+            row.createCell(3).setCellValue(expediente.getUbicacion());
+            row.createCell(4).setCellValue(expediente.getNotas());
+            row.createCell(5).setCellValue(expediente.getTomos());
+            row.createCell(6).setCellValue(expediente.getJuzgado());
+            row.createCell(7).setCellValue(expediente.getLugar());
+            row.createCell(8).setCellValue(expediente.getCaja());
+            row.createCell(9).setCellValue(expediente.getPaginas());
+            row.createCell(10).setCellValue(expediente.getEstado());
         }
     }
 }

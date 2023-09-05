@@ -66,11 +66,11 @@ public class ExportarHistoricoExcel {
         for (Historico hist : filas) {
             Row row = sheet.createRow(rowNum++);
             
-            row.createCell(1).setCellValue(hist.getTipo());
-            row.createCell(2).setCellValue(hist.getNumExpediente());
-            row.createCell(3).setCellValue(hist.getAnio());
-            row.createCell(7).setCellValue(hist.getJuzgado());
-            row.createCell(11).setCellValue(hist.getFechaHito());
+            row.createCell(0).setCellValue(hist.getTipo());
+            row.createCell(1).setCellValue(hist.getNumExpediente());
+            row.createCell(2).setCellValue(hist.getAnio());
+            row.createCell(3).setCellValue(hist.getJuzgado());
+            row.createCell(4).setCellValue(hist.getFechaHito());
         }
     }
 }
