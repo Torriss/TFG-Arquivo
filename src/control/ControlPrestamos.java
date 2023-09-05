@@ -43,7 +43,7 @@ public class ControlPrestamos{
 	
 	public void initControl() {
 		prestamos.getBtnBuscarUbic().addActionListener(e -> buscarUbicacion());
-		prestamos.getBtnImprimir().addActionListener(e -> imprimirPrestamo());
+		prestamos.getBtnPrestar().addActionListener(e -> realizarPrestamo());
 	}
 
 	private void clearControl() {
@@ -52,7 +52,7 @@ public class ControlPrestamos{
 		prestamos.getTextFieldSolicitante().setText("");
 		prestamos.getDatePicker().setText("");
 		prestamos.getTextFieldLugar().setText("");
-		prestamos.getBtnImprimir().setEnabled(false);
+		prestamos.getBtnPrestar().setEnabled(false);
 		
 		expedientes.clear();
 	}
@@ -66,13 +66,18 @@ public class ControlPrestamos{
 			expedientes = expediente.buscaExpediente(numExp, tipoExp, anioExp, juzgado);
 			if(expedientes.isEmpty())
 			{
+				//TODO: revisar si el expediente no esta en el archivo o esta prestado, no distingue
 				JOptionPane.showMessageDialog(null,
-						"El expediente no se encuentra en el archivo", "Ubicación",
+						"El expediente no se encuentra disponible", "Ubicación",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			else
 			{
-				prestamos.getBtnImprimir().setEnabled(true);	
+				TablaResultados tabla = new TablaResultados();
+				ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
+				tablaContr.initControl();
+				tabla.setVisible(true);
+				prestamos.getBtnPrestar().setEnabled(true);
 			}
 			
 		} catch (SQLException e1) {
@@ -84,31 +89,43 @@ public class ControlPrestamos{
 		}
 	}
 
-	private void imprimirPrestamo() {
+	private void realizarPrestamo() {
 		try {
-			int numExp = expedientes.get(0).getNumExpediente();
-			int anioExp = expedientes.get(0).getAnio();
-			String tipoExp = expedientes.get(0).getTipo();
-			String juzgado = expedientes.get(0).getJuzgado();
-			int solicitante = Integer.parseInt(prestamos.getTextFieldSolicitante().getText());
+			String solicitante = prestamos.getTextFieldSolicitante().getText();
 			String fecha = prestamos.getDatePicker().getDateStringOrEmptyString();
-
-			expedientes = prestamo.realizarPrestamo(numExp, tipoExp, anioExp, solicitante, juzgado, fecha);
-			if(expedientes.isEmpty())
-			{
-				JOptionPane.showMessageDialog(null,
-						"El expediente no se encuentra en el archivo", "Ubicación",
-						JOptionPane.INFORMATION_MESSAGE);
+			String lugar = prestamos.getTextFieldLugar().getText();
+			
+			if (solicitante.compareTo("") != 0 && fecha.compareTo("") != 0 && lugar.compareTo("") != 0 ) {
+				int solic = Integer.parseInt(solicitante);
+				int numExp = expedientes.get(0).getNumExpediente();
+				int anioExp = expedientes.get(0).getAnio();
+				String tipoExp = expedientes.get(0).getTipo();
+				String juzgado = expedientes.get(0).getJuzgado();
+				
+				
+				
+				expedientes = prestamo.realizarPrestamo(numExp, tipoExp, anioExp, solic, juzgado, fecha);
+				if(expedientes.isEmpty())
+				{
+					//TODO: revisar
+					JOptionPane.showMessageDialog(null,
+							"El expediente no se encuentra disponible", "Ubicación",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null,
+							"Prestamo realizado con éxito.", "Préstamo",
+							JOptionPane.INFORMATION_MESSAGE);
+					//TODO: crear funcion imprimirPapeleta con toda la info del form
+					//TODO: crear funcion imprimirTestigo con toda la info del form
+					//y añadiendo caja, ubicación, notas, tomos, lugar
+				}
 			}
-			else
-			{
-				TablaResultados tabla = new TablaResultados();
-				ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
-				tablaContr.initControl();
-				tabla.setVisible(true);
-				//TODO: crear funcion imprimirPapeleta con toda la info del form
-				//TODO: crear funcion imprimirTestigo con toda la info del form
-				//y añadiendo caja, ubicación, notas, tomos, lugar
+			else {
+				JOptionPane.showMessageDialog(null,
+						"Por favor, rellene los campos obligatorios: Número de empleado, provincia y fecha.", "Préstamo",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (IllegalArgumentException e2) {
 			JOptionPane.showMessageDialog(null,

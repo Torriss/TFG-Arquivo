@@ -26,7 +26,7 @@ public class Prestamos extends JFrame {
 	private JComboBox<String> comboBoxTipoExp;
 	private JComboBox<String> comboBoxJuzgado;
 	private JButton btnBuscarUbic;
-	private JButton btnImprimir;
+	private JButton btnPrestar;
 	private JTextField textFieldJuzgado;
 	private DatePicker datePicker;
 	
@@ -86,12 +86,12 @@ public class Prestamos extends JFrame {
 		this.btnBuscarUbic = btnBuscarUbic;
 	}
 
-	public JButton getBtnImprimir() {
-		return btnImprimir;
+	public JButton getBtnPrestar() {
+		return btnPrestar;
 	}
 
-	public void setBtnImprimir(JButton btnImprimir) {
-		this.btnImprimir = btnImprimir;
+	public void setBtnPrestar(JButton btnPrestar) {
+		this.btnPrestar = btnPrestar;
 	}
 
 	public JTextField getTextFieldJuzgado() {
@@ -216,9 +216,9 @@ public class Prestamos extends JFrame {
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		panel_5.add(btnBuscarUbic);
 		
-		btnImprimir = new JButton("Imprimir");
-		btnImprimir.setEnabled(false);
-		panel_5.add(btnImprimir);
+		btnPrestar = new JButton("Prestar");
+		btnPrestar.setEnabled(false);
+		panel_5.add(btnPrestar);
 	}
 
 }

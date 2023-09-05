@@ -73,10 +73,23 @@ public class ControlMenu {
             try {
             	if (func == "expurgar") {
             		expurgo.expurgo(file);
+            		JOptionPane.showMessageDialog(null,
+        					"Expurgo realizado con éxito.", "Expurgar",
+        					JOptionPane.INFORMATION_MESSAGE);
             	}
             	else {
             		// Se utiliza la misma funcion para insertar o actualizar expedientes en la BBDD
             		transferencia.transferirExpedientes(file);
+            		if (func == "modificar") {
+            			JOptionPane.showMessageDialog(null,
+            					"Modificación realizada con éxito.", "Modificar",
+            					JOptionPane.INFORMATION_MESSAGE);
+            		}
+            		else {
+            			JOptionPane.showMessageDialog(null,
+            					"Transferencia realizada con éxito.", "Transferir",
+            					JOptionPane.INFORMATION_MESSAGE);
+            		}
             	}
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block

@@ -27,7 +27,7 @@ public class ControlExportar {
 		try {
 			String filePath = ExportarExpedientesExcel.exportarExpedientes();
 			JOptionPane.showMessageDialog(null,
-					"<html>Exportación realizada con éxito.<br>Ruta del archivo: " + filePath, "Exportar",
+					"<html>Exportación realizada con éxito.<br>Nombre del archivo: " + filePath, "Exportar",
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

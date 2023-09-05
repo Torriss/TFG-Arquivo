@@ -72,7 +72,7 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	    	estado = rs.getString("estado");
 	    	 System.out.println(estado);
 	    }
-	    if(estado == "expurgado" || estado == "prestado") return false;
+	    if(estado.equalsIgnoreCase("expurgado") || estado.equalsIgnoreCase("prestado")) return false;
 	    else return true;
 	}
 	
@@ -90,30 +90,6 @@ public class PrestamoDAOImpl implements PrestamoDAO{
             int idSolicitante = rs.getInt("idSolicitante");
             prestamo = new Prestamo(numExpediente, tipo, anio, juzgado, fechaPrestamo, "", idSolicitante);
 		}
-//		else { //TODO: BORRAR!!! Arreglo temporal para que funcione mientras haya fechaDevolucion como null y como "" en la bd
-//			query = "SELECT * FROM prestamos WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
-//					+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'" + " AND fechaDevolucion = \"\"";
-//			rs = Conexion.executeSelect(query);
-//			prestamo = null;
-//
-//			if (rs.next()) {
-//	            String fechaPrestamo = rs.getString("fechaPrestamo");
-//	            int idSolicitante = rs.getInt("idSolicitante");
-//	            prestamo = new Prestamo(numExpediente, tipo, anio, juzgado, fechaPrestamo, "", idSolicitante);
-//			}
-//			else {
-//				query = "SELECT * FROM prestamos WHERE numExpediente = " + numExpediente + " AND tipo = '" + tipo + "'" 
-//						+ " AND anio = " + anio + "" + " AND juzgado = '" + juzgado + "'" + " AND fechaDevolucion IS NULL";
-//				rs = Conexion.executeSelect(query);
-//				prestamo = null;
-//
-//				if (rs.next()) {
-//		            String fechaPrestamo = rs.getString("fechaPrestamo");
-//		            int idSolicitante = rs.getInt("idSolicitante");
-//		            prestamo = new Prestamo(numExpediente, tipo, anio, juzgado, fechaPrestamo, "", idSolicitante);
-//				}
-//			}
-//		} // Borrar hasta aqui
 		return prestamo;
 	}
 }

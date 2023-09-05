@@ -115,37 +115,50 @@ public class ControlDevoluciones {
 	}
 	
 	private void devolverExpediente() {
-		int numExp = expedientes.get(0).getNumExpediente();
-		int anioExp = expedientes.get(0).getAnio();
-		String tipoExp = expedientes.get(0).getTipo();
-		String juzgado = expedientes.get(0).getJuzgado();
-		String notas = devoluciones.getTextFieldNotas().getText();
-		String fecha = devoluciones.getDatePicker().getDateStringOrEmptyString();
-		int paginas = Integer.parseInt(devoluciones.getTextFieldPaginas().getText());
 		
-		try {
-			expedientes = devolucion.devolucion(numExp, anioExp, tipoExp, juzgado, notas, paginas, fecha);
-			if(expedientes.isEmpty())
-			{
-				JOptionPane.showMessageDialog(null,
-						"El expediente no se encuentra en el archivo", "Devolución",
-						JOptionPane.INFORMATION_MESSAGE);
+		String fecha = devoluciones.getDatePicker().getDateStringOrEmptyString();
+		
+		if (fecha.compareTo("") != 0) {
+			int numExp = expedientes.get(0).getNumExpediente();
+			int anioExp = expedientes.get(0).getAnio();
+			String tipoExp = expedientes.get(0).getTipo();
+			String juzgado = expedientes.get(0).getJuzgado();
+			String notas = devoluciones.getTextFieldNotas().getText();
+			int paginas = Integer.parseInt(devoluciones.getTextFieldPaginas().getText());
+			
+			try {
+				expedientes = devolucion.devolucion(numExp, anioExp, tipoExp, juzgado, notas, paginas, fecha);
+				if(expedientes.isEmpty())
+				{
+					JOptionPane.showMessageDialog(null,
+							"El expediente no se encuentra en el archivo", "Devolución",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null,
+							"Devolución realizada con éxito.", "Devolución",
+							JOptionPane.INFORMATION_MESSAGE);
+					// TODO: llamar a funcion imprimirDevolucion con los datos del expediente
+					TablaResultados tabla = new TablaResultados();
+					ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
+					tablaContr.initControl();
+					tabla.setVisible(true);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else
-			{
-				// TODO: llamar a funcion imprimirDevolucion con los datos del expediente
-				TablaResultados tabla = new TablaResultados();
-				ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
-				tablaContr.initControl();
-				tabla.setVisible(true);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		else {
+			JOptionPane.showMessageDialog(null,
+					"Por favor, rellene los campos obligatorios: Fecha.", "Devolución",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		
 		
 	}
 
