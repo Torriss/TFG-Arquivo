@@ -13,12 +13,12 @@ import DAO.ExpedienteDAOImpl;
 import utils.FuncComunes;
 
 public class ExportarExpedientesExcel {
-    public static String exportarExpedientes() throws IOException, ClassNotFoundException, SQLException {
+    public static String exportarExpedientes(int numEXp, int anio, String tipo, String juzgado) throws IOException, ClassNotFoundException, SQLException {
         String fecha = FuncComunes.getFechaHora();
         
     	String filePath = "exportarExpedientes_" + fecha +".xlsx";
     	ExpedienteDAO exp = new ExpedienteDAOImpl();
-    	ArrayList<Expediente> expedientes = exp.getAllExpedientes();
+    	ArrayList<Expediente> expedientes = exp.aplicaFiltrosExpediente(numEXp, tipo, anio, juzgado);
         // Crear un nuevo libro de Excel
         Workbook workbook = new XSSFWorkbook();
         

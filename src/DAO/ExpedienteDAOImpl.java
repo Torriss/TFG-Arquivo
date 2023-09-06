@@ -76,6 +76,60 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         }
         return expedientes;
     }
+	
+	@Override
+    public ArrayList<Expediente> aplicaFiltrosExpediente(int numExp, String tipo, int anio, String juzgado) throws SQLException, ClassNotFoundException{
+		ArrayList<Expediente> expedientes = new ArrayList<>();
+        
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM expedientes WHERE ");
+        
+        if (numExp > 0) {
+            queryBuilder.append(" numExpediente = ");
+            queryBuilder.append(numExp);
+        }
+        if (!tipo.equalsIgnoreCase("")) {
+            if (numExp > 0) {
+                queryBuilder.append(" AND");
+            }
+            queryBuilder.append(" tipo = '");
+            queryBuilder.append(tipo);
+            queryBuilder.append("'");
+        }
+        if (anio > 1900) {
+            if (!tipo.equalsIgnoreCase("") || numExp > 0) {
+                queryBuilder.append(" AND");
+            }
+            queryBuilder.append(" anio = ");
+            queryBuilder.append(anio);
+        }
+        if (!juzgado.equalsIgnoreCase("")) {
+            if (!tipo.equalsIgnoreCase("") || numExp > 0 || anio > 1900) {
+                queryBuilder.append(" AND");
+            }
+            queryBuilder.append(" juzgado = '");
+            queryBuilder.append(juzgado);
+            queryBuilder.append("'");
+        }
+
+        ResultSet rs = Conexion.executeSelect(queryBuilder.toString());
+        while (rs.next()) {
+        	int numExpediente = rs.getInt("numExpediente");
+            String tipo_ = rs.getString("tipo");
+            int anio_ = rs.getInt("anio");
+            int caja = rs.getInt("caja");
+            String ubicacion = rs.getString("ubicacion");
+            String notas = rs.getString("notas");
+            String tomos = rs.getString("tomos");
+            String juzgado_ = rs.getString("juzgado");
+            String lugar = rs.getString("lugar");
+            int paginas = rs.getInt("paginas");
+            String estado = rs.getString("estado");
+            
+            Expediente exp = new Expediente(numExpediente, tipo_, anio_, caja, ubicacion, notas, tomos, juzgado_, lugar, paginas, estado);
+            expedientes.add(exp);
+        }
+        return expedientes;
+    }
     
 	@Override
     public boolean existeExpediente(int numExpediente, String tipo, int anio, String juzgado) throws SQLException, ClassNotFoundException{

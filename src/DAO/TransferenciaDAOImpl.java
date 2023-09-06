@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -38,35 +39,61 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
                 rowIterator.next();
             }
 
+            boolean foundBlankRow = false; // Variable para controlar si se encuentra una fila en blanco
+
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
+
+                // Verificar si la fila está en blanco
+                boolean isRowEmpty = true;
                 Iterator<Cell> cellIterator = row.cellIterator();
-
-                //Crear un objeto Expediente y asignar valores desde el archivo Excel
-                Expediente expediente = new Expediente();
-
-                expediente.setTipo(cellIterator.next().getStringCellValue());
-                expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
-                expediente.setAnio((int) cellIterator.next().getNumericCellValue());
-                expediente.setUbicacion(cellIterator.next().getStringCellValue());
-                expediente.setNotas(cellIterator.next().getStringCellValue());
-                expediente.setTomos(cellIterator.next().getStringCellValue());
-                expediente.setJuzgado(cellIterator.next().getStringCellValue());
-                expediente.setLugar(cellIterator.next().getStringCellValue());
-                expediente.setCaja((int) cellIterator.next().getNumericCellValue());
-                expediente.setPaginas((int) cellIterator.next().getNumericCellValue());
-                // TODO: duda, aqui no deberia ser transferido??
-                expediente.setEstado(cellIterator.next().getStringCellValue());
-                
-                //Expediente existe en bbdd por lo que solo actualizamos
-                if(exp.existeExpediente(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado())) {
-                	expedientesActualizar.add(expediente);
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    if (cell.getCellType() != CellType.BLANK) {
+                        isRowEmpty = false;
+                        break;
+                    }
                 }
-                else expedientesNuevos.add(expediente);
+
+                if (isRowEmpty) {
+                    foundBlankRow = true;
+                    break; // Salir del bucle si se encuentra una fila en blanco
+                }
+
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    Expediente expediente = new Expediente();
+
+                    expediente.setTipo(cellIterator.next().getStringCellValue());
+                    expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
+                    expediente.setAnio((int) cellIterator.next().getNumericCellValue());
+                    expediente.setUbicacion(cellIterator.next().getStringCellValue());
+                    expediente.setNotas(cellIterator.next().getStringCellValue());
+                    expediente.setTomos(cellIterator.next().getStringCellValue());
+                    expediente.setJuzgado(cellIterator.next().getStringCellValue());
+                    expediente.setLugar(cellIterator.next().getStringCellValue());
+                    expediente.setCaja((int) cellIterator.next().getNumericCellValue());
+                    expediente.setPaginas((int) cellIterator.next().getNumericCellValue());
+                    // TODO: duda, aqui no deberia ser transferido??
+                    expediente.setEstado(cellIterator.next().getStringCellValue());
+                    
+                    //Expediente existe en bbdd por lo que solo actualizamos
+                    if(exp.existeExpediente(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado())) {
+                    	expedientesActualizar.add(expediente);
+                    }
+                    else {
+                    	expediente.setEstado("transferido");
+                    	expedientesNuevos.add(expediente);
+                    }
+                }
             }
 
             fis.close();
             workbook.close();
+            
+            if (foundBlankRow) {
+                // Aquí puedes manejar el caso en el que se encontró una fila en blanco
+            }
         } catch (IOException e) {
             throw e;
         }

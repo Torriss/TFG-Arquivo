@@ -181,30 +181,35 @@ public class CajaDAOImpl implements CajaDAO {
     }
     
     private String buscarNuevaUbicacionContigua(String ultimaUbicacion) {
-        char seccion = ultimaUbicacion.charAt(0);
-        int estanteria = Integer.parseInt(ultimaUbicacion.substring(2, 3));
-        int balda = Integer.parseInt(ultimaUbicacion.substring(5, 6));
-        int posicion = Integer.parseInt(ultimaUbicacion.substring(8, 9));
+    	
+    	if (ultimaUbicacion != null && ultimaUbicacion.matches("\\d+-\\d+-\\d+-\\d+")) {
+            char seccion = ultimaUbicacion.charAt(0);
+            int estanteria = Integer.parseInt(ultimaUbicacion.substring(2, 3));
+            int balda = Integer.parseInt(ultimaUbicacion.substring(5, 6));
+            int posicion = Integer.parseInt(ultimaUbicacion.substring(8, 9));
 
-        posicion++;
-        // si se ha alcanzado el limite de posicion en la balda, mover al siguiente nivel
-        if (posicion > 5) {
-            posicion = 0;
-            balda++;
-        }
+            posicion++;
+            // si se ha alcanzado el limite de posicion en la balda, mover al siguiente nivel
+            if (posicion > 5) {
+                posicion = 0;
+                balda++;
+            }
 
-        // si se ha alcanzado el limite de balda, mover a la siguiente estanteria
-        if (balda > 5) {
-            balda = 0;
-            estanteria++;
-        }
+            // si se ha alcanzado el limite de balda, mover a la siguiente estanteria
+            if (balda > 5) {
+                balda = 0;
+                estanteria++;
+            }
 
-        // si se ha alcanzado el limite de estanteria, cambiar a la siguiente seccion
-        if (estanteria > 20) {
-            estanteria = 0;
-            seccion++;
+            // si se ha alcanzado el limite de estanteria, cambiar a la siguiente seccion
+            if (estanteria > 20) {
+                estanteria = 0;
+                seccion++;
+            }
+            return seccion + "-" + String.format("%02d", estanteria) + "-" + balda + "-" + posicion;
+        } else {
+            throw new IllegalArgumentException("Ubicacion en formato no valido");
         }
-        return seccion + "-" + String.format("%02d", estanteria) + "-" + balda + "-" + posicion;
     }
 
 
