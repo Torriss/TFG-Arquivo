@@ -14,6 +14,7 @@ CREATE TABLE `expedientes` (
   `paginas` int NOT NULL,
   `estado` varchar(45) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE INDEX PK_exp ON expedientes (numExpediente, tipo, anio, juzgado);
 
 
 CREATE TABLE `solicitantes` (
@@ -69,7 +70,7 @@ CREATE TABLE `cajas` (
 -- expedientes
 INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
 VALUES
-    (4, 'Escrito', 2012, 2, 'N-2-3-4', 'Algunas notas', 'Tomos 1-3', 'Civil', 'Archivo Transferido', 10, 'transferido'),
+	(4, 'Escrito', 2012, 2, 'N-2-3-4', 'Algunas notas', 'Tomos 1-3', 'Civil', 'Archivo Transferido', 10, 'transferido'),
     (5, 'Escrito', 2013, 2, 'N-2-3-4', 'Notas importantes', 'Tomos 2-4', 'Penal', 'Archivo Transferido', 10, 'transferido'),
     (6, 'Escrito', 2014, 2, 'N-2-3-4', 'Escrito', '', 'Instrucción', 'Archivo', 10, 'disponible'),
     (7, 'Oral', 2015, 3, 'O-1-4-3', '', '', 'Escrito', 'Archivo', 10, 'prestado'),
@@ -109,12 +110,11 @@ VALUES
     ('Roberto', 'Sánchez', 'Juez'),
     ('Laura', 'Gómez', 'Secretario de juez');
 
-
 -- prestamos
 INSERT INTO prestamos (idSolicitante, numExpediente, tipo, anio, juzgado, fechaPrestamo, fechaDevolucion) 
 VALUES
-    (1, 6, 'Escrito', 2014, 'Instrucción', '2023-07-20', '2023-08-04'),
-    (1, 7, 'Oral', 2015, 'Guardia', '2023-08-01', ''),
+	(1, 6, 'Escrito', 2014, 'Instrucción', '2023-07-20', '2023-08-04'),
+    (1, 7, 'Oral', 2015, 'Escrito', '2023-08-01', ''),
     (3, 8, 'Escrito', 2016, 'Civil', '2023-07-30', '2023-08-15'),
     (4, 9, 'Escrito', 2017, 'Penal', '2023-07-15', ''),
     (5, 10, 'Oral', 2018, 'Instrucción', '2023-08-02', '2023-08-17'),
@@ -132,26 +132,21 @@ VALUES
     (10, 22, 'Escrito', 2024, 'Civil', '2023-08-30', '2023-09-15'),
     (10, 23, 'Oral', 2022, 'Familia', '2023-09-04', '');
 
-
 -- historicaExpurgo
-
 INSERT INTO historicaExpurgo (numExpediente, tipo, anio, juzgado, fechaHito) 
 VALUES
-    (12, 'Algunas notas', 2020, 'Civil', '2014-04-30'),
-    (13, 'Notas detalladas', 2021, 'Penal', '2013-03-31');
+    (12, 'Escrito', 2020, 'Civil', '2014-04-30'),
+    (13, 'Escrito', 2021, 'Penal', '2013-03-31');
 
 
 -- historicaTransferencia
-
-
 INSERT INTO historicaTransferencia (numExpediente, tipo, anio, juzgado, fechaHito) 
 VALUES
-    (4, 'Algunas notas', 2012, 'Civil', '2023-02-15'),
-    (5, 'Notas importantes', 2013, 'Penal', '2023-03-20');
+    (4, 'Escrito', 2012, 'Civil', '2023-02-15'),
+    (5, 'Escrito', 2013, 'Penal', '2023-03-20');
 
 
 -- cajas
-
 INSERT INTO cajas (anio, tipo, paginas, ubicacion) 
 VALUES
     (2017, 'Escrito', 30, 'N-2-3-4'),

@@ -16,7 +16,7 @@ public class ExportarExpedientesExcel {
     public static String exportarExpedientes() throws IOException, ClassNotFoundException, SQLException {
         String fecha = FuncComunes.getFechaHora();
         
-    	String filePath = "C:\\01-ArchivoComunJuzgados\\exportarExpedientes_" + fecha +".xlsx";
+    	String filePath = "exportarExpedientes_" + fecha +".xlsx";
     	ExpedienteDAO exp = new ExpedienteDAOImpl();
     	ArrayList<Expediente> expedientes = exp.getAllExpedientes();
         // Crear un nuevo libro de Excel

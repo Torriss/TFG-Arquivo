@@ -23,6 +23,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 					paginasTotales =+ expediente.getPaginas();
 					expediente.setNotas(notas);
 					expediente.setEstado("disponible");
+					exp.update(expediente);
 				}
 				if(paginasNuevas > paginasTotales) {
 					CajaDAO caja = new CajaDAOImpl();

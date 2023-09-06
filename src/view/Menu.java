@@ -299,7 +299,7 @@ public class Menu extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		fc = new JFileChooser("C:\\01-ArchivoComunJuzgados");
+		fc = new JFileChooser();
 		fc.setApproveButtonText("Seleccionar");
 		fc.setApproveButtonToolTipText("Seleccionar archivo");
 
