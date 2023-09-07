@@ -120,6 +120,33 @@ VALUES
     (41, 'Escrito', 2023, 17, 'K-3-2-1', 'Algunas notas', '', 'Laboral', 'Archivo', 10, 'disponible'),
     (42, 'Escrito', 2024, 17, 'K-3-2-1', 'Algunas notas', 'Tomos 3-6', 'Civil', 'Archivo', 10, 'disponible'),
     (43, 'Escrito', 2022, 17, 'K-3-2-1', 'Algunas notas', '', 'Familia', 'Archivo', 10, 'disponible');
+	
+	
+INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
+VALUES
+    (44, 'Escrito', 2020, 22, 'T-5-3-5', 'Algunas notas', 'Tomos 2-4', 'Civil', 'Archivo', 10, 'disponible'),
+    (45, 'Escrito', 2002, 22, 'T-5-3-5', 'Algunas notas', 'Tomos 1-3', 'Penal', 'Archivo', 10, 'disponible'),
+    (46, 'Escrito', 2002, 22, 'T-5-3-5', 'Algunas notas', 'Tomos 3-6', 'Instrucción', 'Archivo', 10, 'disponible'),
+    (47, 'Escrito', 2002, 22, 'T-5-2-1', 'Escrito', '', 'Familia', 'Archivo', 10, 'disponible'),
+    (48, 'Escrito', 2011, 22, 'T-5-3-5', 'Algunas notas', 'Tomos 1-2', 'Mercantil', 'Archivo', 10, 'disponible'),
+    (49, 'Escrito', 2011, 22, 'T-5-2-3', 'Algunas notas', 'Tomos 1-4', 'Civil', 'Archivo', 10, 'disponible'),
+    (50, 'Escrito', 2013, 22, 'T-5-2-1', 'Algunas notas', 'Tomos 2-5', 'Penal', 'Archivo', 10, 'disponible'),
+    (51, 'Escrito', 2013, 22, 'T-5-2-1', 'Algunas notas', '', 'Laboral', 'Archivo', 10, 'disponible'),
+    (52, 'Escrito', 2024, 22, 'T-5-2-1', 'Algunas notas', 'Tomos 3-6', 'Civil', 'Archivo', 10, 'disponible'),
+    (53, 'Escrito', 2022, 22, 'T-5-2-1', 'Algunas notas', '', 'Familia', 'Archivo', 10, 'disponible');
+	
+INSERT INTO expedientes (numExpediente, tipo, anio, caja, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) 
+VALUES
+    (54, 'Escrito', 2020, 19, 'Q-2-2-5', 'Algunas notas', 'Tomos 2-4', 'Civil', 'Archivo', 10, 'disponible'),
+    (55, 'Escrito', 2021, 19, 'Q-2-2-5', 'Algunas notas', 'Tomos 1-3', 'Penal', 'Archivo', 10, 'disponible'),
+    (56, 'Escrito', 2014, 19, 'Q-2-2-5', 'Algunas notas', 'Tomos 3-6', 'Instrucción', 'Archivo', 10, 'disponible'),
+    (57, 'Escrito', 2002, 21, 'X-3-2-1', 'Escrito', '', 'Familia', 'Archivo', 100, 'disponible'),
+    (58, 'Escrito', 2016, 20, 'Q-2-2-5', 'Algunas notas', 'Tomos 1-2', 'Mercantil', 'Archivo', 10, 'disponible'),
+    (59, 'Escrito', 2024, 18, 'Q-2-2-5', 'Algunas notas', 'Tomos 1-4', 'Civil', 'Archivo', 10, 'disponible'),
+    (60, 'Escrito', 2002, 18, 'Q-2-2-5', 'Algunas notas', 'Tomos 2-5', 'Penal', 'Archivo', 10, 'disponible'),
+    (61, 'Escrito', 2023, 18, 'Q-2-2-5', 'Algunas notas', '', 'Laboral', 'Archivo', 10, 'disponible'),
+    (62, 'Escrito', 2003, 18, 'Q-2-2-5', 'Algunas notas', 'Tomos 3-6', 'Civil', 'Archivo', 10, 'disponible'),
+    (63, 'Escrito', 2022, 18, 'Q-2-2-5', 'Algunas notas', '', 'Familia', 'Archivo', 10, 'disponible');
 
 
 -- solicitantes
@@ -201,3 +228,10 @@ INSERT INTO cajas (anio, tipo, paginas, ubicacion)
 VALUES
     (2017, 'Escrito', 90, 'K-2-3-5'),
     (2018, 'Escrito', 100, 'Z-3-2-1');
+	
+	
+INSERT INTO cajas (anio, tipo, paginas, ubicacion) 
+VALUES
+    (2017, 'Escrito', 90, 'Q-2-2-5'),
+    (2018, 'Escrito', 100, 'F-3-2-1'),
+    (2015, 'Escrito', 100, 'T-5-2-1');
