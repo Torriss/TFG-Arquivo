@@ -20,8 +20,12 @@ MEMORIA:
 -Explicar requisitos funcione la app
 -Aclarar formato que deben tener los excel
 -Aclarar que en las modificaciones a través de excel no se pueden modificar ninguna de las claves (numExp, tipo, anio, juzgado y tomos)
+-Diagrama entidad relaxion
+-Diagramas de casos de uso
 
 SOFTWARE:
 -Añadir modificaciones para caja y solicitante
+-Opciones de update y delete para expediente, solicitantes y cajas
 -Exportar tablas mediante filtros
 -Revisar devolucion que solo permita expedientes prestados
+-Revisar puñeteros tomos y updates

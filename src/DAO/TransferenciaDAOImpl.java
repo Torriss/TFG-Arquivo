@@ -4,18 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import model.Caja;
 import model.Expediente;
+import model.Historico;
 
 public class TransferenciaDAOImpl implements TransferenciaDAO {
 
@@ -24,6 +25,7 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
     	ArrayList<Expediente> expedientesActualizar = new ArrayList<Expediente>();
         CajaDAO cajas = new CajaDAOImpl();
         ExpedienteDAO exp = new ExpedienteDAOImpl();
+        HistoricoDAO hist = new HistoricoDAOImpl();
 
         try {
             FileInputStream fis = new FileInputStream(new File(filePath));
@@ -39,66 +41,48 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
                 rowIterator.next();
             }
 
-            boolean foundBlankRow = false; // Variable para controlar si se encuentra una fila en blanco
-
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
-
-                // Verificar si la fila está en blanco
-                boolean isRowEmpty = true;
                 Iterator<Cell> cellIterator = row.cellIterator();
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                    if (cell.getCellType() != CellType.BLANK) {
-                        isRowEmpty = false;
-                        break;
-                    }
+
+                //Crear un objeto Expediente y asignar valores desde el archivo Excel
+                Expediente expediente = new Expediente();
+
+                expediente.setTipo(cellIterator.next().getStringCellValue());
+                expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
+                expediente.setAnio((int) cellIterator.next().getNumericCellValue());
+                expediente.setUbicacion(cellIterator.next().getStringCellValue());
+                expediente.setNotas(cellIterator.next().getStringCellValue());
+                expediente.setTomos(cellIterator.next().getStringCellValue());
+                expediente.setJuzgado(cellIterator.next().getStringCellValue());
+                expediente.setLugar(cellIterator.next().getStringCellValue());
+                expediente.setCaja((int) cellIterator.next().getNumericCellValue());
+                expediente.setPaginas((int) cellIterator.next().getNumericCellValue());
+                expediente.setEstado(cellIterator.next().getStringCellValue());
+                
+                //Expediente existe en bbdd por lo que solo actualizamos
+                if(exp.existeExpediente(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado())) {
+                	expedientesActualizar.add(expediente);
                 }
-
-                if (isRowEmpty) {
-                    foundBlankRow = true;
-                    break; // Salir del bucle si se encuentra una fila en blanco
-                }
-
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                    Expediente expediente = new Expediente();
-
-                    expediente.setTipo(cellIterator.next().getStringCellValue());
-                    expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
-                    expediente.setAnio((int) cellIterator.next().getNumericCellValue());
-                    expediente.setUbicacion(cellIterator.next().getStringCellValue());
-                    expediente.setNotas(cellIterator.next().getStringCellValue());
-                    expediente.setTomos(cellIterator.next().getStringCellValue());
-                    expediente.setJuzgado(cellIterator.next().getStringCellValue());
-                    expediente.setLugar(cellIterator.next().getStringCellValue());
-                    expediente.setCaja((int) cellIterator.next().getNumericCellValue());
-                    expediente.setPaginas((int) cellIterator.next().getNumericCellValue());
-                    // TODO: duda, aqui no deberia ser transferido??
-                    expediente.setEstado(cellIterator.next().getStringCellValue());
-                    
-                    //Expediente existe en bbdd por lo que solo actualizamos
-                    if(exp.existeExpediente(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado())) {
-                    	expedientesActualizar.add(expediente);
-                    }
-                    else {
-                    	expediente.setEstado("transferido");
-                    	expedientesNuevos.add(expediente);
-                    }
+                else {
+                	expediente.setEstado("transferido");
+                	expedientesNuevos.add(expediente);
                 }
             }
 
             fis.close();
             workbook.close();
-            
-            if (foundBlankRow) {
-                // Aquí puedes manejar el caso en el que se encontró una fila en blanco
-            }
         } catch (IOException e) {
             throw e;
         }
 
         for (Expediente expediente : expedientesNuevos) {
+        	 //Obtener la fecha actual
+            LocalDate fechaActual = LocalDate.now();
+            //Crear un formato de fecha
+            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            //Formatear la fecha actual como una cadena
+            String fechaHito = fechaActual.format(formatoFecha);
         	//buscamos caja nueva para expediente
         	Caja caja = cajas.buscarCajasParaExpedienteNuevo(expediente.getAnio(), expediente.getTipo(), expediente.getPaginas());
         	//actualizar ubi de expediente
@@ -110,6 +94,10 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
         	//hacemos update e insert en bbdd
         	cajas.update(caja);
         	exp.insert(expediente);
+        	//numExpediente, String tipo, int anio, String juzgado, String fechaHito
+        	Historico fila = new Historico(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado(), fechaHito);
+        	hist.insert(fila, "historicatransferencia");
+        	
         }
         for (Expediente expediente : expedientesActualizar) {
         	exp.update(expediente);
@@ -121,4 +109,3 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
         return expedientesNuevos;
     }
 }
-
