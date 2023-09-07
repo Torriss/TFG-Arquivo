@@ -25,10 +25,19 @@ public class ControlExportar {
 	
 	private void exportarExpedientes() {
 		try {
-			int numExp = Integer.parseInt(exportar.getTextFieldNumExp().getText());
-			int anio = Integer.parseInt(exportar.getTextFieldAnioExp().getText());
+			int numExp = -1;
+			int anio = -1;
 			String tipo = exportar.getComboBoxExpediente().getSelectedItem().toString();
 			String juzgado = exportar.getComboBoxJuzgado().getSelectedItem().toString();
+			
+			if(!exportar.getTextFieldNumExp().getText().contains(""))
+			{
+				numExp = Integer.parseInt(exportar.getTextFieldNumExp().getText());
+			}
+			if(!exportar.getTextFieldAnioExp().getText().contains(""))
+			{
+				anio = Integer.parseInt(exportar.getTextFieldAnioExp().getText());
+			}
 			String filePath = ExportarExpedientesExcel.exportarExpedientes(numExp, anio, tipo, juzgado);
 			JOptionPane.showMessageDialog(null,
 					"<html>Exportación realizada con éxito.<br>Nombre del archivo: " + filePath, "Exportar",
@@ -47,10 +56,20 @@ public class ControlExportar {
 	
 	private void exportarHistorico(String tabla) {
 		try {
-			int numExp = Integer.parseInt(exportar.getTextFieldNumExp().getText());
-			int anio = Integer.parseInt(exportar.getTextFieldAnioExp().getText());
+			int numExp = -1;
+			int anio = -1;
 			String tipo = exportar.getComboBoxExpediente().getSelectedItem().toString();
 			String juzgado = exportar.getComboBoxJuzgado().getSelectedItem().toString();
+			
+			if(!exportar.getTextFieldNumExp().getText().contains(""))
+			{
+				numExp = Integer.parseInt(exportar.getTextFieldNumExp().getText());
+			}
+			if(!exportar.getTextFieldAnioExp().getText().contains(""))
+			{
+				anio = Integer.parseInt(exportar.getTextFieldAnioExp().getText());
+			}
+			
 			//TODO: pasar argumentos cuando se cambie la funcion
 			String filePath = ExportarHistoricoExcel.exportarHistorico(tabla);
 			JOptionPane.showMessageDialog(null,
