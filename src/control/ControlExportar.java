@@ -3,18 +3,36 @@ package control;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import model.ExportarExpedientesExcel;
 import model.ExportarHistoricoExcel;
+import utils.FuncComunes;
 import view.Exportar;
 
 public class ControlExportar {
 	
 	private Exportar exportar;
+	private FuncComunes func;
 	
 	public ControlExportar(Exportar ex) {
 		exportar = ex;
+		func = new FuncComunes();
+		initView();
+	}
+	
+	private void initView() {
+		try {
+			JComboBox<String> comboBoxJuzgado;
+			comboBoxJuzgado = func.iniciarListaJuzgados(exportar.getComboBoxJuzgado());
+			exportar.setComboBoxJuzgado(comboBoxJuzgado);
+			JComboBox<String> comboBoxExpediente = func.iniciarListaTipoExp(exportar.getComboBoxExpediente());
+			exportar.setComboBoxExpediente(comboBoxExpediente);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void initControl() {
