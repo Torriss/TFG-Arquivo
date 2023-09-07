@@ -13,8 +13,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 		ExpedienteDAO exp = new ExpedienteDAOImpl();
 		ArrayList<Expediente> expList = exp.buscaExpediente(numExp, tipo, anio, juzgado);
 		
-		if (!expList.isEmpty())
-		{
+		if (!expList.isEmpty()) {
 			PrestamoDAO prest = new PrestamoDAOImpl();
 			Prestamo prestamo = prest.existePrestamoSinDevolver(numExp, tipo, anio, juzgado);
 			if (prestamo != null) {

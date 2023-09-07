@@ -25,6 +25,7 @@ public class ControlExportar {
 	
 	private void exportarExpedientes() {
 		try {
+			//TODO: meter argumentos para exportar expediente: int numEXp, int anio, String tipo, String juzgado
 			String filePath = ExportarExpedientesExcel.exportarExpedientes();
 			JOptionPane.showMessageDialog(null,
 					"<html>Exportación realizada con éxito.<br>Nombre del archivo: " + filePath, "Exportar",

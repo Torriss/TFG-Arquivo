@@ -75,6 +75,7 @@ public class ControlDevoluciones {
 			String tipoExp = devoluciones.getComboBoxTipoExp().getSelectedItem().toString();
 			String juzgado = devoluciones.getComboBoxJuzgado().getSelectedItem().toString();
 			expedientes = expediente.buscaExpediente(numExp, tipoExp, anioExp, juzgado);
+			//TODO: si existe el exp y su estado es prestado se activa devoluciones
 			if(expedientes.isEmpty())
 			{
 				devoluciones.getBtnDevolver().setEnabled(false);
