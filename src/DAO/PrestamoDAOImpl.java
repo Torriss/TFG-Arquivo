@@ -20,8 +20,7 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 		//Comprobamos que existe expediente
 		if (!exp.existeExpediente(numExp, tipo, anio, juzgado)) throw new IllegalArgumentException("No existe ese expediente en la BBDD");
 	    //Comprobamos que expediente se puede prestar(su estado no es ni expurgado ni prestado)
-		if(!expedienteDisponible(numExp, tipo, anio, juzgado)) System.out.println("Esta prestado");
-			//throw new IllegalArgumentException("Este expediente se encuentra prestado o expurgado");
+		if(!expedienteDisponible(numExp, tipo, anio, juzgado)) throw new IllegalArgumentException("Este expediente se encuentra prestado o expurgado");
 		else {
 			//Insertamos prestamo en la bbdd
 			Prestamo prestamo = new Prestamo(numExp, tipo, anio, juzgado, fechaPrestamo, "", solicitante);

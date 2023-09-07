@@ -31,21 +31,39 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	                + exp.getLugar() + "', paginas = " + exp.getPaginas() + ", estado = '" + exp.getEstado() 
 	                + "' WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() 
 	                + "' AND anio = " + exp.getAnio() + " AND (tomos = '" + exp.getTomos() + "' OR tomos = '')";
-
+	    			
 	    return Conexion.execute(query);
 	}
-
-
+	
+	@Override
+	public boolean updateListas(ArrayList<Expediente> viejos, ArrayList<Expediente> nuevos) throws SQLException, ClassNotFoundException{
+		for(int i = 0; i < viejos.size(); i++) {
+			Expediente viejo = viejos.get(i);
+			Expediente nuevo = nuevos.get(i);
+			
+			String query = "UPDATE Expedientes SET tipo = '" + nuevo.getTipo() + "', anio = " + nuevo.getAnio() + ", caja = " + nuevo.getCaja()
+            + ", ubicacion = '" + viejo.getUbicacion() + "', notas = " 
+            + (nuevo.getNotas().compareTo("") != 0 ? "'" + nuevo.getNotas() + "'" : "''") + ", tomos = " 
+            + (nuevo.getTomos().compareTo("") != 0 ? "'" + nuevo.getTomos() + "'" : "''") + ", juzgado = '" + nuevo.getJuzgado() + "', lugar = '" 
+            + nuevo.getLugar() + "', paginas = " + nuevo.getPaginas() + ", estado = '" + nuevo.getEstado() 
+            + "' WHERE numExpediente = " + viejo.getNumExpediente() + " AND tipo = '" + viejo.getTipo() 
+            + "' AND anio = " + viejo.getAnio() + " AND (tomos = '" + viejo.getTomos() + "' OR tomos = '')";
+			
+    		Conexion.execute(query);
+    	}
+    	return true;
+	}
 
 	@Override
-    public boolean delete(int numExpediente) throws ClassNotFoundException, SQLException {
-        // Posible comprobacion de no nulos y rangos
+    public boolean delete(ArrayList<Expediente> expedientes) throws ClassNotFoundException, SQLException {
+    	
+		for(Expediente exp : expedientes) {	
+    		String query = "DELETE FROM Expedientes WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() 
+            + "' AND anio = " + exp.getAnio() + " AND juzgado = '" + exp.getJuzgado() + "' AND (tomos = '" + exp.getTomos() + "' OR tomos = '')";
 
-        // Construir la query
-        String query = "DELETE FROM Expedientes WHERE numExpediente = " + numExpediente;
-
-        // Ejecutar la query en la BBDD
-        return Conexion.execute(query);
+    		Conexion.execute(query);
+    	}
+    	return true;
     }
 
 	@Override

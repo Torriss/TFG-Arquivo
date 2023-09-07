@@ -7,5 +7,5 @@ import java.util.ArrayList;
 import model.Expediente;
 
 public interface TransferenciaDAO {
-	public ArrayList<Expediente> transferirExpedientes(String filePath) throws ClassNotFoundException, SQLException, IOException;
+	public boolean transferirExpedientes(String filePath) throws ClassNotFoundException, SQLException, IOException;
 }

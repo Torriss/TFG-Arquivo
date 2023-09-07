@@ -20,7 +20,7 @@ import model.Historico;
 
 public class TransferenciaDAOImpl implements TransferenciaDAO {
 
-    public ArrayList<Expediente> transferirExpedientes(String filePath) throws ClassNotFoundException, SQLException, IOException {
+    public boolean transferirExpedientes(String filePath) throws ClassNotFoundException, SQLException, IOException {
     	ArrayList<Expediente> expedientesNuevos = new ArrayList<Expediente>();
     	ArrayList<Expediente> expedientesActualizar = new ArrayList<Expediente>();
         CajaDAO cajas = new CajaDAOImpl();
@@ -106,6 +106,6 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
         //juntamos listas para retorno
         expedientesNuevos.addAll(expedientesActualizar);
         
-        return expedientesNuevos;
+        return true;
     }
 }
