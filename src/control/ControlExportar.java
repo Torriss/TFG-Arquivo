@@ -25,8 +25,11 @@ public class ControlExportar {
 	
 	private void exportarExpedientes() {
 		try {
-			//TODO: meter argumentos para exportar expediente: int numEXp, int anio, String tipo, String juzgado
-			String filePath = ExportarExpedientesExcel.exportarExpedientes();
+			int numExp = Integer.parseInt(exportar.getTextFieldNumExp().getText());
+			int anio = Integer.parseInt(exportar.getTextFieldAnioExp().getText());
+			String tipo = exportar.getComboBoxExpediente().getSelectedItem().toString();
+			String juzgado = exportar.getComboBoxJuzgado().getSelectedItem().toString();
+			String filePath = ExportarExpedientesExcel.exportarExpedientes(numExp, anio, tipo, juzgado);
 			JOptionPane.showMessageDialog(null,
 					"<html>Exportación realizada con éxito.<br>Nombre del archivo: " + filePath, "Exportar",
 					JOptionPane.INFORMATION_MESSAGE);
@@ -44,6 +47,11 @@ public class ControlExportar {
 	
 	private void exportarHistorico(String tabla) {
 		try {
+			int numExp = Integer.parseInt(exportar.getTextFieldNumExp().getText());
+			int anio = Integer.parseInt(exportar.getTextFieldAnioExp().getText());
+			String tipo = exportar.getComboBoxExpediente().getSelectedItem().toString();
+			String juzgado = exportar.getComboBoxJuzgado().getSelectedItem().toString();
+			//TODO: pasar argumentos cuando se cambie la funcion
 			String filePath = ExportarHistoricoExcel.exportarHistorico(tabla);
 			JOptionPane.showMessageDialog(null,
 					"<html>Exportación realizada con éxito.<br>Ruta del archivo: " + filePath, "Exportar",

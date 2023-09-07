@@ -21,6 +21,7 @@ import model.Historico;
 public class TransferenciaDAOImpl implements TransferenciaDAO {
 
     public boolean transferirExpedientes(String filePath) throws ClassNotFoundException, SQLException, IOException {
+    	boolean res = false;
     	ArrayList<Expediente> expedientesNuevos = new ArrayList<Expediente>();
     	ArrayList<Expediente> expedientesActualizar = new ArrayList<Expediente>();
         CajaDAO cajas = new CajaDAOImpl();
@@ -76,6 +77,11 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
             throw e;
         }
 
+        if (!expedientesActualizar.isEmpty() || !expedientesNuevos.isEmpty())
+        {
+        	res = true;
+        }
+        
         for (Expediente expediente : expedientesNuevos) {
         	 //Obtener la fecha actual
             LocalDate fechaActual = LocalDate.now();
@@ -103,9 +109,10 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
         	exp.update(expediente);
         }
         
+        //TODO: esto sigue haciendo falta???
         //juntamos listas para retorno
         expedientesNuevos.addAll(expedientesActualizar);
         
-        return true;
+        return res;
     }
 }

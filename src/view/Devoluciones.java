@@ -188,6 +188,7 @@ public class Devoluciones extends JFrame {
 		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		datePicker = new DatePicker();
+		datePicker.setDateToToday();
 	    datePicker.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    	}

@@ -22,7 +22,8 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
     
     public boolean expurgo(String filePath) throws IOException, ClassNotFoundException, SQLException {
         // Crear una lista para almacenar los expedientes desde el archivo Excel
-        ArrayList<Expediente> expedientesAEliminar = new ArrayList<Expediente>();
+        boolean res = false;
+    	ArrayList<Expediente> expedientesAEliminar = new ArrayList<Expediente>();
 
         try {
             FileInputStream fis = new FileInputStream(new File(filePath));
@@ -66,6 +67,11 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
            throw e;
         }
         
+        if (!expedientesAEliminar.isEmpty())
+        {
+        	res = true;
+        }
+        
         //Obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
         //Crear un formato de fecha
@@ -87,7 +93,7 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
             if(!hist.existeHistorico(fila, "historicaExpurgo")); hist.insert(fila, "historicaExpurgo");
         }
         
-        return true;
+        return res;
     }
 }
 

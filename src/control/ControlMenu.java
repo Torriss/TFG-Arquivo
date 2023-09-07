@@ -72,23 +72,42 @@ public class ControlMenu {
             String file = menu.getFc().getSelectedFile().getAbsolutePath();
             try {
             	if (func == "expurgar") {
-            		expurgo.expurgo(file);
-            		JOptionPane.showMessageDialog(null,
-        					"Expurgo realizado con éxito.", "Expurgar",
-        					JOptionPane.INFORMATION_MESSAGE);
+            		if (expurgo.expurgo(file))
+            		{
+            			JOptionPane.showMessageDialog(null,
+            					"Expurgo realizado con éxito.", "Expurgar",
+            					JOptionPane.INFORMATION_MESSAGE);            			
+            		}
+            		else
+            		{
+            			JOptionPane.showMessageDialog(null,
+            					"Error durante el expurgo, por favor asegúrese de haber introducido"
+            					+ " un archivo con formato correcto e inténtelo de nuevo.", "Expurgar",
+            					JOptionPane.ERROR_MESSAGE);
+            		}
             	}
             	else {
             		// Se utiliza la misma funcion para insertar o actualizar expedientes en la BBDD
-            		transferencia.transferirExpedientes(file);
-            		if (func == "modificar") {
-            			JOptionPane.showMessageDialog(null,
-            					"Modificación realizada con éxito.", "Modificar",
-            					JOptionPane.INFORMATION_MESSAGE);
+            		if(transferencia.transferirExpedientes(file))
+            		{
+            			if (func == "modificar") {
+            				JOptionPane.showMessageDialog(null,
+            						"Modificación realizada con éxito.", "Modificar",
+            						JOptionPane.INFORMATION_MESSAGE);
+            			}
+            			else {
+            				JOptionPane.showMessageDialog(null,
+            						"Transferencia realizada con éxito.", "Transferir",
+            						JOptionPane.INFORMATION_MESSAGE);
+            			}
+            			
             		}
-            		else {
+            		else
+            		{
             			JOptionPane.showMessageDialog(null,
-            					"Transferencia realizada con éxito.", "Transferir",
-            					JOptionPane.INFORMATION_MESSAGE);
+            					"Error durante la operación, por favor asegúrese de haber introducido"
+            					+ " un archivo con formato correcto e inténtelo de nuevo.", "Error",
+            					JOptionPane.ERROR_MESSAGE);
             		}
             	}
 			} catch (ClassNotFoundException e) {

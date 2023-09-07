@@ -5,6 +5,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.JButton;
+import java.awt.GridBagLayout;
+import javax.swing.JLabel;
+import java.awt.GridBagConstraints;
+import javax.swing.JComboBox;
+import java.awt.Insets;
+import javax.swing.JTextField;
 
 public class Exportar extends JFrame {
 
@@ -16,6 +22,10 @@ public class Exportar extends JFrame {
 	private JButton btnExportExpedientes;
 	private JButton btnExportTransferencias;
 	private JButton btnExportExpurgos;
+	private JTextField textFieldNumExp;
+	private JTextField textFieldAnioExp;
+	private JComboBox<String> comboBoxJuzgado;
+	private JComboBox<String> comboBoxExpediente;
 	
 	public JButton getBtnExportExpedientes() {
 		return btnExportExpedientes;
@@ -41,6 +51,38 @@ public class Exportar extends JFrame {
 		this.btnExportExpurgos = btnExportExpurgos;
 	}
 
+	public JComboBox<String> getComboBoxJuzgado() {
+		return comboBoxJuzgado;
+	}
+
+	public void setComboBoxJuzgado(JComboBox<String> comboBoxJuzgado) {
+		this.comboBoxJuzgado = comboBoxJuzgado;
+	}
+
+	public JComboBox<String> getComboBoxExpediente() {
+		return comboBoxExpediente;
+	}
+
+	public void setComboBoxExpediente(JComboBox<String> comboBoxExpediente) {
+		this.comboBoxExpediente = comboBoxExpediente;
+	}
+	
+	public JTextField getTextFieldNumExp() {
+		return textFieldNumExp;
+	}
+
+	public void setTextFieldNumExp(JTextField textFieldNumExp) {
+		this.textFieldNumExp = textFieldNumExp;
+	}
+
+	public JTextField getTextFieldAnioExp() {
+		return textFieldAnioExp;
+	}
+
+	public void setTextFieldAnioExp(JTextField textFieldAnioExp) {
+		this.textFieldAnioExp = textFieldAnioExp;
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -51,160 +93,128 @@ public class Exportar extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(12, 3, 0, 0));
-		
-		JPanel panel = new JPanel();
-		contentPane.add(panel);
-		panel.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1);
-		panel_1.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2);
-		panel_2.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_3 = new JPanel();
-		contentPane.add(panel_3);
-		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_4 = new JPanel();
-		contentPane.add(panel_4);
-		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_5 = new JPanel();
-		contentPane.add(panel_5);
-		panel_5.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_6 = new JPanel();
-		contentPane.add(panel_6);
-		panel_6.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_7 = new JPanel();
-		contentPane.add(panel_7);
-		panel_7.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		btnExportExpedientes = new JButton("Expedientes");
-		panel_7.add(btnExportExpedientes);
-		
-		JPanel panel_8 = new JPanel();
-		contentPane.add(panel_8);
-		panel_8.setLayout(new GridLayout(1, 0, 0, 0));
+		contentPane.setLayout(new GridLayout(4, 1, 0, 0));
 		
 		JPanel panel_9 = new JPanel();
 		contentPane.add(panel_9);
-		panel_9.setLayout(new GridLayout(1, 0, 0, 0));
+		GridBagLayout gbl_panel_9 = new GridBagLayout();
+		gbl_panel_9.columnWidths = new int[] {190, 100, 190};
+		gbl_panel_9.rowHeights = new int[] {20, 40, 30};
+		gbl_panel_9.columnWeights = new double[]{0.0, 1.0, 0.0};
+		gbl_panel_9.rowWeights = new double[]{0.0, 0.0, 0.0};
+		panel_9.setLayout(gbl_panel_9);
 		
-		JPanel panel_10 = new JPanel();
-		contentPane.add(panel_10);
-		panel_10.setLayout(new GridLayout(1, 0, 0, 0));
+		JLabel lblExpediente = new JLabel("Expediente:");
+		GridBagConstraints gbc_lblExpediente = new GridBagConstraints();
+		gbc_lblExpediente.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblExpediente.insets = new Insets(0, 0, 5, 5);
+		gbc_lblExpediente.gridx = 1;
+		gbc_lblExpediente.gridy = 1;
+		panel_9.add(lblExpediente, gbc_lblExpediente);
 		
-		JPanel panel_11 = new JPanel();
-		contentPane.add(panel_11);
-		panel_11.setLayout(new GridLayout(1, 0, 0, 0));
+		comboBoxExpediente = new JComboBox<String>();
+		GridBagConstraints gbc_comboBoxExpediente = new GridBagConstraints();
+		gbc_comboBoxExpediente.anchor = GridBagConstraints.NORTH;
+		gbc_comboBoxExpediente.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBoxExpediente.fill = GridBagConstraints.BOTH;
+		gbc_comboBoxExpediente.gridx = 1;
+		gbc_comboBoxExpediente.gridy = 2;
+		panel_9.add(comboBoxExpediente, gbc_comboBoxExpediente);
 		
-		JPanel panel_12 = new JPanel();
-		contentPane.add(panel_12);
-		panel_12.setLayout(new GridLayout(1, 0, 0, 0));
+		JPanel panel = new JPanel();
+		contentPane.add(panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[] {30, 130, 10, 130, 190};
+		gbl_panel.rowHeights = new int[] {35, 30, 35, 10};
+		gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0};
+		panel.setLayout(gbl_panel);
 		
-		JPanel panel_13 = new JPanel();
-		contentPane.add(panel_13);
-		panel_13.setLayout(new GridLayout(1, 0, 0, 0));
+		textFieldNumExp = new JTextField();
+		textFieldNumExp.setToolTipText("Número de expediente");
+		textFieldNumExp.setText("");
+		GridBagConstraints gbc_textFieldNumExp = new GridBagConstraints();
+		gbc_textFieldNumExp.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldNumExp.fill = GridBagConstraints.BOTH;
+		gbc_textFieldNumExp.gridx = 1;
+		gbc_textFieldNumExp.gridy = 1;
+		panel.add(textFieldNumExp, gbc_textFieldNumExp);
+		textFieldNumExp.setColumns(10);
 		
-		JPanel panel_14 = new JPanel();
-		contentPane.add(panel_14);
-		panel_14.setLayout(new GridLayout(1, 0, 0, 0));
+		JLabel lblNewLabel = new JLabel("/");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 2;
+		gbc_lblNewLabel.gridy = 1;
+		panel.add(lblNewLabel, gbc_lblNewLabel);
 		
-		JPanel panel_15 = new JPanel();
-		contentPane.add(panel_15);
-		panel_15.setLayout(new GridLayout(1, 0, 0, 0));
+		textFieldAnioExp = new JTextField();
+		textFieldAnioExp.setToolTipText("Año de expediente");
+		GridBagConstraints gbc_textFieldAnioExp = new GridBagConstraints();
+		gbc_textFieldAnioExp.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldAnioExp.fill = GridBagConstraints.BOTH;
+		gbc_textFieldAnioExp.gridx = 3;
+		gbc_textFieldAnioExp.gridy = 1;
+		panel.add(textFieldAnioExp, gbc_textFieldAnioExp);
+		textFieldAnioExp.setColumns(10);
 		
-		JPanel panel_16 = new JPanel();
-		contentPane.add(panel_16);
-		panel_16.setLayout(new GridLayout(1, 0, 0, 0));
+		JLabel lblJuzgado = new JLabel("Juzgado:");
+		GridBagConstraints gbc_lblJuzgado = new GridBagConstraints();
+		gbc_lblJuzgado.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblJuzgado.gridwidth = 3;
+		gbc_lblJuzgado.insets = new Insets(0, 0, 0, 5);
+		gbc_lblJuzgado.gridx = 1;
+		gbc_lblJuzgado.gridy = 2;
+		panel.add(lblJuzgado, gbc_lblJuzgado);
+		
+		JPanel panel_9_1 = new JPanel();
+		contentPane.add(panel_9_1);
+		GridBagLayout gbl_panel_9_1 = new GridBagLayout();
+		gbl_panel_9_1.columnWidths = new int[] {190, 100, 190};
+		gbl_panel_9_1.rowHeights = new int[] {40, 30, 30};
+		gbl_panel_9_1.columnWeights = new double[]{0.0, 1.0, 0.0};
+		gbl_panel_9_1.rowWeights = new double[]{0.0, 0.0, 0.0};
+		panel_9_1.setLayout(gbl_panel_9_1);
+		
+		comboBoxJuzgado = new JComboBox<String>();
+		GridBagConstraints gbc_comboBoxJuzgado = new GridBagConstraints();
+		gbc_comboBoxJuzgado.fill = GridBagConstraints.BOTH;
+		gbc_comboBoxJuzgado.anchor = GridBagConstraints.NORTH;
+		gbc_comboBoxJuzgado.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBoxJuzgado.gridx = 1;
+		gbc_comboBoxJuzgado.gridy = 0;
+		panel_9_1.add(comboBoxJuzgado, gbc_comboBoxJuzgado);
+		
+		JPanel panel_2 = new JPanel();
+		contentPane.add(panel_2);
+		panel_2.setLayout(new GridLayout(3, 3, 0, 0));
+		
+		JPanel panel_3 = new JPanel();
+		panel_2.add(panel_3);
+		
+		JPanel panel_5 = new JPanel();
+		panel_2.add(panel_5);
+		
+		JPanel panel_4 = new JPanel();
+		panel_2.add(panel_4);
+		
+		btnExportExpedientes = new JButton("Expedientes");
+		panel_2.add(btnExportExpedientes);
 		
 		btnExportTransferencias = new JButton("Transferencias");
-		panel_16.add(btnExportTransferencias);
-		
-		JPanel panel_17 = new JPanel();
-		contentPane.add(panel_17);
-		panel_17.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_18 = new JPanel();
-		contentPane.add(panel_18);
-		panel_18.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_19 = new JPanel();
-		contentPane.add(panel_19);
-		panel_19.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_20 = new JPanel();
-		contentPane.add(panel_20);
-		panel_20.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_21 = new JPanel();
-		contentPane.add(panel_21);
-		panel_21.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_22 = new JPanel();
-		contentPane.add(panel_22);
-		panel_22.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_23 = new JPanel();
-		contentPane.add(panel_23);
-		panel_23.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_24 = new JPanel();
-		contentPane.add(panel_24);
-		panel_24.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_25 = new JPanel();
-		contentPane.add(panel_25);
-		panel_25.setLayout(new GridLayout(1, 0, 0, 0));
+		panel_2.add(btnExportTransferencias);
 		
 		btnExportExpurgos = new JButton("Expurgos");
-		panel_25.add(btnExportExpurgos);
+		panel_2.add(btnExportExpurgos);
 		
-		JPanel panel_26 = new JPanel();
-		contentPane.add(panel_26);
-		panel_26.setLayout(new GridLayout(1, 0, 0, 0));
+		JPanel panel_6 = new JPanel();
+		panel_2.add(panel_6);
 		
-		JPanel panel_27 = new JPanel();
-		contentPane.add(panel_27);
-		panel_27.setLayout(new GridLayout(1, 0, 0, 0));
+		JPanel panel_7 = new JPanel();
+		panel_2.add(panel_7);
 		
-		JPanel panel_28 = new JPanel();
-		contentPane.add(panel_28);
-		panel_28.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_29 = new JPanel();
-		contentPane.add(panel_29);
-		panel_29.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_30 = new JPanel();
-		contentPane.add(panel_30);
-		panel_30.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_31 = new JPanel();
-		contentPane.add(panel_31);
-		panel_31.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_32 = new JPanel();
-		contentPane.add(panel_32);
-		panel_32.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_33 = new JPanel();
-		contentPane.add(panel_33);
-		panel_33.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_34 = new JPanel();
-		contentPane.add(panel_34);
-		panel_34.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_35 = new JPanel();
-		contentPane.add(panel_35);
-		panel_35.setLayout(new GridLayout(1, 0, 0, 0));
+		JPanel panel_8 = new JPanel();
+		panel_2.add(panel_8);
 	}
 
 }

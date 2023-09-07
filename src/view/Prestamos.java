@@ -138,12 +138,21 @@ public class Prestamos extends JFrame {
 		panel_1.add(panel_4);
 		panel_4.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblSolicitante = new JLabel("Número de empleado:");
-		panel_4.add(lblSolicitante);
+		JLabel lblFecha = new JLabel("Fecha:");
+		panel_4.add(lblFecha);
 		
-		textFieldSolicitante = new JTextField();
-		panel_4.add(textFieldSolicitante);
-		textFieldSolicitante.setColumns(10);
+		JPanel panel_10 = new JPanel();
+		panel_4.add(panel_10);
+		panel_10.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		datePicker = new DatePicker();
+		datePicker.setDateToToday();
+	    datePicker.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    	}
+	    });
+	    datePicker.setDateToToday();
+	    panel_10.add(datePicker);
 		
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
@@ -157,7 +166,7 @@ public class Prestamos extends JFrame {
 		panel_2.add(lblNewLabel);
 		
 		textFieldAnioExp = new JTextField();
-		textFieldAnioExp.setToolTipText("Año");
+		textFieldAnioExp.setToolTipText("Año de expediente");
 		panel_2.add(textFieldAnioExp);
 		textFieldAnioExp.setColumns(10);
 		
@@ -165,12 +174,12 @@ public class Prestamos extends JFrame {
 		panel_1.add(panel_6);
 		panel_6.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblLugar = new JLabel("Provincia:");
-		panel_6.add(lblLugar);
+		JLabel lblSolicitante = new JLabel("Número de empleado:");
+		panel_6.add(lblSolicitante);
 		
-		textFieldLugar = new JTextField();
-		panel_6.add(textFieldLugar);
-		textFieldLugar.setColumns(10);
+		textFieldSolicitante = new JTextField();
+		panel_6.add(textFieldSolicitante);
+		textFieldSolicitante.setColumns(10);
 		
 		JPanel panel_7 = new JPanel();
 		panel_1.add(panel_7);
@@ -186,20 +195,12 @@ public class Prestamos extends JFrame {
 		panel_1.add(panel_9);
 		panel_9.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblFecha = new JLabel("Fecha:");
-		panel_9.add(lblFecha);
+		JLabel lblLugar = new JLabel("Provincia:");
+		panel_9.add(lblLugar);
 		
-		JPanel panel_10 = new JPanel();
-		panel_9.add(panel_10);
-		panel_10.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		datePicker = new DatePicker();
-	    datePicker.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    	}
-	    });
-	    datePicker.setDateToToday();
-	    panel_10.add(datePicker);
+		textFieldLugar = new JTextField();
+		panel_9.add(textFieldLugar);
+		textFieldLugar.setColumns(10);
 		
 		JPanel panel = new JPanel();
 		contentPanePrestamos.add(panel);

@@ -13,6 +13,7 @@ import DAO.HistoricoDAOImpl;
 import utils.FuncComunes;
 
 public class ExportarHistoricoExcel {
+	//TODO: filtrar por numExp, anio, tipo, juzgado
     public static String exportarHistorico(String tabla) throws IOException, ClassNotFoundException, SQLException {
     	String fecha = FuncComunes.getFechaHora();
     	
