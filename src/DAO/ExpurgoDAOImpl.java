@@ -25,52 +25,65 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
         boolean res = false;
     	ArrayList<Expediente> expedientesAEliminar = new ArrayList<Expediente>();
 
-        try {
+    	try {
             FileInputStream fis = new FileInputStream(new File(filePath));
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-            //Leer la primera hoja del archivo Excel (puedes ajustar esto seg�n tu estructura)
+            // Leer la primera hoja del archivo Excel
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = sheet.iterator();
 
-            //Saltar la primera fila si contiene encabezados
+            // Saltar la primera fila si contiene encabezados
             if (rowIterator.hasNext()) {
                 rowIterator.next();
             }
-
+            
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
-                Iterator<Cell> cellIterator = row.cellIterator();
-
-                //Crear un objeto Expediente y asignar valores desde el archivo Excel 
+                
                 Expediente expediente = new Expediente();
-                //"Tipo", "Numero Expediente", "Anio", "Ubicacion", "Notas", "Tomos", "Juzgado", "Lugar", "Caja", "Paginas", "Estado"
-                expediente.setTipo(cellIterator.next().getStringCellValue());
-                expediente.setNumExpediente((int) cellIterator.next().getNumericCellValue());
-                expediente.setAnio((int) cellIterator.next().getNumericCellValue());
-                expediente.setUbicacion("");
-                expediente.setNotas(cellIterator.next().getStringCellValue());
-                expediente.setTomos(cellIterator.next().getStringCellValue());
-                expediente.setJuzgado(cellIterator.next().getStringCellValue());
-                expediente.setLugar("");
-                expediente.setCaja((int) cellIterator.next().getNumericCellValue());
-                expediente.setPaginas((int) cellIterator.next().getNumericCellValue());
-                expediente.setEstado("Expurgado");
+                
+                for (int i = 0; i < 8; i++) {
+                    Cell cell = row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 
+                    //Verificar el tipo de celda y asignar valores
+                    switch (i) {
+                        case 0:
+                            expediente.setTipo(getStringCellValue(cell));
+                            break;
+                        case 1:
+                            expediente.setNumExpediente((int) getNumericCellValue(cell));
+                            break;
+                        case 2:
+                            expediente.setAnio((int) getNumericCellValue(cell));
+                            break;
+                        case 3:
+                            expediente.setNotas(getStringCellValue(cell));
+                            break;
+                        case 4:
+                            expediente.setTomos(getStringCellValue(cell));
+                            break;
+                        case 5:
+                            expediente.setJuzgado(getStringCellValue(cell));
+                            break;
+                        case 6:
+                            expediente.setLugar(getStringCellValue(cell));
+                            break;
+                        case 7:
+                        	expediente.setPaginas((int)getNumericCellValue(cell));
+                    }
+                }
                 expedientesAEliminar.add(expediente);
             }
-
             fis.close();
             workbook.close();
         } catch (IOException e) {
-           throw e;
+            throw e;
         }
         
-        if (!expedientesAEliminar.isEmpty())
-        {
-        	res = true;
-        }
+        if (!expedientesAEliminar.isEmpty()) res = true;
+
         
         //Obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
@@ -85,8 +98,11 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
         HistoricoDAO hist = new HistoricoDAOImpl();
         CajaDAO caja = new CajaDAOImpl();
         for (Expediente expediente : expedientesAEliminar) {
+        	//buscar informacion restante
+        	expediente.setEstado("expurgado");
         	Caja box = caja.getById(expediente.getCaja());
         	box.sumarPaginas(expediente.getPaginas());
+        	caja.update(box);
         	expediente.setCaja(-1);
             exp.update(expediente);
             Historico fila = new Historico(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado(), fechaHito);
@@ -94,6 +110,38 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
         }
         
         return res;
+    }
+    
+    private String getStringCellValue(Cell cell) {
+        if (cell != null) {
+            switch (cell.getCellType()) {
+                case STRING:
+                    return cell.getStringCellValue();
+                case NUMERIC:
+                    return String.valueOf(cell.getNumericCellValue());
+                default:
+                    return "";
+            }
+        }
+        return "";
+    }
+
+    private double getNumericCellValue(Cell cell) {
+        if (cell != null) {
+            switch (cell.getCellType()) {
+                case STRING:
+                    try {
+                        return Double.parseDouble(cell.getStringCellValue());
+                    } catch (NumberFormatException e) {
+                        return 0.0; 
+                    }
+                case NUMERIC:
+                    return cell.getNumericCellValue();
+                default:
+                    return 0.0;
+            }
+        }
+        return 0.0;
     }
 }
 

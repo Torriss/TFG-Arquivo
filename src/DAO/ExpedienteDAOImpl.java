@@ -3,6 +3,8 @@ package DAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import model.Caja;
 import model.Conexion;
 import model.Expediente;
 
@@ -27,7 +29,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	                + (exp.getNotas().compareTo("") != 0 ? "'" + exp.getNotas() + "'" : "''") + ", tomos = " 
 	                + (exp.getTomos().compareTo("") != 0 ? "'" + exp.getTomos() + "'" : "''") + ", juzgado = '" + exp.getJuzgado() + "', lugar = '" 
 	                + exp.getLugar() + "', paginas = " + exp.getPaginas() + ", estado = '" + exp.getEstado() 
-	                + "' WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() 
+	                + "' WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() + "' AND juzgado = '" + exp.getJuzgado()
 	                + "' AND anio = " + exp.getAnio() + " AND (tomos = '" + exp.getTomos() + "' OR tomos = '')";
 	    			
 	    return Conexion.execute(query);
@@ -44,7 +46,7 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             + (nuevo.getNotas().compareTo("") != 0 ? "'" + nuevo.getNotas() + "'" : "''") + ", tomos = " 
             + (nuevo.getTomos().compareTo("") != 0 ? "'" + nuevo.getTomos() + "'" : "''") + ", juzgado = '" + nuevo.getJuzgado() + "', lugar = '" 
             + nuevo.getLugar() + "', paginas = " + nuevo.getPaginas() + ", estado = '" + nuevo.getEstado() 
-            + "' WHERE numExpediente = " + viejo.getNumExpediente() + " AND tipo = '" + viejo.getTipo() 
+            + "' WHERE numExpediente = " + viejo.getNumExpediente() + " AND tipo = '" + viejo.getTipo() + "' AND juzgado = '" + viejo.getJuzgado()
             + "' AND anio = " + viejo.getAnio() + " AND (tomos = '" + viejo.getTomos() + "' OR tomos = '')";
 			
     		Conexion.execute(query);
@@ -53,12 +55,18 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	}
 
 	@Override
-    public boolean delete(ArrayList<Expediente> expedientes) throws ClassNotFoundException, SQLException {
-    	
+    public boolean delete(ArrayList<Expediente> expedientes) throws ClassNotFoundException, SQLException {   	
 		for(Expediente exp : expedientes) {	
-    		String query = "DELETE FROM Expedientes WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() 
-            + "' AND anio = " + exp.getAnio() + " AND juzgado = '" + exp.getJuzgado() + "' AND (tomos = '" + exp.getTomos() + "' OR tomos = '')";
-
+			
+			CajaDAO box = new CajaDAOImpl();
+			Caja caja = box.getById(exp.getCaja());
+			caja.sumarPaginas(exp.getPaginas());
+			box.update(caja);
+			
+			String query = "UPDATE Expedientes SET estado = 'borrado', caja = " + -1 
+            + " WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() + "' AND juzgado = '" + exp.getJuzgado()
+            + "' AND anio = " + exp.getAnio() + " AND (tomos = '" + exp.getTomos() + "' OR tomos = '')";
+			
     		Conexion.execute(query);
     	}
     	return true;
@@ -234,4 +242,18 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         return res;
 	}
 	
+	@Override
+	public boolean obtenerExpedientesPorIdCaja(int idCaja) throws SQLException, ClassNotFoundException {
+	    String query = "SELECT COUNT(*) FROM expedientes WHERE caja = " + idCaja;
+	    ResultSet rs = Conexion.executeSelect(query);
+
+	    if (rs.next()) {
+	        int count = rs.getInt(1);
+	        return count > 0;
+	    }
+
+	    return false;
+	}
+
 }
+

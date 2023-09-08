@@ -71,7 +71,7 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	    	estado = rs.getString("estado");
 	    	 System.out.println(estado);
 	    }
-	    if(estado.equalsIgnoreCase("expurgado") || estado.equalsIgnoreCase("prestado")) return false;
+	    if(estado.equalsIgnoreCase("expurgado") || estado.equalsIgnoreCase("prestado") || estado.equalsIgnoreCase("borrado")) return false;
 	    else return true;
 	}
 	

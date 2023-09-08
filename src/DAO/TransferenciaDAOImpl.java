@@ -47,12 +47,11 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
                 Row row = rowIterator.next();
                 
                 Expediente expediente = new Expediente();
-                int columnCount = 0; // Contador de columnas recorridas
                 
                 for (int i = 0; i < 8; i++) {
                     Cell cell = row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 
-                    // Verificar el tipo de celda y asignar valores
+                    //Verificar el tipo de celda y asignar valores
                     switch (i) {
                         case 0:
                             expediente.setTipo(getStringCellValue(cell));
@@ -77,7 +76,6 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
                             break;
                         case 7:
                         	expediente.setPaginas((int)getNumericCellValue(cell));
-                    //columnCount++;
                     }
                 }
                 expedientesNuevos.add(expediente);
@@ -92,29 +90,30 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
         
         
         for (Expediente expediente : expedientesNuevos) {
-        	 //Obtener la fecha actual
-            LocalDate fechaActual = LocalDate.now();
-            //Crear un formato de fecha
-            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            //Formatear la fecha actual como una cadena
-            String fechaHito = fechaActual.format(formatoFecha);
-        	//buscamos caja nueva para expediente
-        	Caja caja = cajas.buscarCajasParaExpedienteNuevo(expediente.getAnio(), expediente.getTipo(), expediente.getPaginas());
-        	//actualizar ubi de expediente
-        	expediente.setUbicacion(caja.getUbicacion());
-        	//actualizar caja de expediente
-        	expediente.setCaja(caja.getIdCaja());
-        	//cambiamos estado a transferido
-        	expediente.setEstado("transferido");
-        	//restar paginas de caja
-        	caja.restarPaginas(expediente.getPaginas());
-        	//hacemos update e insert en bbdd
-        	cajas.update(caja);
-        	exp.insert(expediente);
-        	//numExpediente, String tipo, int anio, String juzgado, String fechaHito
-        	Historico fila = new Historico(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado(), fechaHito);
-        	hist.insert(fila, "historicatransferencia");
-        	
+        	if(!exp.existeExpediente(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado())) {
+	        	//Obtener la fecha actual
+	            LocalDate fechaActual = LocalDate.now();
+	            //Crear un formato de fecha
+	            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	            //Formatear la fecha actual como una cadena
+	            String fechaHito = fechaActual.format(formatoFecha);
+	        	//buscamos caja nueva para expediente
+	        	Caja caja = cajas.buscarCajasParaExpedienteNuevo(expediente.getAnio(), expediente.getTipo(), expediente.getPaginas());
+	        	//actualizar ubi de expediente
+	        	expediente.setUbicacion(caja.getUbicacion());
+	        	//actualizar caja de expediente
+	        	expediente.setCaja(caja.getIdCaja());
+	        	//cambiamos estado a transferido
+	        	expediente.setEstado("transferido");
+	        	//restar paginas de caja
+	        	caja.restarPaginas(expediente.getPaginas());
+	        	//hacemos update e insert en bbdd
+	        	cajas.update(caja);
+	        	exp.insert(expediente);
+	        	//numExpediente, String tipo, int anio, String juzgado, String fechaHito
+	        	Historico fila = new Historico(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado(), fechaHito);
+	        	hist.insert(fila, "historicatransferencia");
+        	}
         }
         
         return res;
@@ -126,25 +125,22 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
                 case STRING:
                     return cell.getStringCellValue();
                 case NUMERIC:
-                    // Si la celda contiene un número, conviértelo en cadena
                     return String.valueOf(cell.getNumericCellValue());
                 default:
                     return "";
             }
         }
-        return ""; // Devolver cadena vacía si la celda es nula o está vacía
+        return "";
     }
 
-    // Función para obtener el valor de la celda como número, manejando celdas vacías y tipos mixtos
     private double getNumericCellValue(Cell cell) {
         if (cell != null) {
             switch (cell.getCellType()) {
                 case STRING:
                     try {
-                        // Intenta convertir el valor de cadena en número
                         return Double.parseDouble(cell.getStringCellValue());
                     } catch (NumberFormatException e) {
-                        return 0.0; // Devolver 0.0 si no se puede convertir a número
+                        return 0.0; 
                     }
                 case NUMERIC:
                     return cell.getNumericCellValue();
@@ -152,7 +148,7 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
                     return 0.0;
             }
         }
-        return 0.0; // Devolver 0.0 si la celda es nula o está vacía
+        return 0.0;
     }
     
 }

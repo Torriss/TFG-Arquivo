@@ -49,9 +49,13 @@ public class CajaDAOImpl implements CajaDAO {
     }
 
 	@Override
-    public boolean delete(int idCaja) throws SQLException, ClassNotFoundException{
-        String query = "DELETE FROM cajas WHERE idCaja = " + idCaja;
-        return Conexion.execute(query);
+    public void delete(int idCaja) throws SQLException, ClassNotFoundException{
+		ExpedienteDAO exp = new ExpedienteDAOImpl();
+		if(!exp.obtenerExpedientesPorIdCaja(idCaja)) {
+	        String query = "DELETE FROM cajas WHERE idCaja = " + idCaja;
+	        Conexion.execute(query);
+		}
+		else throw new IllegalArgumentException("No se puede eliminar una caja no vacia");
     }
     
 	@Override

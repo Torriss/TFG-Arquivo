@@ -58,6 +58,7 @@ public class Menu extends JFrame {
 		return btnModificaciones;
 	}
 
+	//TODO: el delete de expediente cambia el expediente al estado borrado, que es lo que quiere
 	public void setBtnModificaciones(JButton btnModificaciones) {
 		this.btnModificaciones = btnModificaciones;
 	}
