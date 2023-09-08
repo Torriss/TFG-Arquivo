@@ -11,6 +11,7 @@ import DAO.TransferenciaDAOImpl;
 import view.Devoluciones;
 import view.Exportar;
 import view.Menu;
+import view.Modificaciones;
 import view.Prestamos;
 
 public class ControlMenu {
@@ -19,6 +20,7 @@ public class ControlMenu {
 	private Devoluciones devoluciones; //Vista
 	private Prestamos prestamos; //Vista
 	private Exportar exportar; //Vista
+	private Modificaciones modificaciones; //Vista
 	private ExpurgoDAOImpl expurgo;
 	private TransferenciaDAOImpl transferencia;
 	
@@ -46,7 +48,7 @@ public class ControlMenu {
 	public void initControl() {
 		menu.getBtnDevoluciones().addActionListener(e -> mostrarDevoluciones());
 		menu.getBtnPrestamos().addActionListener(e -> mostrarPrestamos());
-		menu.getBtnModificaciones().addActionListener(e -> elegirArchivo("modificar"));
+		menu.getBtnModificaciones().addActionListener(e -> mostrarModificaciones());
 		menu.getBtnTransferencia().addActionListener(e -> elegirArchivo("transferir"));
 		menu.getBtnExpurgo().addActionListener(e -> elegirArchivo("expurgar"));
 		menu.getBtnExportar().addActionListener(e -> mostrarExportar());
@@ -63,6 +65,12 @@ public class ControlMenu {
 		prestamos.setVisible(true);
 		ControlPrestamos prControl = new ControlPrestamos(prestamos);
 		prControl.initControl();
+	}
+	
+	private void mostrarModificaciones() {
+		modificaciones.setVisible(true);
+		ControlModificaciones modControl = new ControlModificaciones(modificaciones);
+		modControl.initControl();
 	}
 	
 	private void elegirArchivo(String func) {
@@ -90,23 +98,16 @@ public class ControlMenu {
             		// Se utiliza la misma funcion para insertar o actualizar expedientes en la BBDD
             		if(transferencia.transferirExpedientes(file))
             		{
-            			if (func == "modificar") {
-            				JOptionPane.showMessageDialog(null,
-            						"Modificación realizada con éxito.", "Modificar",
-            						JOptionPane.INFORMATION_MESSAGE);
-            			}
-            			else {
-            				JOptionPane.showMessageDialog(null,
-            						"Transferencia realizada con éxito.", "Transferir",
-            						JOptionPane.INFORMATION_MESSAGE);
-            			}
+            			JOptionPane.showMessageDialog(null,
+        						"Transferencia realizada con éxito.", "Transferir",
+        						JOptionPane.INFORMATION_MESSAGE);
             			
             		}
             		else
             		{
             			JOptionPane.showMessageDialog(null,
-            					"Error durante la operación, por favor asegúrese de haber introducido"
-            					+ " un archivo con formato correcto e inténtelo de nuevo.", "Error",
+            					"Error durante la transferencia, por favor asegúrese de haber introducido"
+            					+ " un archivo con formato correcto e inténtelo de nuevo.", "Transferir",
             					JOptionPane.ERROR_MESSAGE);
             		}
             	}
