@@ -1,7 +1,9 @@
 package utils;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -52,5 +54,15 @@ public class FuncComunes {
         String fecha = fechaActual.format(formatoFecha);
         
         return fecha;
+	}
+	
+	public LocalDate fecha() {
+		LocalDate date = LocalDate.now();
+		LocalTime time12 = LocalTime.parse("12:00:00");
+		LocalTime now = LocalTime.now();
+		if (now.isAfter(time12)) {
+			date = date.plusDays(1);
+		}
+		return date;
 	}
 }

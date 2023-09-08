@@ -15,6 +15,9 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class Prestamos extends JFrame {
 
@@ -22,13 +25,21 @@ public class Prestamos extends JFrame {
 	private JTextField textFieldNumExp;
 	private JTextField textFieldAnioExp;
 	private JTextField textFieldSolicitante;
-	private JTextField textFieldLugar;
 	private JComboBox<String> comboBoxTipoExp;
 	private JComboBox<String> comboBoxJuzgado;
 	private JButton btnBuscarUbic;
 	private JButton btnPrestar;
 	private JTextField textFieldJuzgado;
 	private DatePicker datePicker;
+	private JButton btnAyuda;
+	
+	public JButton getBtnAyuda() {
+		return btnAyuda;
+	}
+
+	public void setBtnAyuda(JButton btnAyuda) {
+		this.btnAyuda = btnAyuda;
+	}
 	
 	public JTextField getTextFieldNumExp() {
 		return textFieldNumExp;
@@ -52,14 +63,6 @@ public class Prestamos extends JFrame {
 
 	public void setTextFieldSolicitante(JTextField textFieldSolicitante) {
 		this.textFieldSolicitante = textFieldSolicitante;
-	}
-
-	public JTextField getTextFieldLugar() {
-		return textFieldLugar;
-	}
-
-	public void setTextFieldLugar(JTextField textFieldLugar) {
-		this.textFieldLugar = textFieldLugar;
 	}
 
 	public JComboBox<String> getComboBoxTipoExp() {
@@ -136,23 +139,21 @@ public class Prestamos extends JFrame {
 		
 		JPanel panel_4 = new JPanel();
 		panel_1.add(panel_4);
-		panel_4.setLayout(new GridLayout(2, 0, 0, 0));
+		GridBagLayout gbl_panel_4 = new GridBagLayout();
+		gbl_panel_4.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_4.rowHeights = new int[]{0, 0, 0};
+		gbl_panel_4.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_4.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		panel_4.setLayout(gbl_panel_4);
 		
-		JLabel lblFecha = new JLabel("Fecha:");
-		panel_4.add(lblFecha);
-		
-		JPanel panel_10 = new JPanel();
-		panel_4.add(panel_10);
-		panel_10.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		datePicker = new DatePicker();
-		datePicker.setDateToToday();
-	    datePicker.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    	}
-	    });
-	    datePicker.setDateToToday();
-	    panel_10.add(datePicker);
+		btnAyuda = new JButton("Ayuda");
+		GridBagConstraints gbc_btnAyuda = new GridBagConstraints();
+		gbc_btnAyuda.insets = new Insets(0, 0, 5, 0);
+		gbc_btnAyuda.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnAyuda.gridwidth = 2;
+		gbc_btnAyuda.gridx = 7;
+		gbc_btnAyuda.gridy = 0;
+		panel_4.add(btnAyuda, gbc_btnAyuda);
 		
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
@@ -174,12 +175,19 @@ public class Prestamos extends JFrame {
 		panel_1.add(panel_6);
 		panel_6.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblSolicitante = new JLabel("Número de empleado:");
-		panel_6.add(lblSolicitante);
+		JLabel lblFecha = new JLabel("Fecha:");
+		panel_6.add(lblFecha);
 		
-		textFieldSolicitante = new JTextField();
-		panel_6.add(textFieldSolicitante);
-		textFieldSolicitante.setColumns(10);
+		JPanel panel_10 = new JPanel();
+		panel_6.add(panel_10);
+		panel_10.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		datePicker = new DatePicker();
+	    datePicker.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    	}
+	    });
+	    panel_10.add(datePicker);
 		
 		JPanel panel_7 = new JPanel();
 		panel_1.add(panel_7);
@@ -195,12 +203,12 @@ public class Prestamos extends JFrame {
 		panel_1.add(panel_9);
 		panel_9.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblLugar = new JLabel("Provincia:");
-		panel_9.add(lblLugar);
+		JLabel lblSolicitante = new JLabel("Número de empleado:");
+		panel_9.add(lblSolicitante);
 		
-		textFieldLugar = new JTextField();
-		panel_9.add(textFieldLugar);
-		textFieldLugar.setColumns(10);
+		textFieldSolicitante = new JTextField();
+		panel_9.add(textFieldSolicitante);
+		textFieldSolicitante.setColumns(10);
 		
 		JPanel panel = new JPanel();
 		contentPanePrestamos.add(panel);

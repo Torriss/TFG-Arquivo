@@ -45,6 +45,7 @@ public class ControlDevoluciones {
 		devoluciones.getBtnBuscarUbic().addActionListener(e -> buscarUbicacion());
 		devoluciones.getBtnDevolver().addActionListener(e -> devolverExpediente());
 		devoluciones.getBtnNuevo().addActionListener(e -> nuevoExpediente());
+		devoluciones.getBtnAyuda().addActionListener(e -> mostrarAyuda());
 	}
 
 	private void clearControl() {
@@ -65,7 +66,7 @@ public class ControlDevoluciones {
 		devoluciones.getTextFieldUbicacion().setEnabled(false);
 		devoluciones.getBtnDevolver().setEnabled(false);
 		devoluciones.getBtnNuevo().setEnabled(false);
-		
+		devoluciones.getDatePicker().setDate(func.fecha());
 		expedientes.clear();
 	}
 	private void buscarUbicacion() {
@@ -196,4 +197,13 @@ public class ControlDevoluciones {
 		}
 	}
 	
+	private void mostrarAyuda() {
+		//TODO: meter texto de ayuda
+		String msg = "<html>Esto escribe una linea<br><br>"
+				+ "Con cada br se añade un salto de linea<br><br>";
+
+		JOptionPane.showMessageDialog(null,
+				msg, "Ayuda",
+				JOptionPane.QUESTION_MESSAGE);
+	}
 }

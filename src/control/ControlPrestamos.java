@@ -44,6 +44,7 @@ public class ControlPrestamos{
 	public void initControl() {
 		prestamos.getBtnBuscarUbic().addActionListener(e -> buscarUbicacion());
 		prestamos.getBtnPrestar().addActionListener(e -> realizarPrestamo());
+		prestamos.getBtnAyuda().addActionListener(e -> mostrarAyuda());
 	}
 
 	private void clearControl() {
@@ -51,9 +52,8 @@ public class ControlPrestamos{
 		prestamos.getTextFieldAnioExp().setText("");
 		prestamos.getTextFieldSolicitante().setText("");
 		prestamos.getDatePicker().setText("");
-		prestamos.getTextFieldLugar().setText("");
 		prestamos.getBtnPrestar().setEnabled(false);
-		
+		prestamos.getDatePicker().setDate(func.fecha());
 		expedientes.clear();
 	}
 	
@@ -93,9 +93,8 @@ public class ControlPrestamos{
 		try {
 			String solicitante = prestamos.getTextFieldSolicitante().getText();
 			String fecha = prestamos.getDatePicker().getDateStringOrEmptyString();
-			String lugar = prestamos.getTextFieldLugar().getText();
 			
-			if (solicitante.compareTo("") != 0 && fecha.compareTo("") != 0 && lugar.compareTo("") != 0 ) {
+			if (solicitante.compareTo("") != 0 && fecha.compareTo("") != 0) {
 				int solic = Integer.parseInt(solicitante);
 				int numExp = expedientes.get(0).getNumExpediente();
 				int anioExp = expedientes.get(0).getAnio();
@@ -140,5 +139,15 @@ public class ControlPrestamos{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void mostrarAyuda() {
+		//TODO: meter texto de ayuda
+		String msg = "<html>Esto escribe una linea<br><br>"
+				+ "Con cada br se añade un salto de linea<br><br>";
+
+		JOptionPane.showMessageDialog(null,
+				msg, "Ayuda",
+				JOptionPane.QUESTION_MESSAGE);
 	}
 }

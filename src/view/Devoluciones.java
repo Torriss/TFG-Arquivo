@@ -35,7 +35,16 @@ public class Devoluciones extends JFrame {
 	private JButton btnNuevo;
 	private JTextField textFieldPaginas;
 	private DatePicker datePicker;
+	private JButton btnAyuda;
+	
+	public JButton getBtnAyuda() {
+		return btnAyuda;
+	}
 
+	public void setBtnAyuda(JButton btnAyuda) {
+		this.btnAyuda = btnAyuda;
+	}
+	
 	public JTextField getTextFieldNumExp() {
 		return textFieldNumExp;
 	}
@@ -168,7 +177,74 @@ public class Devoluciones extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(5, 0, 0, 0));
+		contentPane.setLayout(new GridLayout(6, 0, 0, 0));
+		
+		JPanel panel_07 = new JPanel();
+		contentPane.add(panel_07);
+		panel_07.setLayout(new GridLayout(0, 5, 0, 0));
+		
+		JPanel panel_9_14 = new JPanel();
+		panel_07.add(panel_9_14);
+		panel_9_14.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_13 = new JPanel();
+		panel_07.add(panel_9_13);
+		panel_9_13.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_12 = new JPanel();
+		panel_07.add(panel_9_12);
+		panel_9_12.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_11 = new JPanel();
+		panel_07.add(panel_9_11);
+		panel_9_11.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_10 = new JPanel();
+		panel_07.add(panel_9_10);
+		panel_9_10.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnAyuda = new JButton("Ayuda");
+		panel_9_10.add(btnAyuda);
+		
+		JPanel panel_9_9 = new JPanel();
+		panel_07.add(panel_9_9);
+		panel_9_9.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_8 = new JPanel();
+		panel_07.add(panel_9_8);
+		panel_9_8.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_7 = new JPanel();
+		panel_07.add(panel_9_7);
+		panel_9_7.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_6 = new JPanel();
+		panel_07.add(panel_9_6);
+		panel_9_6.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_5 = new JPanel();
+		panel_07.add(panel_9_5);
+		panel_9_5.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_4 = new JPanel();
+		panel_07.add(panel_9_4);
+		panel_9_4.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_1 = new JPanel();
+		panel_07.add(panel_9_1);
+		panel_9_1.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_2 = new JPanel();
+		panel_07.add(panel_9_2);
+		panel_9_2.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9 = new JPanel();
+		panel_07.add(panel_9);
+		panel_9.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9_3 = new JPanel();
+		panel_07.add(panel_9_3);
+		panel_9_3.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
@@ -188,13 +264,10 @@ public class Devoluciones extends JFrame {
 		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		datePicker = new DatePicker();
-		datePicker.setDateToToday();
 	    datePicker.getComponentToggleCalendarButton().addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    	}
 	    });
-	    datePicker.setDateToToday();
-		
 		panel_4.add(datePicker);
 		
 		JPanel panel_2 = new JPanel();

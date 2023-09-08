@@ -74,6 +74,19 @@ public class ControlTablaResultados {
 		}
 	}
 	
+	public void hideButtonImprimir() {
+		tabla.getBtnImprimir().setVisible(false);
+	}
+	
+	public void enableEditCells() {
+		//TODO: ver si es posible hacer asi
+		for (int i = 0; i < tabla.getColumnasTabla(); i++) {
+			for (int j = 0; j < expedientes.size(); j++) {
+				
+			}
+		}
+	}
+	
 	private void imprimirTabla() {
 		try {
 			ExportarExpedientesExcel.imprimirExpedientes(expedientes);
