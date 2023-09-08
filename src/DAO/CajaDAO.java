@@ -13,8 +13,4 @@ public interface CajaDAO {
     boolean delete(int idCaja) throws SQLException, ClassNotFoundException;
     Caja getById(int idCaja) throws SQLException, ClassNotFoundException;
     Caja buscarCajasParaExpedienteNuevo(int anio, String tipo, int paginasExpediente) throws SQLException, ClassNotFoundException;
-    //String buscarNuevaUbicacionContigua(String ultimaUbicacion);
-    //boolean insertarExpedienteEnCaja(Expediente expediente) throws SQLException;
-    //List<Caja> obtenerCajasPorTipo(String tipo) throws SQLException;
-    //Caja buscarCajaDisponible(String tipo, int anio, int numPaginasExpediente) throws SQLException;
 }

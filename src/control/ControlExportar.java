@@ -36,6 +36,7 @@ public class ControlExportar {
 	}
 	
 	public void initControl() {
+		//TODO: dejar posibles valores nulos de juzgado y tipo
 		exportar.getBtnExportExpedientes().addActionListener(e -> exportarExpedientes());
 		exportar.getBtnExportTransferencias().addActionListener(e -> exportarHistorico("historicaTransferencia"));
 		exportar.getBtnExportExpurgos().addActionListener(e -> exportarHistorico("historicaExpurgo"));
@@ -48,14 +49,16 @@ public class ControlExportar {
 			String tipo = exportar.getComboBoxExpediente().getSelectedItem().toString();
 			String juzgado = exportar.getComboBoxJuzgado().getSelectedItem().toString();
 			
-			if(!exportar.getTextFieldNumExp().getText().contains(""))
-			{
-				numExp = Integer.parseInt(exportar.getTextFieldNumExp().getText());
-			}
-			if(!exportar.getTextFieldAnioExp().getText().contains(""))
-			{
-				anio = Integer.parseInt(exportar.getTextFieldAnioExp().getText());
-			}
+			String numExpText = exportar.getTextFieldNumExp().getText();
+	        String anioText = exportar.getTextFieldAnioExp().getText();
+
+	        if (numExpText != null && !numExpText.isEmpty()) {
+	            numExp = Integer.parseInt(numExpText);
+	        }
+	        if (anioText != null && !anioText.isEmpty()) {
+	            anio = Integer.parseInt(anioText);
+	        }
+			
 			String filePath = ExportarExpedientesExcel.exportarExpedientes(numExp, anio, tipo, juzgado);
 			JOptionPane.showMessageDialog(null,
 					"<html>Exportación realizada con éxito.<br>Nombre del archivo: " + filePath, "Exportar",
@@ -79,17 +82,18 @@ public class ControlExportar {
 			String tipo = exportar.getComboBoxExpediente().getSelectedItem().toString();
 			String juzgado = exportar.getComboBoxJuzgado().getSelectedItem().toString();
 			
-			if(!exportar.getTextFieldNumExp().getText().contains(""))
-			{
-				numExp = Integer.parseInt(exportar.getTextFieldNumExp().getText());
-			}
-			if(!exportar.getTextFieldAnioExp().getText().contains(""))
-			{
-				anio = Integer.parseInt(exportar.getTextFieldAnioExp().getText());
-			}
+			String numExpText = exportar.getTextFieldNumExp().getText();
+	        String anioText = exportar.getTextFieldAnioExp().getText();
+
+	        if (numExpText != null && !numExpText.isEmpty()) {
+	            numExp = Integer.parseInt(numExpText);
+	        }
+	        if (anioText != null && !anioText.isEmpty()) {
+	            anio = Integer.parseInt(anioText);
+	        }
 			
 			//TODO: pasar argumentos cuando se cambie la funcion
-			String filePath = ExportarHistoricoExcel.exportarHistorico(tabla);
+			String filePath = ExportarHistoricoExcel.exportarHistorico(numExp, anio, tipo, juzgado, tabla);
 			JOptionPane.showMessageDialog(null,
 					"<html>Exportación realizada con éxito.<br>Ruta del archivo: " + filePath, "Exportar",
 					JOptionPane.INFORMATION_MESSAGE);

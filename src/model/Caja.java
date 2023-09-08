@@ -14,6 +14,7 @@ public class Caja {
         this.tipo = tipo;
         this.anio = anio;
         this.ubicacion = ubicacion;
+        this.idCaja = idCaja;
     }
     public Caja(String ubicacion, String tipo, int anio) {
     	this.paginas = PAGINAS_FIJAS;
@@ -69,7 +70,7 @@ public class Caja {
     }
     
     public void restarPaginas(int resta) {
-    	this.paginas =- resta;
+    	this.paginas = this.paginas - resta;
     }
     
     public void sumarPaginas(int suma) {

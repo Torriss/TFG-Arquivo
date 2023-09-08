@@ -10,8 +10,6 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	
 	@Override
 	public boolean insert(Expediente exp) throws SQLException, ClassNotFoundException{
-        // Posible comprobacion de no nulos y rangos
-
         // Construir la query
         String query = "INSERT INTO Expedientes (numExpediente, tipo, caja, anio, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) VALUES ('"
                 + exp.getNumExpediente() + "','" + exp.getTipo() + "','" + exp.getCaja() + "','"

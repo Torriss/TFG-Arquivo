@@ -85,7 +85,7 @@ public class CajaDAOImpl implements CajaDAO {
         	String ultimaUbicacion = cajasMismoTipoYAnio.get(cajasMismoTipoYAnio.size() - 1).getUbicacion();
             String nuevaUbicacion = buscarNuevaUbicacionContigua(ultimaUbicacion);
             nuevaCaja = new Caja(nuevaUbicacion, tipo, anio);
-            this.insert(nuevaCaja);
+            insert(nuevaCaja);
         }
         else {
         	ArrayList<Caja> cajasMismoTipo = obtenerCajasPorTipo(tipo);
@@ -96,7 +96,7 @@ public class CajaDAOImpl implements CajaDAO {
             	String ultimaUbicacion = cajasMismoTipo.get(cajasMismoTipo.size() - 1).getUbicacion();
                 String nuevaUbicacion = buscarNuevaUbicacionContigua(ultimaUbicacion);
                 nuevaCaja = new Caja(nuevaUbicacion, tipo, anio);
-                this.insert(nuevaCaja);
+                insert(nuevaCaja);
             }
             else {
             	ArrayList<Caja> cajasMismoAnio = obtenerCajasPorAnio(anio);
@@ -107,7 +107,7 @@ public class CajaDAOImpl implements CajaDAO {
                 	String ultimaUbicacion = cajasMismoAnio.get(cajasMismoAnio.size() - 1).getUbicacion();
                     String nuevaUbicacion = buscarNuevaUbicacionContigua(ultimaUbicacion);
                     nuevaCaja = new Caja(nuevaUbicacion, tipo, anio);
-                    this.insert(nuevaCaja);
+                    insert(nuevaCaja);
                 }
             }
         }
@@ -181,36 +181,43 @@ public class CajaDAOImpl implements CajaDAO {
     }
     
     private String buscarNuevaUbicacionContigua(String ultimaUbicacion) {
-    	
-    	if (ultimaUbicacion != null && ultimaUbicacion.matches("\\d+-\\d+-\\d+-\\d+")) {
-            char seccion = ultimaUbicacion.charAt(0);
-            int estanteria = Integer.parseInt(ultimaUbicacion.substring(2, 3));
-            int balda = Integer.parseInt(ultimaUbicacion.substring(5, 6));
-            int posicion = Integer.parseInt(ultimaUbicacion.substring(8, 9));
+        if (ultimaUbicacion != null && ultimaUbicacion.matches("[A-Z]-\\d+-\\d+-\\d+")) {
+            // Divide la ubicación en partes por guiones
+            String[] partesUbicacion = ultimaUbicacion.split("-");
+            
+            if (partesUbicacion.length == 4) {
+                char seccion = partesUbicacion[0].charAt(0);
+                int estanteria = Integer.parseInt(partesUbicacion[1]);
+                int balda = Integer.parseInt(partesUbicacion[2]);
+                int posicion = Integer.parseInt(partesUbicacion[3]);
 
-            posicion++;
-            // si se ha alcanzado el limite de posicion en la balda, mover al siguiente nivel
-            if (posicion > 5) {
-                posicion = 0;
-                balda++;
-            }
+                posicion++;
+                // si se ha alcanzado el límite de posición en la balda, mover al siguiente nivel
+                if (posicion > 5) {
+                    posicion = 0;
+                    balda++;
+                }
 
-            // si se ha alcanzado el limite de balda, mover a la siguiente estanteria
-            if (balda > 5) {
-                balda = 0;
-                estanteria++;
-            }
+                // si se ha alcanzado el límite de balda, mover a la siguiente estantería
+                if (balda > 5) {
+                    balda = 0;
+                    estanteria++;
+                }
 
-            // si se ha alcanzado el limite de estanteria, cambiar a la siguiente seccion
-            if (estanteria > 20) {
-                estanteria = 0;
-                seccion++;
+                // si se ha alcanzado el límite de estantería, cambiar a la siguiente sección
+                if (estanteria > 20) {
+                    estanteria = 0;
+                    seccion++;
+                }
+
+                // Formatea la nueva ubicación en el formato deseado
+                return String.format("%c-%d-%d-%d", seccion, estanteria, balda, posicion);
+            } else {
+                throw new IllegalArgumentException("Ubicación en formato no válido");
             }
-            return seccion + "-" + String.format("%02d", estanteria) + "-" + balda + "-" + posicion;
         } else {
-            throw new IllegalArgumentException("Ubicacion en formato no valido");
+            throw new IllegalArgumentException("Ubicación en formato no válido");
         }
     }
-
 
 }

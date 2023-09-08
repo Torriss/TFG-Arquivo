@@ -14,12 +14,12 @@ import utils.FuncComunes;
 
 public class ExportarHistoricoExcel {
 	//TODO: filtrar por numExp, anio, tipo, juzgado
-    public static String exportarHistorico(String tabla) throws IOException, ClassNotFoundException, SQLException {
+    public static String exportarHistorico(int numEXp, int anio, String tipo, String juzgado, String tabla) throws IOException, ClassNotFoundException, SQLException {
     	String fecha = FuncComunes.getFechaHora();
     	
     	String filePath = "exportar_"+ tabla + "_" + fecha +".xlsx";
     	HistoricoDAO hist = new HistoricoDAOImpl();
-    	ArrayList<Historico> historico = hist.getAllRows(tabla);
+    	ArrayList<Historico> historico = hist.aplicaFiltrosHistorico(numEXp, tipo, anio, juzgado, tabla);
         // Crear un nuevo libro de Excel
         Workbook workbook = new XSSFWorkbook();
         
