@@ -84,12 +84,18 @@ public class ControlModificaciones {
 	}
 	
 	private void mostrarAyuda() {
-		//TODO: meter texto de ayuda
-		String msg = "<html>Esto escribe una linea<br><br>"
-				+ "Con cada br se añade un salto de linea<br><br>";
+	    String msg = "<html>El Control de Modificaciones te permite buscar expedientes por número de expediente, tipo, año y juzgado.<br><br>" +
+	                 "Sigue estos pasos para buscar una ubicación:<br><br>" +
+	                 "1. Ingresa el número de expediente, el año, selecciona el tipo de expediente y el juzgado de tu interés.<br>" +
+	                 "2. Haz clic en el botón 'Buscar'.<br>" +
+	                 "3. Si el expediente se encuentra disponible, verás los resultados en la tabla.<br>" +
+	                 "4. Puedes imprimir la tabla haciendo clic en el botón 'Imprimir'.<br>" +
+	                 "5. ¡Listo! Ahora puedes consultar la ubicación de tu expediente.<br><br>" +
+	                 "Nota: Si no se encuentran resultados, el expediente puede estar fuera del archivo o prestado.<br></html>";
 
-		JOptionPane.showMessageDialog(null,
-				msg, "Ayuda",
-				JOptionPane.QUESTION_MESSAGE);
+	    JOptionPane.showMessageDialog(null,
+	            msg, "Ayuda para Control de Modificaciones",
+	            JOptionPane.INFORMATION_MESSAGE);
 	}
+
 }

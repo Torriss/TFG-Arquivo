@@ -199,8 +199,15 @@ public class ControlDevoluciones {
 	
 	private void mostrarAyuda() {
 		//TODO: meter texto de ayuda
-		String msg = "<html>Esto escribe una linea<br><br>"
-				+ "Con cada br se añade un salto de linea<br><br>";
+		String msg = "<html>Para devolver un expediente, sigue estos pasos:<br><br>" +
+				"1. Verifica que el expediente que deseas devolver se encuentra en tu posesión.<br>" +
+				"2. Ingresa el número de expediente, tipo, año y juzgado correspondientes.<br>" +
+				"3. Añade notas adicionales si es necesario.<br><br>" +
+				"4. Ingresa el número de páginas nuevas si el expediente ha aumentado su tamaño.<br>" +
+				"5. Indica la fecha de devolución en el formato yyyy-MM-dd.<br>" +
+				"6. Confirma la devolución del expediente.<br>" +
+				"7. El expediente será marcado como 'disponible' y estará listo para ser prestado nuevamente.<br>" +
+				"8. ¡Listo! El expediente ha sido devuelto con éxito.</html>";
 
 		JOptionPane.showMessageDialog(null,
 				msg, "Ayuda",

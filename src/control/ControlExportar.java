@@ -114,13 +114,18 @@ public class ControlExportar {
 	}
 
 	private void mostrarAyuda() {
-		//TODO: meter texto de ayuda
-		String msg = "<html>Esto escribe una linea<br><br>"
-				+ "Con cada br se añade un salto de linea<br><br>";
+	    String msg = "<html>Para exportar expedientes, sigue estos pasos:<br><br>" +
+	                 "1. Selecciona los filtros que desees aplicar, como el tipo de expediente, el juzgado, el número de expediente y el año.<br>" +
+	                 "2. Haz clic en el botón 'Exportar Expedientes'.<br>" +
+	                 "3. Se generará un archivo Excel con los expedientes que coincidan con los filtros seleccionados.<br>" +
+	                 "4. Puedes encontrar el archivo exportado en la ubicación especificada.<br>" +
+	                 "5. ¡Listo! Ahora tienes un archivo Excel con la información de los expedientes seleccionados.<br><br>" +
+	                 "Nota: Si no seleccionas ningún filtro, se exportarán todos los expedientes disponibles.</html>";
 
-		JOptionPane.showMessageDialog(null,
-				msg, "Ayuda",
-				JOptionPane.QUESTION_MESSAGE);
+	    JOptionPane.showMessageDialog(null,
+	            msg, "Ayuda para Exportar Expedientes",
+	            JOptionPane.INFORMATION_MESSAGE);
 	}
+
 	
 }

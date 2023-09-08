@@ -142,12 +142,20 @@ public class ControlPrestamos{
 	}
 	
 	private void mostrarAyuda() {
-		//TODO: meter texto de ayuda
-		String msg = "<html>Esto escribe una linea<br><br>"
-				+ "Con cada br se añade un salto de linea<br><br>";
+	    String msg = "<html>El Control de Préstamos te permite buscar expedientes disponibles y realizar préstamos.<br><br>" +
+	                 "Sigue estos pasos para realizar un préstamo:<br><br>" +
+	                 "1. Ingresa el número de expediente, el año, selecciona el tipo de expediente y el juzgado de tu interés.<br>" +
+	                 "2. Haz clic en el botón 'Buscar Ubicación'.<br>" +
+	                 "3. Si el expediente está disponible, verás los resultados en la tabla y se habilitará el botón 'Prestar'.<br>" +
+	                 "4. Ingresa el número de empleado del solicitante y la fecha del préstamo.<br>" +
+	                 "5. Haz clic en el botón 'Prestar' para realizar el préstamo.<br>" +
+	                 "6. Si el préstamo se realiza con éxito, verás un mensaje de confirmación.<br>" +
+	                 "7. Puedes imprimir la papeleta y el testigo del préstamo para registrar la información.<br><br>" +
+	                 "Nota: Asegúrate de llenar todos los campos obligatorios antes de realizar el préstamo.<br></html>";
 
-		JOptionPane.showMessageDialog(null,
-				msg, "Ayuda",
-				JOptionPane.QUESTION_MESSAGE);
+	    JOptionPane.showMessageDialog(null,
+	            msg, "Ayuda para Control de Préstamos",
+	            JOptionPane.INFORMATION_MESSAGE);
 	}
+
 }
