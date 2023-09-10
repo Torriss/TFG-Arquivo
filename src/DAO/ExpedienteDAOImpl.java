@@ -12,7 +12,6 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	
 	@Override
 	public boolean insert(Expediente exp) throws SQLException, ClassNotFoundException{
-        // Construir la query
         String query = "INSERT INTO Expedientes (numExpediente, tipo, caja, anio, ubicacion, notas, tomos, juzgado, lugar, paginas, estado) VALUES ('"
                 + exp.getNumExpediente() + "','" + exp.getTipo() + "','" + exp.getCaja() + "','"
         		+ exp.getAnio() + "','" + exp.getUbicacion() + "','" + exp.getNotas() + "','"
@@ -22,37 +21,52 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         // Ejecutar la query en la BBDD
         return Conexion.execute(query);
     }
-
+	
 	public boolean update(Expediente exp) throws SQLException, ClassNotFoundException {
 	    String query = "UPDATE Expedientes SET tipo = '" + exp.getTipo() + "', anio = " + exp.getAnio() + ", caja = " + exp.getCaja()
-	                + ", ubicacion = '" + exp.getUbicacion() + "', notas = " 
-	                + (exp.getNotas().compareTo("") != 0 ? "'" + exp.getNotas() + "'" : "''") + ", tomos = " 
-	                + (exp.getTomos().compareTo("") != 0 ? "'" + exp.getTomos() + "'" : "''") + ", juzgado = '" + exp.getJuzgado() + "', lugar = '" 
-	                + exp.getLugar() + "', paginas = " + exp.getPaginas() + ", estado = '" + exp.getEstado() 
-	                + "' WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() + "' AND juzgado = '" + exp.getJuzgado()
-	                + "' AND anio = " + exp.getAnio() + " AND (tomos = '" + exp.getTomos() + "' OR tomos = '')";
-	    			
+	            + ", ubicacion = '" + exp.getUbicacion() + "', notas = ";
+
+	    if (exp.getNotas() == null) query += "''";
+	    else query += "'" + exp.getNotas() + "'";
+
+	    query += ", tomos = ";
+
+	    if (exp.getTomos() == null) query += "''";
+	    else query += "'" + exp.getTomos() + "'";
+
+	    query += ", juzgado = '" + exp.getJuzgado() + "', lugar = '" 
+	            + exp.getLugar() + "', paginas = " + exp.getPaginas() + ", estado = '" + exp.getEstado() 
+	            + "' WHERE numExpediente = " + exp.getNumExpediente() + " AND tipo = '" + exp.getTipo() + "' AND juzgado = '" + exp.getJuzgado()
+	            + "' AND anio = " + exp.getAnio() + " AND (tomos = '" + exp.getTomos() + "' OR tomos = '')";
+
 	    return Conexion.execute(query);
 	}
+
 	
-	@Override
 	public boolean updateListas(ArrayList<Expediente> viejos, ArrayList<Expediente> nuevos) throws SQLException, ClassNotFoundException{
-		for(int i = 0; i < viejos.size(); i++) {
-			Expediente viejo = viejos.get(i);
-			Expediente nuevo = nuevos.get(i);
-			
-			String query = "UPDATE Expedientes SET tipo = '" + nuevo.getTipo() + "', anio = " + nuevo.getAnio() + ", caja = " + nuevo.getCaja()
-            + ", ubicacion = '" + viejo.getUbicacion() + "', notas = " 
-            + (nuevo.getNotas().compareTo("") != 0 ? "'" + nuevo.getNotas() + "'" : "''") + ", tomos = " 
-            + (nuevo.getTomos().compareTo("") != 0 ? "'" + nuevo.getTomos() + "'" : "''") + ", juzgado = '" + nuevo.getJuzgado() + "', lugar = '" 
-            + nuevo.getLugar() + "', paginas = " + nuevo.getPaginas() + ", estado = '" + nuevo.getEstado() 
-            + "' WHERE numExpediente = " + viejo.getNumExpediente() + " AND tipo = '" + viejo.getTipo() + "' AND juzgado = '" + viejo.getJuzgado()
-            + "' AND anio = " + viejo.getAnio() + " AND (tomos = '" + viejo.getTomos() + "' OR tomos = '')";
-			
-    		Conexion.execute(query);
-    	}
-    	return true;
+	    for(int i = 0; i < viejos.size(); i++) {
+	        Expediente viejo = viejos.get(i);
+	        Expediente nuevo = nuevos.get(i);
+	        
+	        String query = "UPDATE Expedientes SET tipo = '" + nuevo.getTipo() + "', anio = " + nuevo.getAnio() + ", caja = " + nuevo.getCaja()
+	                + ", ubicacion = '" + viejo.getUbicacion() + "', ";
+
+	        if (nuevo.getNotas() == null) query += "notas = '', ";
+	        else query += "notas = '" + nuevo.getNotas() + "', ";
+
+	        if (nuevo.getTomos() == null) query += "tomos = '', ";
+	        else query += "tomos = '" + nuevo.getTomos() + "', ";
+
+	        query += "juzgado = '" + nuevo.getJuzgado() + "', lugar = '" 
+	                + nuevo.getLugar() + "', paginas = " + nuevo.getPaginas() + ", estado = '" + nuevo.getEstado() 
+	                + "' WHERE numExpediente = " + viejo.getNumExpediente() + " AND tipo = '" + viejo.getTipo() + "' AND juzgado = '" + viejo.getJuzgado()
+	                + "' AND anio = " + viejo.getAnio() + " AND (tomos = '" + viejo.getTomos() + "' OR tomos = '')";
+	        
+	        Conexion.execute(query);
+	    }
+	    return true;
 	}
+
 
 	@Override
     public boolean delete(ArrayList<Expediente> expedientes) throws ClassNotFoundException, SQLException {   	
@@ -99,6 +113,35 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
             expedientes.add(exp);
         }
         return expedientes;
+    }
+	
+	@Override
+    public Expediente buscaExpedienteTomos(int numExpe, String type, int year, String judge, String tomos) throws SQLException, ClassNotFoundException{
+		Expediente expediente = null;
+		
+        String query = "SELECT * FROM Expedientes WHERE numExpediente = " + numExpe +
+        		" AND tipo = '" + type + "'" +
+                " AND anio = " + year + "" +
+        		" AND juzgado = '" + judge + 
+        		"' AND tomos = '" + tomos + "'";
+
+        ResultSet rs = Conexion.executeSelect(query);
+        if (rs.next()) {
+        	int numExpediente = rs.getInt("numExpediente");
+            String tipo = rs.getString("tipo");
+            int anio = rs.getInt("anio");
+            int caja = rs.getInt("caja");
+            String ubicacion = rs.getString("ubicacion");
+            String notas = rs.getString("notas");
+            String to = rs.getString("tomos");
+            String juzgado = rs.getString("juzgado");
+            String lugar = rs.getString("lugar");
+            int paginas = rs.getInt("paginas");
+            String estado = rs.getString("estado");
+            
+            expediente = new Expediente(numExpediente, tipo, anio, caja, ubicacion, notas, to, juzgado, lugar, paginas, estado);
+        }
+        return expediente;
     }
 	
 	@Override
@@ -154,6 +197,25 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
         }
         return expedientes;
     }
+	
+	@Override
+    public boolean existeExpedienteTomos(int numExpediente, String tipo, int anio, String juzgado, String tomos) throws SQLException, ClassNotFoundException{
+        boolean existe = false;
+
+        String query = "SELECT COUNT(*) AS count FROM Expedientes WHERE numExpediente = " + numExpediente +
+        		" AND tipo = '" + tipo + "'" +
+                " AND anio = " + anio + "" +
+                " AND juzgado = '" + juzgado + 
+                "' AND tomos = '" + tomos + "'";
+
+        ResultSet rs = Conexion.executeSelect(query);
+        if (rs.next()) {
+        	int count = rs.getInt("count");
+        	existe = count > 0;
+        }
+        return existe;
+    }
+
     
 	@Override
     public boolean existeExpediente(int numExpediente, String tipo, int anio, String juzgado) throws SQLException, ClassNotFoundException{

@@ -19,7 +19,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 			if (prestamo != null) {
 				int paginasTotales = 0; //Sumamos paginas del expediente para saber si ha aumentado de tamanio y de paso actualizamos estado
 				for(Expediente expediente : expList) {
-					paginasTotales =+ expediente.getPaginas();
+					paginasTotales += expediente.getPaginas();
 					expediente.setNotas(notas);
 					expediente.setEstado("disponible");
 					exp.update(expediente);
@@ -37,7 +37,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 							Caja cajaOrigen = caja.getById(expList.get(i).getCaja());
 							cajaOrigen.sumarPaginas(expList.get(i).getPaginas());
 							//actualizamos paginas del ultimo tomo
-							if(i == expList.size() - 1) expList.get(expList.size() - 1).sumarPaginas(paginasNuevas - paginasTotales);
+							if(i == (expList.size() - 1)) expList.get(expList.size() - 1).sumarPaginas(paginasNuevas - paginasTotales);
 							//lo restamos de la nueva caja
 							nuevaCaja.restarPaginas(expList.get(i).getPaginas());
 							//actualizamos caja y ubicacion en expediente

@@ -123,7 +123,7 @@ public class ControlPrestamos{
 			}
 			else {
 				JOptionPane.showMessageDialog(null,
-						"Por favor, rellene los campos obligatorios: Número de empleado, provincia y fecha.", "Préstamo",
+						"Por favor, rellene los campos obligatorios: Número de empleado.", "Préstamo",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (IllegalArgumentException e2) {

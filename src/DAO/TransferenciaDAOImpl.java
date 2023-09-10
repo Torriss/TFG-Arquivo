@@ -90,7 +90,7 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
         
         
         for (Expediente expediente : expedientesNuevos) {
-        	if(!exp.existeExpediente(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado())) {
+        	if(!exp.existeExpedienteTomos(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado(), expediente.getTomos())) {
 	        	//Obtener la fecha actual
 	            LocalDate fechaActual = LocalDate.now();
 	            //Crear un formato de fecha

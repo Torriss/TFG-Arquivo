@@ -21,7 +21,9 @@ import model.Historico;
 public class ExpurgoDAOImpl implements ExpurgoDAO{
     
     public boolean expurgo(String filePath) throws IOException, ClassNotFoundException, SQLException {
-        // Crear una lista para almacenar los expedientes desde el archivo Excel
+    	ExpedienteDAO exp = new ExpedienteDAOImpl();
+    	HistoricoDAO hist = new HistoricoDAOImpl();
+    	CajaDAO caja = new CajaDAOImpl();
         boolean res = false;
     	ArrayList<Expediente> expedientesAEliminar = new ArrayList<Expediente>();
 
@@ -44,7 +46,7 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
                 
                 Expediente expediente = new Expediente();
                 
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i < 6; i++) {
                     Cell cell = row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 
                     //Verificar el tipo de celda y asignar valores
@@ -59,22 +61,23 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
                             expediente.setAnio((int) getNumericCellValue(cell));
                             break;
                         case 3:
-                            expediente.setNotas(getStringCellValue(cell));
-                            break;
-                        case 4:
                             expediente.setTomos(getStringCellValue(cell));
                             break;
-                        case 5:
+                        case 4:
                             expediente.setJuzgado(getStringCellValue(cell));
                             break;
-                        case 6:
+                        case 5:
                             expediente.setLugar(getStringCellValue(cell));
                             break;
-                        case 7:
-                        	expediente.setPaginas((int)getNumericCellValue(cell));
                     }
                 }
-                expedientesAEliminar.add(expediente);
+                Expediente estado = exp.buscaExpedienteTomos(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado(), expediente.getTomos());
+                if(estado.getEstado().equalsIgnoreCase("disponible") || estado.getEstado().equalsIgnoreCase("transferido")) {
+                	expediente.setCaja(estado.getCaja());
+                	expediente.setPaginas(estado.getPaginas());
+                	expedientesAEliminar.add(expediente);
+                }
+                else throw new IllegalArgumentException("No se puede expurgar este expedietne");
             }
             fis.close();
             workbook.close();
@@ -94,11 +97,7 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
         
         //Recorremos la lista y cambiamos le estado de todos los expedientes a expurgado
         //Aniadir todos los expedientes a tabla expurgos
-        ExpedienteDAO exp = new ExpedienteDAOImpl();
-        HistoricoDAO hist = new HistoricoDAOImpl();
-        CajaDAO caja = new CajaDAOImpl();
         for (Expediente expediente : expedientesAEliminar) {
-        	//buscar informacion restante
         	expediente.setEstado("expurgado");
         	Caja box = caja.getById(expediente.getCaja());
         	box.sumarPaginas(expediente.getPaginas());
@@ -106,7 +105,7 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
         	expediente.setCaja(-1);
             exp.update(expediente);
             Historico fila = new Historico(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado(), fechaHito);
-            if(!hist.existeHistorico(fila, "historicaExpurgo")); hist.insert(fila, "historicaExpurgo");
+            if(!hist.existeHistorico(fila, "historicaExpurgo")) hist.insert(fila, "historicaExpurgo");
         }
         
         return res;
