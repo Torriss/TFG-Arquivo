@@ -24,7 +24,6 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
     public boolean transferirExpedientes(String filePath) throws ClassNotFoundException, SQLException, IOException {
     	boolean res = false;
     	ArrayList<Expediente> expedientesNuevos = new ArrayList<Expediente>();
-    	//ArrayList<Expediente> expedientesActualizar = new ArrayList<Expediente>();
         CajaDAO cajas = new CajaDAOImpl();
         ExpedienteDAO exp = new ExpedienteDAOImpl();
         HistoricoDAO hist = new HistoricoDAOImpl();
