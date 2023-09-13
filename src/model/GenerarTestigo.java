@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GenerarTestigo {
-    public static void imprimirTestigo(ArrayList<Expediente> expedientes) {
+    public static void imprimirTestigo(ArrayList<Expediente> expedientes, String solicitante, String fecha) {
 //        String nombreJuzgado = "Nombre del Juzgado"; //Reemplaza con el nombre del juzgado
 //        String tipo = "Tipo"; //Reemplaza con el tipo
 //        String numeroExpediente = "12345"; //Reemplaza con el número de expediente
@@ -108,7 +108,7 @@ public class GenerarTestigo {
             }
 
             //Guardar el documento en un archivo
-            FileOutputStream out = new FileOutputStream("documento_completo_con_encabezado_y_tabla.docx");
+            FileOutputStream out = new FileOutputStream("testigo_" + fecha + "_" + solicitante +".docx");
             document.write(out);
             out.close();
 

@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import DAO.ExpedienteDAOImpl;
 import DAO.PrestamoDAOImpl;
 import model.Expediente;
+import model.GenerarTestigo;
 import utils.FuncComunes;
 import view.Prestamos;
 import view.TablaResultados;
@@ -114,8 +115,9 @@ public class ControlPrestamos{
 				else
 				{
 					JOptionPane.showMessageDialog(null,
-							"Prestamo realizado con éxito.", "Préstamo",
+							"Préstamo realizado con éxito.", "Préstamo",
 							JOptionPane.INFORMATION_MESSAGE);
+					GenerarTestigo.imprimirTestigo(expedientes, solicitante, fecha);
 					//TODO: crear funcion imprimirPapeleta con toda la info del form
 					//TODO: crear funcion imprimirTestigo con toda la info del form
 					//y añadiendo caja, ubicación, notas, tomos, lugar
@@ -123,7 +125,7 @@ public class ControlPrestamos{
 			}
 			else {
 				JOptionPane.showMessageDialog(null,
-						"Por favor, rellene los campos obligatorios: Número de empleado.", "Préstamo",
+						"Por favor, rellene el campo obligatorio: Número de empleado.", "Préstamo",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (IllegalArgumentException e2) {
