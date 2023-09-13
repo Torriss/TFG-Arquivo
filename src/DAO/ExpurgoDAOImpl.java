@@ -88,11 +88,8 @@ public class ExpurgoDAOImpl implements ExpurgoDAO{
         if (!expedientesAEliminar.isEmpty()) res = true;
 
         
-        //Obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
-        //Crear un formato de fecha
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        //Formatear la fecha actual como una cadena
         String fechaHito = fechaActual.format(formatoFecha);
         
         //Recorremos la lista y cambiamos le estado de todos los expedientes a expurgado

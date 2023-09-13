@@ -31,12 +31,10 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
             FileInputStream fis = new FileInputStream(new File(filePath));
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-            // Leer la primera hoja del archivo Excel
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = sheet.iterator();
 
-            // Saltar la primera fila si contiene encabezados
             if (rowIterator.hasNext()) {
                 rowIterator.next();
             }
@@ -49,7 +47,6 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
                 for (int i = 0; i < 8; i++) {
                     Cell cell = row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 
-                    //Verificar el tipo de celda y asignar valores
                     switch (i) {
                         case 0:
                             expediente.setTipo(getStringCellValue(cell));
@@ -110,7 +107,7 @@ public class TransferenciaDAOImpl implements TransferenciaDAO {
 	        	exp.insert(expediente);
 	        	//numExpediente, String tipo, int anio, String juzgado, String fechaHito
 	        	Historico fila = new Historico(expediente.getNumExpediente(), expediente.getTipo(), expediente.getAnio(), expediente.getJuzgado(), fechaHito);
-	        	hist.insert(fila, "historicatransferencia");
+	        	if(!hist.existeHistorico(fila, "historicaTransferencia")) hist.insert(fila, "historicaTransferencia");
         	}
         }
         

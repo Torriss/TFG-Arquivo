@@ -8,14 +8,11 @@ import java.sql.Statement;
 
 public class Conexion {
 	
-	//public enum consult { Insert, Update, CreateTable }
-	
 	protected static Connection instance = null;
 	private static String usuario ="root";
 	private static String password = "1234";
 	private static String _bd = "arquivo";
 	private static String url = "jdbc:mysql://localhost/" + _bd;
-	//protected HashMap<consult, String> structConsult;
 	
 	private static void initConnection() throws ClassNotFoundException, SQLException {
 		try {
@@ -27,15 +24,13 @@ public class Conexion {
 			
 		}
 		catch(SQLException ex){
-			//System.out.println("Hubo un problema al intentar conecarse a la base de datos"+ url);
-			//ex.printStackTrace();
 			throw ex;
 		}
 	}
 	
 	public static void closeConnection() throws SQLException {
 		if (instance != null || instance.isClosed()){
-			//System.out.println("Conexion CERRADA!");
+			System.out.println("Conexion CERRADA!");
 			instance.close();
 		}
 	}
@@ -47,11 +42,8 @@ public class Conexion {
 			Statement statement = instance.createStatement();
 			r = statement.executeUpdate(query);
 		} catch (SQLException e) {
-			//System.out.println("No se ha podido ejecutar la query: '" + query + "'");
-			//e.printStackTrace();
 			throw e;
 		} catch (ClassNotFoundException e) {
-			//e.printStackTrace();
 			throw e;
 		}
 
@@ -66,10 +58,8 @@ public class Conexion {
 			rs = statement.executeQuery(query); 
 		} catch (SQLException e) {
 			System.out.println("No se ha podido ejecutar al query: '" + query + "'");
-			//e.printStackTrace();
 			throw e;
 		} catch (ClassNotFoundException e) {
-			//e.printStackTrace();
 			throw e;
 		}
 		return rs;
