@@ -30,6 +30,7 @@ public class ControlMenu {
 			devoluciones = new Devoluciones();
 			prestamos = new Prestamos();
 			exportar = new Exportar();
+			modificaciones = new Modificaciones();
 			expurgo = new ExpurgoDAOImpl();
 			transferencia = new TransferenciaDAOImpl();
 			initView();

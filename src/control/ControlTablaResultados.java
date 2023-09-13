@@ -7,6 +7,7 @@ import model.Expediente;
 import model.ExportarExpedientesExcel;
 import view.ModeloTabla;
 import view.TablaResultados;
+import view.GestionCeldas;
 
 public class ControlTablaResultados {
 
@@ -14,13 +15,13 @@ public class ControlTablaResultados {
 	private ArrayList<Expediente> expedientes;
 	private ModeloTabla modelo;
 	
-	public ControlTablaResultados(TablaResultados ctr, ArrayList<Expediente> exp) {
+	public ControlTablaResultados(TablaResultados ctr, ArrayList<Expediente> exp, boolean modificable) {
 		tabla = ctr;
 		expedientes = exp;
-		initView();
+		initView(modificable);			
 	}
 	
-	private void initView() {
+	private void initView(boolean modificable) {
 		borrarTabla();
 		tabla.getBtnImprimir().setEnabled(false);
 
@@ -37,17 +38,28 @@ public class ControlTablaResultados {
 		nombresCol.add("Páginas");
 		nombresCol.add("Estado");
 		
+		if (modificable) nombresCol.add(" ");
+		
 		String nombresCols[] = new String[nombresCol.size()];
 		for (int i = 0; i < nombresCols.length; i++) {
 			nombresCols[i]=nombresCol.get(i);
 		}
 		
-		Object[][] data = obtenerMatrizDatos(nombresCol);
-		modelo = new ModeloTabla(data, nombresCols);
+		Object[][] data = obtenerMatrizDatos(nombresCol, modificable);
+		if (modificable) {
+			modelo = new ModeloTabla(data, nombresCols, modificable);
+		}
+		else {
+			modelo = new ModeloTabla(data, nombresCols);			
+		}
 		tabla.getTabla().setModel(modelo);
+		tabla.getTabla().getColumnModel().getColumn(11).setCellRenderer(new GestionCeldas());
+		
 	}
 	
-	private Object[][] obtenerMatrizDatos(ArrayList<String> nombresCols) {
+	
+	
+	private Object[][] obtenerMatrizDatos(ArrayList<String> nombresCols, boolean modificable) {
 		
 		String informacion[][] = new String[expedientes.size()][nombresCols.size()];
 		
@@ -63,6 +75,9 @@ public class ControlTablaResultados {
 			informacion[x][8] = expedientes.get(x).getLugar()+ "";
 			informacion[x][9] = expedientes.get(x).getPaginas()+ "";
 			informacion[x][10] = expedientes.get(x).getEstado()+ "";
+			if(modificable) {
+				informacion[x][11] = "checkbox";
+			}
 		}
 		return informacion;
 	}

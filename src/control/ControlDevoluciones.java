@@ -143,7 +143,7 @@ public class ControlDevoluciones {
 							JOptionPane.INFORMATION_MESSAGE);
 					// TODO: llamar a funcion imprimirDevolucion con los datos del expediente
 					TablaResultados tabla = new TablaResultados();
-					ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
+					ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes, false);
 					tablaContr.initControl();
 					tabla.setVisible(true);
 				}
@@ -185,7 +185,7 @@ public class ControlDevoluciones {
 
             expedientes.add(exp);
             TablaResultados tabla = new TablaResultados();
-			ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
+			ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes, false);
 			tablaContr.initControl();
 			tabla.setVisible(true);
 		} catch (SQLException e1) {

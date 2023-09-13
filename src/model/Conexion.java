@@ -18,8 +18,8 @@ public class Conexion {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			instance = (Connection)DriverManager.getConnection(url, usuario, password);
-			if (instance != null) {
-				System.out.println("Conexion correcta!");
+			if (instance == null) {
+				System.out.println("Error de conexión.");
 			}
 			
 		}
@@ -57,7 +57,7 @@ public class Conexion {
 			Statement statement =  instance.createStatement();
 			rs = statement.executeQuery(query); 
 		} catch (SQLException e) {
-			System.out.println("No se ha podido ejecutar al query: '" + query + "'");
+			System.out.println("No se ha podido ejecutar la query: '" + query + "'");
 			throw e;
 		} catch (ClassNotFoundException e) {
 			throw e;

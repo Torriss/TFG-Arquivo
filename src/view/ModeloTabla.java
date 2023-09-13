@@ -3,19 +3,13 @@ package view;
 import javax.swing.table.DefaultTableModel;
 
 public class ModeloTabla extends DefaultTableModel{
-	 
-	 /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 8451366906105239287L;
 	private String[] titulos;
 	private Object[][] datos;
 	
-	//
-	// Determina el modelo con el que se va a construir la tabla
-	// @param datos
-	// @param titulos
-	//
+	public ModeloTabla() {}
+
 	public ModeloTabla(Object[][] d, String[] t) {
 		super();
 		titulos=t;
@@ -23,7 +17,21 @@ public class ModeloTabla extends DefaultTableModel{
 		setDataVector(datos, titulos);
 	}
 	
-	public ModeloTabla() {
-		// TODO Auto-generated constructor stub
+	public ModeloTabla(Object[][] d, String[] t, boolean modificable) {
+		super();
+		titulos=t;
+		datos=d;
+		setDataVector(datos, titulos);
+		
+	}
+	
+	@Override
+	public boolean isCellEditable (int row, int column)
+	{
+		boolean editable = false;
+		if (row != 0 && column != 11){
+			editable = true;
+		}
+		return editable;
 	}
 }
