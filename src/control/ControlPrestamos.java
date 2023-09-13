@@ -75,8 +75,10 @@ public class ControlPrestamos{
 			else
 			{
 				TablaResultados tabla = new TablaResultados();
-				ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes, false);
+				ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
 				tablaContr.initControl();
+				tablaContr.hideButton(tabla.getBtnModificar());
+				tablaContr.hideButton(tabla.getBtnEliminar());
 				tabla.setVisible(true);
 				prestamos.getBtnPrestar().setEnabled(true);
 			}

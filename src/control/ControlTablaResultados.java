@@ -1,27 +1,30 @@
 package control;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.swing.JButton;
 
 import model.Expediente;
 import model.ExportarExpedientesExcel;
 import view.ModeloTabla;
 import view.TablaResultados;
-import view.GestionCeldas;
-
+import DAO.ExpedienteDAOImpl;
 public class ControlTablaResultados {
 
 	private TablaResultados tabla;
 	private ArrayList<Expediente> expedientes;
 	private ModeloTabla modelo;
+	private ExpedienteDAOImpl expDAO = new ExpedienteDAOImpl();
 	
-	public ControlTablaResultados(TablaResultados ctr, ArrayList<Expediente> exp, boolean modificable) {
+	public ControlTablaResultados(TablaResultados ctr, ArrayList<Expediente> exp) {
 		tabla = ctr;
 		expedientes = exp;
-		initView(modificable);			
+		initView();			
 	}
 	
-	private void initView(boolean modificable) {
+	private void initView() {
 		borrarTabla();
 		tabla.getBtnImprimir().setEnabled(false);
 
@@ -38,28 +41,20 @@ public class ControlTablaResultados {
 		nombresCol.add("Páginas");
 		nombresCol.add("Estado");
 		
-		if (modificable) nombresCol.add(" ");
-		
 		String nombresCols[] = new String[nombresCol.size()];
 		for (int i = 0; i < nombresCols.length; i++) {
 			nombresCols[i]=nombresCol.get(i);
 		}
 		
-		Object[][] data = obtenerMatrizDatos(nombresCol, modificable);
-		if (modificable) {
-			modelo = new ModeloTabla(data, nombresCols, modificable);
-		}
-		else {
-			modelo = new ModeloTabla(data, nombresCols);			
-		}
-		tabla.getTabla().setModel(modelo);
-		tabla.getTabla().getColumnModel().getColumn(11).setCellRenderer(new GestionCeldas());
+		Object[][] data = obtenerMatrizDatos(nombresCol);
+		modelo = new ModeloTabla(data, nombresCols);
 		
+		tabla.getTabla().setModel(modelo);
 	}
 	
 	
 	
-	private Object[][] obtenerMatrizDatos(ArrayList<String> nombresCols, boolean modificable) {
+	private Object[][] obtenerMatrizDatos(ArrayList<String> nombresCols) {
 		
 		String informacion[][] = new String[expedientes.size()][nombresCols.size()];
 		
@@ -75,32 +70,35 @@ public class ControlTablaResultados {
 			informacion[x][8] = expedientes.get(x).getLugar()+ "";
 			informacion[x][9] = expedientes.get(x).getPaginas()+ "";
 			informacion[x][10] = expedientes.get(x).getEstado()+ "";
-			if(modificable) {
-				informacion[x][11] = "checkbox";
-			}
 		}
 		return informacion;
 	}
 	
 	public void initControl() {
 		if(!expedientes.isEmpty()) {
+			tabla.getBtnImprimir().setVisible(true);
+			tabla.getBtnModificar().setVisible(true);
+			tabla.getBtnEliminar().setVisible(true);
 			tabla.getBtnImprimir().setEnabled(true);
 			tabla.getBtnImprimir().addActionListener(e -> imprimirTabla());
+			tabla.getBtnModificar().addActionListener(e -> modificarExp());
+			//tabla.getBtnEliminar().addActionListener(e -> eliminarExp());
 		}
 	}
 	
-	public void hideButtonImprimir() {
-		tabla.getBtnImprimir().setVisible(false);
-	}
-	
-	public void enableEditCells() {
-		//TODO: ver si es posible hacer asi
-		for (int i = 0; i < tabla.getColumnasTabla(); i++) {
-			for (int j = 0; j < expedientes.size(); j++) {
-				
-			}
+	public void hideButton(JButton button) {
+		
+		if (button == tabla.getBtnImprimir()) {
+			tabla.getBtnImprimir().setVisible(false);
+		}
+		else if (button == tabla.getBtnModificar()) {
+			tabla.getBtnModificar().setVisible(false);
+		}
+		else if (button == tabla.getBtnEliminar()) {
+			tabla.getBtnEliminar().setVisible(false);
 		}
 	}
+
 	
 	private void imprimirTabla() {
 		try {
@@ -110,6 +108,41 @@ public class ControlTablaResultados {
 			e.printStackTrace();
 		}
 	}
+	
+	private void modificarExp() {
+		try {
+			ArrayList<Expediente> expedientesModif = new ArrayList<Expediente>();
+			Expediente exp = new Expediente();
+			int filas = tabla.getTabla().getRowCount();
+			for (int i = 1; i < filas; i++) {
+				// TODO: convertir objetos en String o int
+//				exp.setNumExpediente(tabla.getTabla().getModel().getValueAt(i, 0));
+//				exp.setTipo(tabla.getTabla().getModel().getValueAt(i, 1));
+//				exp.setAnio(tabla.getTabla().getModel().getValueAt(i, 2));
+//				exp.setCaja(tabla.getTabla().getModel().getValueAt(i, 3));
+//				exp.setUbicacion(tabla.getTabla().getModel().getValueAt(i, 4));
+//				exp.setNotas(tabla.getTabla().getModel().getValueAt(i, 5));
+//				exp.setTomos(tabla.getTabla().getModel().getValueAt(i, 6));
+//				exp.setJuzgado(tabla.getTabla().getModel().getValueAt(i, 7));
+//				exp.setLugar(tabla.getTabla().getModel().getValueAt(i, 8));
+//				exp.setPaginas(tabla.getTabla().getModel().getValueAt(i, 9));
+//				exp.setEstado(tabla.getTabla().getModel().getValueAt(i, 10));
+				
+				expedientesModif.add(exp);
+			}
+			if (!expedientesModif.isEmpty()) {
+				expDAO.updateListas(expedientesModif, expedientes);
+			} 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	private void borrarTabla() {
 		//TODO: completar si es necesario

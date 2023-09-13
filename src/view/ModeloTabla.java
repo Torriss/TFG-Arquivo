@@ -17,14 +17,6 @@ public class ModeloTabla extends DefaultTableModel{
 		setDataVector(datos, titulos);
 	}
 	
-	public ModeloTabla(Object[][] d, String[] t, boolean modificable) {
-		super();
-		titulos=t;
-		datos=d;
-		setDataVector(datos, titulos);
-		
-	}
-	
 	@Override
 	public boolean isCellEditable (int row, int column)
 	{

@@ -68,9 +68,9 @@ public class ControlModificaciones {
 			else
 			{
 				TablaResultados tabla = new TablaResultados();
-				ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes, true);
+				ControlTablaResultados tablaContr = new ControlTablaResultados(tabla, expedientes);
 				tablaContr.initControl();
-				tablaContr.hideButtonImprimir();
+				tablaContr.hideButton(tabla.getBtnImprimir());
 				tabla.setVisible(true);
 			}
 			
