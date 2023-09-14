@@ -134,7 +134,7 @@ public class ControlMenu {
 	private void mostrarAyuda() {
 		String msg = "<html>Préstamos: permite buscar expedientes disponibles en el Archivo para solicitar un préstamo.<br><br>"
 				+ "Devoluciones: permite realizar la devolución de un préstamo o la inserción de un nuevo expediente en el Archivo.<br><br>"
-				+ "Modificaciones: permite modificar la información de uno o varios expedientes mediante un documento Excel.<br><br>"
+				+ "Modificaciones: permite modificar o eliminar la información de un expediente.<br><br>"
 				+ "Transferencia: permite insertar automáticamente un listado de Expedientes transferidos al Archivo desde un documento Excel.<br><br>"
 				+ "Expurgo: permite expurgar auntomáticamente un listado de Expedientes del Archivo desde un documento Excel.<br><br>"
 				+ "Exportar datos: permite exportar información histórica del Archivo sobre Expedientes, Transferencias o Expurgos en formato Excel.";

@@ -18,7 +18,6 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
                 + exp.getTomos() + "','" + exp.getJuzgado() + "','" + exp.getLugar() + "','"
         		+ exp.getPaginas() + "','" + exp.getEstado() + "')";
 
-        // Ejecutar la query en la BBDD
         return Conexion.execute(query);
     }
 	
@@ -44,12 +43,14 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 
 	
 	public boolean updateListas(ArrayList<Expediente> viejos, ArrayList<Expediente> nuevos) throws SQLException, ClassNotFoundException{
-	    for(int i = 0; i < viejos.size(); i++) {
+	    boolean res = true;
+		for(int i = 0; i < viejos.size() && res; i++) {
+			res = false;
 	        Expediente viejo = viejos.get(i);
 	        Expediente nuevo = nuevos.get(i);
 	        
 	        String query = "UPDATE Expedientes SET tipo = '" + nuevo.getTipo() + "', anio = " + nuevo.getAnio() + ", caja = " + nuevo.getCaja()
-	                + ", ubicacion = '" + viejo.getUbicacion() + "', ";
+	                + ", ubicacion = '" + nuevo.getUbicacion() + "', ";
 
 	        if (nuevo.getNotas() == null) query += "notas = '', ";
 	        else query += "notas = '" + nuevo.getNotas() + "', ";
@@ -62,9 +63,9 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	                + "' WHERE numExpediente = " + viejo.getNumExpediente() + " AND tipo = '" + viejo.getTipo() + "' AND juzgado = '" + viejo.getJuzgado()
 	                + "' AND anio = " + viejo.getAnio() + " AND (tomos = '" + viejo.getTomos() + "' OR tomos = '')";
 	        
-	        Conexion.execute(query);
+	        res = Conexion.execute(query);
 	    }
-	    return true;
+	    return res;
 	}
 
 
@@ -306,15 +307,16 @@ public class ExpedienteDAOImpl implements ExpedienteDAO {
 	
 	@Override
 	public boolean obtenerExpedientesPorIdCaja(int idCaja) throws SQLException, ClassNotFoundException {
-	    String query = "SELECT COUNT(*) FROM expedientes WHERE caja = " + idCaja;
+	    boolean res = false;
+		String query = "SELECT COUNT(*) FROM expedientes WHERE caja = " + idCaja;
 	    ResultSet rs = Conexion.executeSelect(query);
 
 	    if (rs.next()) {
 	        int count = rs.getInt(1);
-	        return count > 0;
+	        res = count > 0;
 	    }
 
-	    return false;
+	    return res;
 	}
 
 }

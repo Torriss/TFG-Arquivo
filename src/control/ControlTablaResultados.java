@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import model.Expediente;
 import model.ExportarExpedientesExcel;
@@ -82,7 +83,7 @@ public class ControlTablaResultados {
 			tabla.getBtnImprimir().setEnabled(true);
 			tabla.getBtnImprimir().addActionListener(e -> imprimirTabla());
 			tabla.getBtnModificar().addActionListener(e -> modificarExp());
-			//tabla.getBtnEliminar().addActionListener(e -> eliminarExp());
+			tabla.getBtnEliminar().addActionListener(e -> eliminarExp());
 		}
 	}
 	
@@ -112,26 +113,29 @@ public class ControlTablaResultados {
 	private void modificarExp() {
 		try {
 			ArrayList<Expediente> expedientesModif = new ArrayList<Expediente>();
-			Expediente exp = new Expediente();
 			int filas = tabla.getTabla().getRowCount();
-			for (int i = 1; i < filas; i++) {
-				// TODO: convertir objetos en String o int
-//				exp.setNumExpediente(tabla.getTabla().getModel().getValueAt(i, 0));
-//				exp.setTipo(tabla.getTabla().getModel().getValueAt(i, 1));
-//				exp.setAnio(tabla.getTabla().getModel().getValueAt(i, 2));
-//				exp.setCaja(tabla.getTabla().getModel().getValueAt(i, 3));
-//				exp.setUbicacion(tabla.getTabla().getModel().getValueAt(i, 4));
-//				exp.setNotas(tabla.getTabla().getModel().getValueAt(i, 5));
-//				exp.setTomos(tabla.getTabla().getModel().getValueAt(i, 6));
-//				exp.setJuzgado(tabla.getTabla().getModel().getValueAt(i, 7));
-//				exp.setLugar(tabla.getTabla().getModel().getValueAt(i, 8));
-//				exp.setPaginas(tabla.getTabla().getModel().getValueAt(i, 9));
-//				exp.setEstado(tabla.getTabla().getModel().getValueAt(i, 10));
+			for (int i = 0; i < filas; i++) {
+				Expediente exp = new Expediente();
+				exp.setNumExpediente(Integer.valueOf(tabla.getTabla().getModel().getValueAt(i, 0).toString()));
+				exp.setTipo(tabla.getTabla().getModel().getValueAt(i, 1).toString());
+				exp.setAnio(Integer.valueOf(tabla.getTabla().getModel().getValueAt(i, 2).toString()));
+				exp.setCaja(Integer.valueOf(tabla.getTabla().getModel().getValueAt(i, 3).toString()));
+				exp.setUbicacion(tabla.getTabla().getModel().getValueAt(i, 4).toString());
+				exp.setNotas(tabla.getTabla().getModel().getValueAt(i, 5).toString());
+				exp.setTomos(tabla.getTabla().getModel().getValueAt(i, 6).toString());
+				exp.setJuzgado(tabla.getTabla().getModel().getValueAt(i, 7).toString());
+				exp.setLugar(tabla.getTabla().getModel().getValueAt(i, 8).toString());
+				exp.setPaginas(Integer.valueOf(tabla.getTabla().getModel().getValueAt(i, 9).toString()));
+				exp.setEstado(tabla.getTabla().getModel().getValueAt(i, 10).toString());
 				
 				expedientesModif.add(exp);
 			}
 			if (!expedientesModif.isEmpty()) {
-				expDAO.updateListas(expedientesModif, expedientes);
+				if (expDAO.updateListas(expedientes, expedientesModif)) {
+					JOptionPane.showMessageDialog(null,
+							"Modificación realizada con éxito.", "Modificaciones",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			} 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -142,7 +146,23 @@ public class ControlTablaResultados {
 		}
 	}
 	
-	
+	private void eliminarExp() {
+		if (!expedientes.isEmpty()) {
+			try {
+				if(expDAO.delete(expedientes)) {
+					JOptionPane.showMessageDialog(null,
+							"Expediente eliminado con éxito.", "Modificaciones",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	private void borrarTabla() {
 		//TODO: completar si es necesario

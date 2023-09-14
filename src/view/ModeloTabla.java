@@ -20,10 +20,6 @@ public class ModeloTabla extends DefaultTableModel{
 	@Override
 	public boolean isCellEditable (int row, int column)
 	{
-		boolean editable = false;
-		if (row != 0 && column != 11){
-			editable = true;
-		}
-		return editable;
+		return true;
 	}
 }

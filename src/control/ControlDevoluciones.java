@@ -202,7 +202,6 @@ public class ControlDevoluciones {
 	}
 	
 	private void mostrarAyuda() {
-		//TODO: meter texto de ayuda
 		String msg = "<html>Para devolver un expediente, sigue estos pasos:<br><br>" +
 				"1. Verifica que el expediente que deseas devolver se encuentra en tu posesión.<br>" +
 				"2. Ingresa el número de expediente, tipo, año y juzgado correspondientes.<br>" +
