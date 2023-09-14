@@ -18,6 +18,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 public class Prestamos extends JFrame {
 
@@ -114,6 +115,7 @@ public class Prestamos extends JFrame {
 	}
 
 	public Prestamos() throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("./img/Arquivo.png"));
 		setTitle("Préstamos");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 675, 450);

@@ -10,6 +10,7 @@ import DAO.PrestamoDAOImpl;
 import model.Expediente;
 import model.GenerarTestigo;
 import utils.FuncComunes;
+import utils.IntVerifier;
 import view.Prestamos;
 import view.TablaResultados;
 
@@ -35,6 +36,9 @@ public class ControlPrestamos{
 			prestamos.setComboBoxJuzgado(comboBoxJuzgado);
 			JComboBox<String> comboBoxTipoExp = func.iniciarListaTipoExp(prestamos.getComboBoxTipoExp());
 			prestamos.setComboBoxTipoExp(comboBoxTipoExp);
+			prestamos.getTextFieldAnioExp().setInputVerifier(new IntVerifier());
+			prestamos.getTextFieldNumExp().setInputVerifier(new IntVerifier());
+			prestamos.getTextFieldSolicitante().setInputVerifier(new IntVerifier());
 			clearControl();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -104,8 +108,6 @@ public class ControlPrestamos{
 				String tipoExp = expedientes.get(0).getTipo();
 				String juzgado = expedientes.get(0).getJuzgado();
 				
-				
-				
 				expedientes = prestamo.realizarPrestamo(numExp, tipoExp, anioExp, solic, juzgado, fecha);
 				if(expedientes.isEmpty())
 				{
@@ -119,10 +121,8 @@ public class ControlPrestamos{
 					JOptionPane.showMessageDialog(null,
 							"Préstamo realizado con éxito.", "Préstamo",
 							JOptionPane.INFORMATION_MESSAGE);
+					//TODO: revisar funcion imprimirTestigo
 					GenerarTestigo.imprimirTestigo(expedientes, solicitante, fecha);
-					//TODO: crear funcion imprimirPapeleta con toda la info del form
-					//TODO: crear funcion imprimirTestigo con toda la info del form
-					//y añadiendo caja, ubicación, notas, tomos, lugar
 				}
 			}
 			else {

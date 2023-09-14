@@ -4,11 +4,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-
 import DAO.DevolucionDAOImpl;
 import DAO.ExpedienteDAOImpl;
 import model.Expediente;
 import utils.FuncComunes;
+import utils.IntVerifier;
 import view.Devoluciones;
 import view.TablaResultados;
 
@@ -34,6 +34,10 @@ public class ControlDevoluciones {
 			devoluciones.setComboBoxJuzgado(comboBoxJuzgado);
 			JComboBox<String> comboBoxTipoExp = func.iniciarListaTipoExp(devoluciones.getComboBoxTipoExp());
 			devoluciones.setComboBoxTipoExp(comboBoxTipoExp);
+			devoluciones.getTextFieldAnioExp().setInputVerifier(new IntVerifier());
+			devoluciones.getTextFieldNumExp().setInputVerifier(new IntVerifier());
+			devoluciones.getTextFieldCaja().setInputVerifier(new IntVerifier());
+			devoluciones.getTextFieldPaginas().setInputVerifier(new IntVerifier());
 			clearControl();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -76,7 +80,6 @@ public class ControlDevoluciones {
 			String tipoExp = devoluciones.getComboBoxTipoExp().getSelectedItem().toString();
 			String juzgado = devoluciones.getComboBoxJuzgado().getSelectedItem().toString();
 			expedientes = expediente.buscaExpediente(numExp, tipoExp, anioExp, juzgado);
-			//TODO: si existe el exp y su estado es prestado se activa devoluciones
 			if(expedientes.isEmpty())
 			{
 				devoluciones.getBtnDevolver().setEnabled(false);
@@ -92,7 +95,6 @@ public class ControlDevoluciones {
 				devoluciones.getBtnNuevo().setEnabled(false);
 				devoluciones.getTextFieldPaginas().setEnabled(true);
 				devoluciones.getTextFieldNotas().setEnabled(true);
-
 				
 				String caja = Integer.toString(expedientes.get(0).getCaja());
 	            String ubicacion = expedientes.get(0).getUbicacion();
@@ -162,8 +164,6 @@ public class ControlDevoluciones {
 					"Por favor, rellene los campos obligatorios: Fecha.", "Devolución",
 					JOptionPane.ERROR_MESSAGE);
 		}
-		
-		
 	}
 
 	private void nuevoExpediente() {

@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import DAO.ExpedienteDAOImpl;
 import model.Expediente;
 import utils.FuncComunes;
+import utils.IntVerifier;
 import view.Modificaciones;
 import view.TablaResultados;
 
@@ -33,6 +34,8 @@ public class ControlModificaciones {
 			modificaciones.setComboBoxJuzgado(comboBoxJuzgado);
 			JComboBox<String> comboBoxTipoExp = func.iniciarListaTipoExp(modificaciones.getComboBoxExpediente());
 			modificaciones.setComboBoxExpediente(comboBoxTipoExp);
+			modificaciones.getTextFieldAnio().setInputVerifier(new IntVerifier());
+			modificaciones.getTextFieldNumExp().setInputVerifier(new IntVerifier());
 			clearControl();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

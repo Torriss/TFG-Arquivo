@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
 import java.awt.Insets;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 
 public class Exportar extends JFrame {
@@ -96,6 +98,7 @@ public class Exportar extends JFrame {
 	 * Create the frame.
 	 */
 	public Exportar() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("./img/Arquivo.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 675, 450);
 		contentPane = new JPanel();
