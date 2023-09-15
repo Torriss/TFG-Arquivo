@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 public class TablaResultados extends JFrame {
 
@@ -73,14 +74,10 @@ public class TablaResultados extends JFrame {
 		this.tabla = tabla;
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	
-
 	public TablaResultados() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("./img/Arquivo.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 675, 450);
+		setBounds(100, 100, 875, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

@@ -96,7 +96,6 @@ public class ControlMenu {
             		}
             	}
             	else {
-            		// Se utiliza la misma funcion para insertar o actualizar expedientes en la BBDD
             		if(transferencia.transferirExpedientes(file))
             		{
             			JOptionPane.showMessageDialog(null,

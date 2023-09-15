@@ -5,6 +5,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -123,6 +125,7 @@ public class Menu extends JFrame {
 	 * Create the frame.
 	 */
 	public Menu() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("./img/Arquivo.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 450);
 		contentPane = new JPanel();

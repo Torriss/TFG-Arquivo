@@ -8,15 +8,14 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Toolkit;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class Modificaciones extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3009682336085335849L;
 	private JPanel contentPane;
 	private JTextField textFieldNumExp;
@@ -73,11 +72,9 @@ public class Modificaciones extends JFrame {
 	public void setComboBoxJuzgado(JComboBox<String> comboBoxJuzgado) {
 		this.comboBoxJuzgado = comboBoxJuzgado;
 	}
-	
-	/**
-	 * Create the frame.
-	 */
+
 	public Modificaciones() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("./img/Arquivo.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 675, 450);
 		contentPane = new JPanel();

@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 public class Devoluciones extends JFrame {
 
@@ -170,6 +171,7 @@ public class Devoluciones extends JFrame {
 	 * @throws SQLException 
 	 */
 	public Devoluciones() throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("./img/Arquivo.png"));
 		setTitle("Devoluciones");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 675, 450);

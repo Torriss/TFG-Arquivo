@@ -53,8 +53,6 @@ public class ControlTablaResultados {
 		tabla.getTabla().setModel(modelo);
 	}
 	
-	
-	
 	private Object[][] obtenerMatrizDatos(ArrayList<String> nombresCols) {
 		
 		String informacion[][] = new String[expedientes.size()][nombresCols.size()];
@@ -99,7 +97,6 @@ public class ControlTablaResultados {
 			tabla.getBtnEliminar().setVisible(false);
 		}
 	}
-
 	
 	private void imprimirTabla() {
 		try {
