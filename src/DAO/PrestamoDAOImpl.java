@@ -67,10 +67,8 @@ public class PrestamoDAOImpl implements PrestamoDAO{
 	    ResultSet rs = Conexion.executeSelect(query);
 	    
 	    String estado = null;
-	    if (rs.next()) {
-	    	estado = rs.getString("estado");
-	    	 System.out.println(estado);
-	    }
+	    if (rs.next()) estado = rs.getString("estado");
+	    
 	    if(estado.equalsIgnoreCase("expurgado") || estado.equalsIgnoreCase("prestado") || estado.equalsIgnoreCase("borrado")) return false;
 	    else return true;
 	}

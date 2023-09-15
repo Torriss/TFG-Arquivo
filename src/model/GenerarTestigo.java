@@ -1,121 +1,66 @@
 package model;
 
-import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
-import org.apache.poi.xwpf.usermodel.*;
-
-import java.io.FileOutputStream;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class GenerarTestigo {
-    public static void imprimirTestigo(ArrayList<Expediente> expedientes, String solicitante, String fecha) {
-//        String nombreJuzgado = "Nombre del Juzgado"; //Reemplaza con el nombre del juzgado
-//        String tipo = "Tipo"; //Reemplaza con el tipo
-//        String numeroExpediente = "12345"; //Reemplaza con el número de expediente
-//        String año = "2023"; //Reemplaza con el año
-//        String solicitante = "Solicitante"; //Reemplaza con el solicitante
-//        String fecha = "12 de septiembre de 2023"; //Reemplaza con la fecha
-    	Expediente expediente = expedientes.get(0);
 
-        try {
-            //Crear un nuevo documento de Word
-            XWPFDocument document = new XWPFDocument();
-
-            //Crear una sección
-            XWPFHeaderFooterPolicy headerFooterPolicy = document.getHeaderFooterPolicy();
-            if (headerFooterPolicy == null) {
-                headerFooterPolicy = document.createHeaderFooterPolicy();
-            }
-
-            //Agregar un encabezado
-            XWPFHeader header = headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT);
-
-            //Crear un párrafo en el encabezado
-            XWPFParagraph headerParagraph = header.createParagraph();
-
-            //Configurar alineación para el párrafo
-            headerParagraph.setAlignment(ParagraphAlignment.LEFT);
-
-            //Agregar el nombre del juzgado a la izquierda
-            XWPFRun leftRun = headerParagraph.createRun();
-            leftRun.setText(expediente.getJuzgado());
-
-            //Crear otro párrafo en el encabezado para "ARQUIVO"
-            XWPFParagraph headerParagraph2 = header.createParagraph();
-
-            //Configurar alineación para el párrafo
-            headerParagraph2.setAlignment(ParagraphAlignment.RIGHT);
-
-            //Agregar "ARQUIVO" en mayúsculas a la derecha
-            XWPFRun rightRun = headerParagraph2.createRun();
-            rightRun.setText("ARQUIVO");
-            rightRun.setBold(true);
-
-            //Dividir la página en dos secciones con una línea de puntos
-            XWPFParagraph divider = document.createParagraph();
-            XWPFRun dividerRun = divider.createRun();
-            dividerRun.setText("........................................................................................................................................");
-            dividerRun.setFontSize(8);
-
-            //Dividir la sección superior en dos secciones izquierda y derecha con una línea de puntos
-            XWPFParagraph topDivider = document.createParagraph();
-            XWPFRun topDividerRun = topDivider.createRun();
-            topDividerRun.setText("........................................................................................................................................");
-            topDividerRun.setFontSize(8);
-
-            //Sección izquierda en la parte superior (Firma del solicitante)
-            XWPFParagraph leftSection = document.createParagraph();
-            XWPFRun leftRun2 = leftSection.createRun();
-            leftRun2.setText("Firma del solicitante");
-            leftRun2.setFontSize(10);
-
-            //Sección derecha en la parte superior (Formulario)
-            XWPFParagraph rightSection = document.createParagraph();
-            XWPFRun rightRun2 = rightSection.createRun();
-            rightRun2.setText("Tipo: " + expediente.getTipo() + "\nNúmero de Expediente: " + expediente.getNumExpediente() + "\nAño: " + expediente.getAnio() + "\nJuzgado: " + expediente.getJuzgado() + "\nSolicitante: " + solicitante + "\nFecha: " + fecha);
-            rightRun2.setFontSize(10);
-
-            //Sección inferior (Tabla)
-            XWPFParagraph bottomSection = document.createParagraph();
-
-            //Agregar una tabla con encabezado
-            int numRows = expedientes.size() + 1; // +1 para el encabezado
-            int numCols = 5; // Número de columnas
-
-            XWPFTable table = document.createTable(numRows, numCols);
-            XWPFTableRow tableRow = table.getRow(0);
-
-            //Encabezado de la tabla
-            String[] encabezadoTabla = {"Caja", "Ubicación", "Notas", "Tomos", "Lugar"};
-
-            for (int i = 0; i < encabezadoTabla.length; i++) {
-                XWPFTableCell cell = tableRow.getCell(i);
-                XWPFParagraph cellParagraph = cell.getParagraphs().get(0);
-                XWPFRun cellRun = cellParagraph.createRun();
-                cellRun.setText(encabezadoTabla[i]);
-                cellRun.setBold(true);
-            }
-
-            //Agregar filas a la tabla con los datos de Expediente
-            for (int i = 0; i < expedientes.size(); i++) {
-                Expediente exp = expedientes.get(i);
-                XWPFTableRow newRow = table.getRow(i + 1);
-                newRow.getCell(0).setText(String.valueOf(exp.getCaja()));
-                newRow.getCell(1).setText(exp.getUbicacion());
-                newRow.getCell(2).setText(exp.getNotas());
-                newRow.getCell(3).setText(exp.getTomos());
-                newRow.getCell(4).setText(exp.getLugar());
-            }
-
-            //Guardar el documento en un archivo
-            FileOutputStream out = new FileOutputStream("testigo_" + fecha + "_" + solicitante +".docx");
-            document.write(out);
-            out.close();
-
-            System.out.println("Documento de Word completo con encabezado y tabla generado con éxito.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void imprimirTestigo(ArrayList<Expediente> expedientes, String solicitante, String fecha) throws IOException {
+    	for (Expediente exp : expedientes) {
+    		String cajaStr = String.valueOf(exp.getCaja());
+	        try (BufferedWriter writer = new BufferedWriter(new FileWriter("testigo_" + exp.getTomos()+ ".txt"))) {
+	            writer.write("    Madrid                                                    ARQUIVO          \n");
+	            writer.write("---------------------------------------------------------------------------\n");
+	            writer.write("             Préstamo               |               Tipo: " + exp.getTipo() + "\n");
+	            writer.write("                                    |                                       \n");
+	            writer.write("                                    |               Num Expediente: " + exp.getNumExpediente() + "\n");
+	            writer.write("                                    |                                       \n");
+	            writer.write("                                    |               Año: " + exp.getAnio() + "\n");
+	            writer.write("                                    |                                       \n");
+	            writer.write("                                    |               Juzgado: " + exp.getJuzgado() + "\n");
+	            writer.write("                                    |                                       \n");
+	            writer.write("                                    |               Solicitante: " + solicitante + "\n");
+	            writer.write("                                    |                                       \n");
+	            writer.write("                                    |               Fecha: " + fecha + "\n");
+	            writer.write("                                    |                                       \n");
+	            writer.write("           Firma solicitante        |                                       \n");
+	            writer.write("...........................................................................\n");
+	            writer.write("                                                                       \n");
+	            writer.write("                                                                       \n");
+	            writer.write("                     TIPO: " + exp.getTipo() + "\n");
+	            writer.write("                                                                       \n");
+	            writer.write("                     JUZGADO: " + exp.getJuzgado() + "\n");
+	            writer.write("                                                                       \n");
+	            writer.write("                     NUM EXPEDIENTE: " + exp.getNumExpediente() + "\n");
+	            writer.write("                                                                       \n");
+	            writer.write("                     AÑO: " + exp.getAnio() + "\n");
+	            writer.write("                                                                       \n");
+	            writer.write("                     SOLICITANTE: " + solicitante + "\n");
+	            writer.write("                                                                       \n");
+	            writer.write("                     FECHA: " + fecha + "\n");
+	            writer.write("                                                                       \n");
+	            writer.write("                                                                       \n");
+	            writer.write("                       							                     \n");
+	            writer.write("    __________________________________________________________________ \n");
+	            writer.write("    | " + padCenter("CAJA", 7) + " | " + padCenter("UBICACION", 12) + " | " + padCenter("NOTAS", 10) + " | " + padCenter("TOMOS", 7) + " | " + padCenter("LUGAR", 10) + " |                  \n");
+	            writer.write("    | " + padCenter(cajaStr, 7) + " | " + padCenter(exp.getUbicacion(), 12) + " | " + padCenter(exp.getNotas(), 10) + " | " + padCenter(exp.getTomos(), 7) + " | " + padCenter(exp.getLugar(), 10) + " |                  \n");	          
+	            writer.write("    |-----------------------------------------------------------------|                  \n");
+	
+	            System.out.println("Archivo de testigo generado con éxito.");
+	        } catch (IOException e) {
+	            throw e;
+	        }
+    	}
+    }
+    
+//    private static String padRight(String s, int n) {
+//        return String.format("%-" + n + "s", s);
+//    }
+    private static String padCenter(String s, int n) {
+        int leftPadding = (n - s.length()) / 2;
+        int rightPadding = n - s.length() - leftPadding;
+        return " ".repeat(leftPadding) + s + " ".repeat(rightPadding);
     }
 }
-

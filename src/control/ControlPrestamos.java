@@ -1,5 +1,6 @@
 package control;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
@@ -119,10 +120,12 @@ public class ControlPrestamos{
 					JOptionPane.showMessageDialog(null,
 							"Préstamo realizado con éxito.", "Préstamo",
 							JOptionPane.INFORMATION_MESSAGE);
-					GenerarTestigo.imprimirTestigo(expedientes, solicitante, fecha);
-					//TODO: crear funcion imprimirPapeleta con toda la info del form
-					//TODO: crear funcion imprimirTestigo con toda la info del form
-					//y añadiendo caja, ubicación, notas, tomos, lugar
+					try {
+						GenerarTestigo.imprimirTestigo(expedientes, solicitante, fecha);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			else {
