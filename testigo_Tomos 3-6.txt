@@ -1,0 +1,34 @@
+    Madrid                                                    ARQUIVO          
+---------------------------------------------------------------------------
+             Préstamo               |               Tipo: Escrito
+                                    |                                       
+                                    |               Num Expediente: 8
+                                    |                                       
+                                    |               Año: 2016
+                                    |                                       
+                                    |               Juzgado: Civil
+                                    |                                       
+                                    |               Solicitante: 1
+                                    |                                       
+                                    |               Fecha: 2023-09-16
+                                    |                                       
+           Firma solicitante        |                                       
+...........................................................................
+                                                                       
+                                                                       
+                     TIPO: Escrito
+                                                                       
+                     JUZGADO: Civil
+                                                                       
+                     NUM EXPEDIENTE: 8
+                                                                       
+                     AÑO: 2016
+                                                                       
+                     SOLICITANTE: 1
+                                                                       
+                     FECHA: 2023-09-16
+                                                                       
+                                                                       
+                       							                     
+    __________________________________________________________________ 
+    |  CAJA   |  UBICACION   |   NOTAS    |  TOMOS  |   LUGAR    |                  

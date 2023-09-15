@@ -45,7 +45,7 @@ public class GenerarTestigo {
 	            writer.write("                       							                     \n");
 	            writer.write("    __________________________________________________________________ \n");
 	            writer.write("    | " + padCenter("CAJA", 7) + " | " + padCenter("UBICACION", 12) + " | " + padCenter("NOTAS", 10) + " | " + padCenter("TOMOS", 7) + " | " + padCenter("LUGAR", 10) + " |                  \n");
-	            writer.write("    | " + padCenter(cajaStr, 7) + " | " + padCenter(exp.getUbicacion(), 12) + " | " + padCenter(exp.getNotas(), 10) + " | " + padCenter(exp.getTomos(), 7) + " | " + padCenter(exp.getLugar(), 10) + " |                  \n");	          
+	            writer.write("    | " + padRight(cajaStr, 7) + " | " + padRight(exp.getUbicacion(), 12) + " | " + padRight(exp.getNotas(), 10) + " | " + padRight(exp.getTomos(), 7) + " | " + padRight(exp.getLugar(), 10) + " |                  \n");	          
 	            writer.write("    |-----------------------------------------------------------------|                  \n");
 	
 	            System.out.println("Archivo de testigo generado con éxito.");
@@ -55,9 +55,9 @@ public class GenerarTestigo {
     	}
     }
     
-//    private static String padRight(String s, int n) {
-//        return String.format("%-" + n + "s", s);
-//    }
+    private static String padRight(String s, int n) {
+        return String.format("%-" + n + "s", s);
+    }
     private static String padCenter(String s, int n) {
         int leftPadding = (n - s.length()) / 2;
         int rightPadding = n - s.length() - leftPadding;
